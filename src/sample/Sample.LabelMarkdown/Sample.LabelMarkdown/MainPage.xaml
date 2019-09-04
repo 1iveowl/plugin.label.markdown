@@ -17,7 +17,8 @@
                HorizontalOptions="Center"
                VerticalOptions="CenterAndExpand"></Label>-->
 
-        <markDown:LabelMarkdown TextMarkdown="Start **bold text** stop."
+        <markDown:LabelMarkdown x:Name="LabelMarkdownTest"
+                                TextMarkdown="Start _bold text_ stop  &#x0a;New Line"
                                 HorizontalOptions="Center"
                                 VerticalOptions="CenterAndExpand"></markDown:LabelMarkdown>
     </StackLayout>

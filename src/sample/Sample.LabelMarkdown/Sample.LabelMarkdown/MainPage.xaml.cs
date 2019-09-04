@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Xamarin.Forms;
+using Plugin.Label.MarkDown;
 
 namespace Sample.LabelMarkdown
 {
@@ -16,6 +17,9 @@ namespace Sample.LabelMarkdown
         public MainPage()
         {
             InitializeComponent();
+
+            //LabelMarkdownTest.TextMarkdown= "Start _bold text_ stop  \r\n" +
+            //                                "Next line";
         }
     }
 }
