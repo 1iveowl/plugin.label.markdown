@@ -11,12 +11,16 @@ namespace Plugin.Label.MarkDown.Renderer
 {
     internal class LabelMarkdownRenderer : MarkdownRendererBase
     {
-
         private readonly Stack<MarkdownInlineType> _inlineTypeStack;
 
-        public LabelMarkdownRenderer(MarkdownDocument document) : base(document)
+        private readonly IDictionary<int, Style> _headerStyles; 
+
+        private int _headerLevel;
+
+        public LabelMarkdownRenderer(MarkdownDocument document, IDictionary<int, Style> headerStyles) : base(document)
         {
             _inlineTypeStack = new Stack<MarkdownInlineType>();
+            _headerStyles = headerStyles;
         }
         
         protected override void RenderParagraph(ParagraphBlock element, IRenderContext context)
@@ -46,8 +50,19 @@ namespace Plugin.Label.MarkDown.Renderer
 
         protected override void RenderHeader(HeaderBlock element, IRenderContext context)
         {
-            
-            throw new NotImplementedException();
+            _headerLevel = element.HeaderLevel;
+            RenderInlineChildren(element.Inlines, context);
+
+            if (context.Parent is FormattedString fs)
+            {
+                if (fs.Spans?.Any() ?? false)
+                {
+                    fs.Spans.Last().Text += Environment.NewLine;
+                }
+
+            }
+
+            _headerLevel = 0;
         }
 
         protected override void RenderListElement(ListBlock element, IRenderContext context)
@@ -88,6 +103,11 @@ namespace Plugin.Label.MarkDown.Renderer
                 {
                     Text = element.Text.Replace("\n\r", Environment.NewLine)
                 };
+
+                if (_headerLevel > 0)
+                {
+                    span.Style = _headerStyles[_headerLevel];
+                }
 
                 foreach (var inlineType in _inlineTypeStack)
                 {

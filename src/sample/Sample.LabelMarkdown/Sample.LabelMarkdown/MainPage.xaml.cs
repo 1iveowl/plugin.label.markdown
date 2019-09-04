@@ -1,11 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.ComponentModel;
 using Xamarin.Forms;
-using Plugin.Label.MarkDown;
 
 namespace Sample.LabelMarkdown
 {
@@ -14,6 +8,8 @@ namespace Sample.LabelMarkdown
     [DesignTimeVisible(false)]
     public partial class MainPage : ContentPage
     {
+        public string Var1 { get; set; } = "Var1";
+
         public MainPage()
         {
             InitializeComponent();

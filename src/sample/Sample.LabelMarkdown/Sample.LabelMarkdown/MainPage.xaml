@@ -5,7 +5,31 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:markDown="clr-namespace:Plugin.Label.MarkDown;assembly=Plugin.Label.MarkDown"
              mc:Ignorable="d"
+             x:Name="This"
              x:Class="Sample.LabelMarkdown.MainPage">
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+
+            <Style TargetType="Span" x:Key="Header1SpanStyle">
+                <Setter Property="FontSize" Value="32"></Setter>
+                
+                <Setter Property="ForegroundColor"  Value="Blue"></Setter>
+            </Style>
+
+            <Style TargetType="Span" x:Key="Header2SpanStyle">
+                <Setter Property="FontSize" Value="16"></Setter>
+                <Setter Property="FontAttributes" Value="Italic"></Setter>
+            </Style>
+
+            <Style TargetType="Span" x:Key="Header3SpanStyle">
+                <Setter Property="FontSize" Value="12"></Setter>
+            </Style>
+
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    
 
     <StackLayout>
         <!-- Place new controls here -->
@@ -18,7 +42,14 @@
                VerticalOptions="CenterAndExpand"></Label>-->
 
         <markDown:LabelMarkdown x:Name="LabelMarkdownTest"
-                                TextMarkdown="Start _bold text_ stop  &#x0a;New Line"
+                                
+                                Header1Style="{DynamicResource Header1SpanStyle}"
+                                Header2Style="{DynamicResource Header2SpanStyle}"
+                                Header3Style="{DynamicResource Header3SpanStyle}"
+                                Variable1="{Binding Source={x:Reference This}, Path=Var1}"
+                                TextMarkdown="#Header 1  &#x0a;##Header 2  &#x0a;###Header 3  &#x0a;First Line with some _italic text_.  &#x0a;New Line with Variable 1 in bold: **{{1}}**  &#x0a;New line with variable 3: {{3}}"
+                                Variable3="Var3"
+                                
                                 HorizontalOptions="Center"
                                 VerticalOptions="CenterAndExpand"></markDown:LabelMarkdown>
     </StackLayout>
