@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.Toolkit.Parsers.Markdown;
-using Plugin.Label.MarkDown.CustomControl;
 using Plugin.Label.MarkDown.Renderer;
 using Xamarin.Forms;
 
@@ -12,21 +11,8 @@ namespace Plugin.Label.MarkDown
     {
         private static event EventHandler OnUpdateEventHandler;
 
-        private static event EventHandler<MarkdownTextEventArgs> OnUpdateMarkupTextEventHandler;
-
         private string _textMarkdownStr;
 
-        //public static readonly BindableProperty MarkdownFormattedStringProperty = BindableProperty.Create(
-        //    propertyName: "MarkdownFormattedString",
-        //    returnType: typeof(FormattedString),
-        //    declaringType: typeof(LabelMd),
-        //    defaultValue: default(FormattedString));
-
-        //public FormattedString MarkdownFormattedString
-        //{
-        //    get => (FormattedString) GetValue(MarkdownFormattedStringProperty);
-        //    set => SetValue(MarkdownFormattedStringProperty, value);
-        //}
 
         public static readonly BindableProperty TextMarkdownProperty = BindableProperty.Create(
             propertyName: "TextMarkdown",
@@ -178,8 +164,6 @@ namespace Plugin.Label.MarkDown
         public LabelMd()
         {
             OnUpdateEventHandler += OnUpdateEvent;
-
-            OnUpdateMarkupTextEventHandler += OnOnUpdateMarkupTextEvent;
         }
 
         private void OnUpdateEvent(object sender, EventArgs e)
@@ -190,15 +174,6 @@ namespace Plugin.Label.MarkDown
             }
         }
 
-        private void OnOnUpdateMarkupTextEvent(object sender, MarkdownTextEventArgs e)
-        {
-            if (sender is LabelMd labelMarkdown)
-            {
-                //_originalTextMarkdownStr = e.MarkdownText;
-
-                OnUpdateEvent(sender, e);
-            }
-        }
 
         private static void OnUpdatePropertyChanged(BindableObject bindable, object oldvalue, object newvalue)
         {
@@ -236,7 +211,7 @@ namespace Plugin.Label.MarkDown
                 && newvalue != oldvalue 
                 && newvalue is string str)
             {
-                OnUpdateMarkupTextEventHandler?.Invoke(labelMarkdown, new MarkdownTextEventArgs{MarkdownText = str});
+                OnUpdateEventHandler?.Invoke(labelMarkdown, null);
             }
         }
 
