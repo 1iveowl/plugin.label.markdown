@@ -13,11 +13,14 @@ namespace Sample.LabelMarkdown
         public MainPage()
         {
             InitializeComponent();
-            
-            //LabelMarkdownTest2.TextMarkdown = "Line one\nLine two\n";
 
-            //LabelMarkdownTest.TextMarkdown= "Start _bold text_ stop  \r\n" +
-            //                                "Next line";
+            //LabelMarkdownTest2.TextMarkdown = "#Header 1\r\n" +
+            //                                  "##Header 2\r\n" +
+            //                                  "###Header 3 _with italic_\r\n" +
+            //                                  "First Line with some _italic text_.\r\n" +
+            //                                  "New Line with Variable 1 in italic-bold: ***{{1}}***\r\n" +
+            //                                  "New line with variable 3: {{3}}\r\n" +
+            //                                  "[Link to Bing](https://www.bing.com)";
         }
     }
 }
