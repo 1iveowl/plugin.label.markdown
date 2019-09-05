@@ -11,10 +11,16 @@
     <ContentPage.Resources>
         <ResourceDictionary>
 
-            <Style TargetType="Span" x:Key="Header1SpanStyle">
+            <Style TargetType="Span" x:Key="Header1SpanStyleA">
                 <Setter Property="FontSize" Value="32"></Setter>
                 
                 <Setter Property="ForegroundColor"  Value="Blue"></Setter>
+            </Style>
+
+            <Style TargetType="Span" x:Key="Header1SpanStyleB">
+                <Setter Property="FontSize" Value="32"></Setter>
+
+                <Setter Property="ForegroundColor"  Value="Red"></Setter>
             </Style>
 
             <Style TargetType="Span" x:Key="Header2SpanStyle">
@@ -52,31 +58,35 @@
                                 HorizontalOptions="Center"
                                 VerticalOptions="CenterAndExpand"></markDown:LabelMarkdown>-->
 
-        <markDown:LabelMarkdown x:Name="LabelMarkdownTest2"
-                                UrlLinkColor="DeepPink"
+
+        <markDown:LabelMd x:Name="LabelMarkdownTest"
+                                UrlLinkColor="Purple"
                                 Variable1="{Binding Source={x:Reference This}, Path=Var1}"
-                                
                                 Variable3="Var3"
-                                Header1Style="{DynamicResource Header1SpanStyle}"
+                                TextMarkdown="#Header A  &#x0a;##Header B  &#x0a;###Header C _with italic_  &#x0a;First Line with some _italic text_.  &#x0a;New Line with Variable 1 in bold: **{{1}}**  &#x0a;New line with variable 3: {{3}}  &#x0a;[Link to Google](https://www.google.com) &#x0a;"
+                                Header1Style="{DynamicResource Header1SpanStyleA}"
                                 Header2Style="{DynamicResource Header2SpanStyle}"
                                 Header3Style="{DynamicResource Header3SpanStyle}"
                                 HorizontalOptions="Center"
-                                VerticalOptions="CenterAndExpand">
-            <markDown:LabelMarkdown.TextMarkdown>
-Line one
-Line two
-            </markDown:LabelMarkdown.TextMarkdown>
-
-        </markDown:LabelMarkdown>
+                                VerticalOptions="CenterAndExpand"></markDown:LabelMd>
 
 
-        <!--<markDown:LabelMarkdown x:Name="LabelMarkdownTest2"
+        <markDown:LabelMd UrlLinkColor="Blue"
+                                TextMarkdown="#Header 1  &#x0a;First _Line_."
+                                HorizontalOptions="Center"
+                                VerticalOptions="CenterAndExpand"></markDown:LabelMd>
+
+
+        <markDown:LabelMd x:Name="LabelMarkdownTest1"
                                 UrlLinkColor="Aqua"
-                                Header1Style="{DynamicResource Header1SpanStyle}"
+                                Variable1="{Binding Source={x:Reference This}, Path=Var1}"
+                                Variable3="Var3"
+                                TextMarkdown="#Header 1  &#x0a;##Header 2  &#x0a;###Header 3 _with italic_  &#x0a;First Line with some _italic text_.  &#x0a;New Line with Variable 1 in bold: **{{1}}**  &#x0a;New line with variable 3: {{3}}  &#x0a;[Link to Google](https://www.google.com) &#x0a;"
+                                Header1Style="{DynamicResource Header1SpanStyleB}"
                                 Header2Style="{DynamicResource Header2SpanStyle}"
                                 Header3Style="{DynamicResource Header3SpanStyle}"
                                 HorizontalOptions="Center"
-                                VerticalOptions="CenterAndExpand"></markDown:LabelMarkdown>-->
+                                VerticalOptions="CenterAndExpand"></markDown:LabelMd>
     </StackLayout>
 
 </ContentPage>

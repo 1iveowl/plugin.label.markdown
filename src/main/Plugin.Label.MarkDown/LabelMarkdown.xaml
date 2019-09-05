@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<customControl1:LabelMarkdownControl xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:customControl="clr-namespace:Plugin.Label.MarkDown"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:customControl1="clr-namespace:Plugin.Label.MarkDown.CustomControl;assembly=Plugin.Label.MarkDown"
+             mc:Ignorable="d"
+             x:Name="This"
+             x:Class="Plugin.Label.MarkDown.LabelMarkdown">
+    <customControl1:LabelMarkdownControl.Content>
+      <Label FormattedText="{Binding Source={x:Reference This}, Path=MarkdownFormattedString}"></Label>
+  </customControl1:LabelMarkdownControl.Content>
+</customControl1:LabelMarkdownControl>

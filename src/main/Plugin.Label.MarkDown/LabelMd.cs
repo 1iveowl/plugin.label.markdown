@@ -2,22 +2,36 @@
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.Toolkit.Parsers.Markdown;
+using Plugin.Label.MarkDown.CustomControl;
 using Plugin.Label.MarkDown.Renderer;
 using Xamarin.Forms;
 
 namespace Plugin.Label.MarkDown
 {
-    public class LabelMarkdown : Xamarin.Forms.Label
+    public class LabelMd : Xamarin.Forms.Label
     {
         private static event EventHandler OnUpdateEventHandler;
 
-        private static string _originalTextMarkdownStr;
-        private static string _textMarkdownStr;
+        private static event EventHandler<MarkdownTextEventArgs> OnUpdateMarkupTextEventHandler;
+
+        private string _textMarkdownStr;
+
+        //public static readonly BindableProperty MarkdownFormattedStringProperty = BindableProperty.Create(
+        //    propertyName: "MarkdownFormattedString",
+        //    returnType: typeof(FormattedString),
+        //    declaringType: typeof(LabelMd),
+        //    defaultValue: default(FormattedString));
+
+        //public FormattedString MarkdownFormattedString
+        //{
+        //    get => (FormattedString) GetValue(MarkdownFormattedStringProperty);
+        //    set => SetValue(MarkdownFormattedStringProperty, value);
+        //}
 
         public static readonly BindableProperty TextMarkdownProperty = BindableProperty.Create(
             propertyName: "TextMarkdown",
             returnType: typeof(string),
-            declaringType: typeof(LabelMarkdown),
+            declaringType: typeof(LabelMd),
             defaultValue: default(string),
             defaultBindingMode:BindingMode.OneWay,
             OnTextMarkdownValidateValue,
@@ -32,7 +46,7 @@ namespace Plugin.Label.MarkDown
         public static readonly BindableProperty UrlLinkColorProperty = BindableProperty.Create(
             propertyName: "UrlLinkColor",
             returnType: typeof(Color),
-            declaringType: typeof(LabelMarkdown),
+            declaringType: typeof(LabelMd),
             defaultValue: Color.Blue,
             propertyChanged: OnUpdatePropertyChanged);
 
@@ -45,7 +59,7 @@ namespace Plugin.Label.MarkDown
         public static readonly BindableProperty Header1StyleProperty = BindableProperty.Create(
             propertyName: "Header1Style",
             returnType: typeof(Style),
-            declaringType: typeof(LabelMarkdown),
+            declaringType: typeof(LabelMd),
             defaultValue: default(Style),
             propertyChanged: OnUpdatePropertyChanged);
 
@@ -58,7 +72,7 @@ namespace Plugin.Label.MarkDown
         public static readonly BindableProperty Header2StyleProperty = BindableProperty.Create(
             propertyName: "Header2Style",
             returnType: typeof(Style),
-            declaringType: typeof(LabelMarkdown),
+            declaringType: typeof(LabelMd),
             defaultValue: default(Style),
             propertyChanged: OnUpdatePropertyChanged);
 
@@ -71,7 +85,7 @@ namespace Plugin.Label.MarkDown
         public static readonly BindableProperty Header3StyleProperty = BindableProperty.Create(
             propertyName: "Header3Style",
             returnType: typeof(Style),
-            declaringType: typeof(LabelMarkdown),
+            declaringType: typeof(LabelMd),
             defaultValue: default(Style),
             propertyChanged: OnUpdatePropertyChanged);
 
@@ -85,7 +99,7 @@ namespace Plugin.Label.MarkDown
         public static readonly BindableProperty Variable1Property = BindableProperty.Create(
             propertyName: "Variable1",
             returnType: typeof(string),
-            declaringType: typeof(LabelMarkdown),
+            declaringType: typeof(LabelMd),
             defaultValue: default(string),
             propertyChanged: OnUpdatePropertyChanged);
 
@@ -99,7 +113,7 @@ namespace Plugin.Label.MarkDown
         public static readonly BindableProperty Variable2Property = BindableProperty.Create(
             propertyName: "Variable2",
             returnType: typeof(string),
-            declaringType: typeof(LabelMarkdown),
+            declaringType: typeof(LabelMd),
             defaultValue: default(string),
             propertyChanged: OnUpdatePropertyChanged);
 
@@ -112,7 +126,7 @@ namespace Plugin.Label.MarkDown
         public static readonly BindableProperty Variable3Property = BindableProperty.Create(
             propertyName: "Variable3",
             returnType: typeof(string),
-            declaringType: typeof(LabelMarkdown),
+            declaringType: typeof(LabelMd),
             defaultValue: default(string),
             propertyChanged: OnUpdatePropertyChanged);
 
@@ -125,7 +139,7 @@ namespace Plugin.Label.MarkDown
         public static readonly BindableProperty Variable4Property = BindableProperty.Create(
             propertyName: "Variable4",
             returnType: typeof(string),
-            declaringType: typeof(LabelMarkdown),
+            declaringType: typeof(LabelMd),
             defaultValue: default(string),
             propertyChanged: OnUpdatePropertyChanged);
 
@@ -138,7 +152,7 @@ namespace Plugin.Label.MarkDown
         public static readonly BindableProperty Variable5Property = BindableProperty.Create(
             propertyName: "Variable5",
             returnType: typeof(string),
-            declaringType: typeof(LabelMarkdown),
+            declaringType: typeof(LabelMd),
             defaultValue: default(string),
             propertyChanged: OnUpdatePropertyChanged);
 
@@ -151,7 +165,7 @@ namespace Plugin.Label.MarkDown
         public static readonly BindableProperty Variable6Property = BindableProperty.Create(
             propertyName: "Variable6",
             returnType: typeof(string),
-            declaringType: typeof(LabelMarkdown),
+            declaringType: typeof(LabelMd),
             defaultValue: default(string),
             propertyChanged: OnUpdatePropertyChanged);
 
@@ -161,28 +175,39 @@ namespace Plugin.Label.MarkDown
             set => SetValue(Variable6Property, value);
         }
 
-        public LabelMarkdown()
+        public LabelMd()
         {
-            OnUpdateEventHandler += OnOnUpdateEventHandler;
+            OnUpdateEventHandler += OnUpdateEvent;
+
+            OnUpdateMarkupTextEventHandler += OnOnUpdateMarkupTextEvent;
         }
 
-        private void OnOnUpdateEventHandler(object sender, EventArgs e)
+        private void OnUpdateEvent(object sender, EventArgs e)
         {
-            if (sender is LabelMarkdown labelMarkdown)
+            if (sender is LabelMd labelMarkdown)
             {
-                UpdateFormattedText(labelMarkdown);
+                UpdateFormattedText();
+            }
+        }
+
+        private void OnOnUpdateMarkupTextEvent(object sender, MarkdownTextEventArgs e)
+        {
+            if (sender is LabelMd labelMarkdown)
+            {
+                //_originalTextMarkdownStr = e.MarkdownText;
+
+                OnUpdateEvent(sender, e);
             }
         }
 
         private static void OnUpdatePropertyChanged(BindableObject bindable, object oldvalue, object newvalue)
         {
-            if (bindable is LabelMarkdown labelMarkdown && oldvalue != newvalue)
+            if (bindable is LabelMd labelMarkdown && oldvalue != newvalue)
             {
                 OnUpdateEventHandler?.Invoke(labelMarkdown, null);
             }
         }
-
-
+        
         private static bool OnTextMarkdownValidateValue(BindableObject bindable, object value)
         {
             var str = (string)value;
@@ -207,23 +232,21 @@ namespace Plugin.Label.MarkDown
 
         private static void OnTextMarkdownPropertyChanged(BindableObject bindable, object oldvalue, object newvalue)
         {
-            if (bindable is LabelMarkdown labelMarkdown 
+            if (bindable is LabelMd labelMarkdown 
                 && newvalue != oldvalue 
                 && newvalue is string str)
             {
-                _originalTextMarkdownStr = str;
-
-                OnUpdateEventHandler?.Invoke(labelMarkdown, null);
+                OnUpdateMarkupTextEventHandler?.Invoke(labelMarkdown, new MarkdownTextEventArgs{MarkdownText = str});
             }
         }
 
-        private void UpdateFormattedText(Xamarin.Forms.Label label)
+        private void UpdateFormattedText()
         {
             AddVariablesToMarkdownString();
 
             if (!string.IsNullOrEmpty(_textMarkdownStr))
             {
-                label.FormattedText = GetFormattedString(_textMarkdownStr);
+                FormattedText = GetFormattedString(_textMarkdownStr);
             }
         }
 
@@ -233,7 +256,7 @@ namespace Plugin.Label.MarkDown
 
             var document = new MarkdownDocument();
 
-            var markdownStr = str.Replace("\n", "  ");
+            var markdownStr = str.Replace("\r", "  ");
             
             document.Parse(markdownStr);
 
@@ -257,7 +280,7 @@ namespace Plugin.Label.MarkDown
 
         private void AddVariablesToMarkdownString()
         {
-            _textMarkdownStr = _originalTextMarkdownStr;
+            _textMarkdownStr = TextMarkdown;
 
             if (!string.IsNullOrEmpty(_textMarkdownStr))
             {
