@@ -5,6 +5,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:markDown="clr-namespace:Plugin.Label.MarkDown;assembly=Plugin.Label.MarkDown"
              mc:Ignorable="d"
+             BackgroundColor="BurlyWood"
              x:Name="This"
              x:Class="Sample.LabelMarkdown.MainPage">
 

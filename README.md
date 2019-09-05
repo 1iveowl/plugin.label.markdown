@@ -29,6 +29,12 @@ Markdown supported:
 ## XAML Sample
 The easied way to introduce the features is by looking at a simple example:
 
+<!-- ![Sample image](https://raw.githubusercontent.com/1iveowl/plugin.label.markdown/develop/images/sample1.png?token=ADCGLUEGHFAPFOSUOVSWFDK5OEZQY =250x) -->
+
+<img src="https://raw.githubusercontent.com/1iveowl/plugin.label.markdown/develop/images/sample1.png?token=ADCGLUEGHFAPFOSUOVSWFDK5OEZQY" width="150"/>
+
+
+
 ```xml
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
