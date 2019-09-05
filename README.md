@@ -5,15 +5,17 @@
 *Please star this project if you find it useful. Thank you!*
 
 ## Why this plugin
-Wouldn't it be cool if the Xamarin Label control supported (Markdown)[https://en.wikipedia.org/wiki/Markdown]? 
+Wouldn't it be cool if the Xamarin Label control supported [Markdown](https://en.wikipedia.org/wiki/Markdown)?
 
-And how cool would it be if it was possible to include bindable properties inside a Markdown text like this: 
+And how cool would it be if it was possible to include bindable properties inside a Markdown text like this:
 > `There are {{1}} apples in the basket.`
 
 
 Where `{{1}}` represent the place-holder for the value of the bindable property?
 
-## Platform support
+These are scenarios this plugin adresses.
+
+## Platforms supported
 
 The plugin works on all platforms supported by Xamarin Forms and .NET Standard 2.0.
 
@@ -26,13 +28,25 @@ Markdown supported:
 - Bold-Italic
 - Hyperlinks
 
+Other features:
+- Bindable Property place-holders (variables in the Markdown text)
+- Header styling
+
 ## XAML Sample
 The easied way to introduce the features is by looking at a simple example:
 
-<!-- ![Sample image](https://raw.githubusercontent.com/1iveowl/plugin.label.markdown/develop/images/sample1.png?token=ADCGLUEGHFAPFOSUOVSWFDK5OEZQY =250x) -->
+<img src="https://github.com/1iveowl/plugin.label.markdown/blob/develop/images/sample1.png?raw=true" width="320" />
 
-<img src="https://raw.githubusercontent.com/1iveowl/plugin.label.markdown/develop/images/sample1.png?token=ADCGLUEGHFAPFOSUOVSWFDK5OEZQY" width="150"/>
+This screenshot from iPhone was created using the XAML below.
 
+Please notice:
+
+- A paragraph is ended by adding two spaces and \&#x0a;. \&#x0a; is the unicode notation for New Line (aka. \n) 
+    - E.g. a paragraph is ended by: ***[space][space]\n***.
+    - It is other possible to end a paragraph using: ***\r\n***.
+- The three styles defined in the ResourceDictionary with `TargetType = "Span"`. These define the styles of each of the headings
+- `Variable1` and `Variable3`. These are two of the total of six Bindable Properties that can be utilized. By adding the placeholders `{{1}}` ... `{{6}}` in the Markdown text, each placeholder will be replaced by the value of the bindable property at run time. 
+- `UrlLinkColor` which is the property defining the color of hyper links. Default is Blue.
 
 
 ```xml
