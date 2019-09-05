@@ -9,19 +9,10 @@ namespace Plugin.Label.MarkDown
 {
     public class LabelMarkdown : Xamarin.Forms.Label
     {
+        private static event EventHandler OnUpdateEventHandler;
+
         private static string _originalTextMarkdownStr;
         private static string _textMarkdownStr;
-
-        private static Style _header1Style;
-        private static Style _header2Style;
-        private static Style _header3Style;
-
-        private static string _variable1;
-        private static string _variable2;
-        private static string _variable3;
-        private static string _variable4;
-        private static string _variable5;
-        private static string _variable6;
 
         public static readonly BindableProperty TextMarkdownProperty = BindableProperty.Create(
             propertyName: "TextMarkdown",
@@ -38,12 +29,25 @@ namespace Plugin.Label.MarkDown
             set => SetValue(TextMarkdownProperty, value);
         }
 
+        public static readonly BindableProperty UrlLinkColorProperty = BindableProperty.Create(
+            propertyName: "UrlLinkColor",
+            returnType: typeof(Color),
+            declaringType: typeof(LabelMarkdown),
+            defaultValue: Color.Blue,
+            propertyChanged: OnUpdatePropertyChanged);
+
+        public Color UrlLinkColor
+        {
+            get => (Color) GetValue(UrlLinkColorProperty);
+            set => SetValue(UrlLinkColorProperty, value);
+        }
+
         public static readonly BindableProperty Header1StyleProperty = BindableProperty.Create(
             propertyName: "Header1Style",
             returnType: typeof(Style),
             declaringType: typeof(LabelMarkdown),
             defaultValue: default(Style),
-            propertyChanged: OnHeader1StylePropertyChanged);
+            propertyChanged: OnUpdatePropertyChanged);
 
         public Style Header1Style
         {
@@ -56,7 +60,7 @@ namespace Plugin.Label.MarkDown
             returnType: typeof(Style),
             declaringType: typeof(LabelMarkdown),
             defaultValue: default(Style),
-            propertyChanged: OnHeader2StylePropertyChanged);
+            propertyChanged: OnUpdatePropertyChanged);
 
         public Style Header2Style
         {
@@ -69,7 +73,7 @@ namespace Plugin.Label.MarkDown
             returnType: typeof(Style),
             declaringType: typeof(LabelMarkdown),
             defaultValue: default(Style),
-            propertyChanged:OnHeader3StylePropertyChanged);
+            propertyChanged: OnUpdatePropertyChanged);
 
 
         public Style Header3Style
@@ -83,7 +87,7 @@ namespace Plugin.Label.MarkDown
             returnType: typeof(string),
             declaringType: typeof(LabelMarkdown),
             defaultValue: default(string),
-            propertyChanged:OnVariable1PropertyChanged);
+            propertyChanged: OnUpdatePropertyChanged);
 
 
         public string Variable1
@@ -97,7 +101,7 @@ namespace Plugin.Label.MarkDown
             returnType: typeof(string),
             declaringType: typeof(LabelMarkdown),
             defaultValue: default(string),
-            propertyChanged: OnVariable2PropertyChanged);
+            propertyChanged: OnUpdatePropertyChanged);
 
         public string Variable2
         {
@@ -110,7 +114,7 @@ namespace Plugin.Label.MarkDown
             returnType: typeof(string),
             declaringType: typeof(LabelMarkdown),
             defaultValue: default(string),
-            propertyChanged: OnVariable3PropertyChanged);
+            propertyChanged: OnUpdatePropertyChanged);
 
         public string Variable3
         {
@@ -123,7 +127,7 @@ namespace Plugin.Label.MarkDown
             returnType: typeof(string),
             declaringType: typeof(LabelMarkdown),
             defaultValue: default(string),
-            propertyChanged: OnVariable4PropertyChanged);
+            propertyChanged: OnUpdatePropertyChanged);
 
         public string Variable4
         {
@@ -136,7 +140,7 @@ namespace Plugin.Label.MarkDown
             returnType: typeof(string),
             declaringType: typeof(LabelMarkdown),
             defaultValue: default(string),
-            propertyChanged: OnVariable5PropertyChanged);
+            propertyChanged: OnUpdatePropertyChanged);
 
         public string Variable5
         {
@@ -149,14 +153,36 @@ namespace Plugin.Label.MarkDown
             returnType: typeof(string),
             declaringType: typeof(LabelMarkdown),
             defaultValue: default(string),
-            propertyChanged: OnVariable6PropertyChanged);
+            propertyChanged: OnUpdatePropertyChanged);
 
         public string Variable6
         {
             get => (string) GetValue(Variable6Property);
             set => SetValue(Variable6Property, value);
         }
-        
+
+        public LabelMarkdown()
+        {
+            OnUpdateEventHandler += OnOnUpdateEventHandler;
+        }
+
+        private void OnOnUpdateEventHandler(object sender, EventArgs e)
+        {
+            if (sender is LabelMarkdown labelMarkdown)
+            {
+                UpdateFormattedText(labelMarkdown);
+            }
+        }
+
+        private static void OnUpdatePropertyChanged(BindableObject bindable, object oldvalue, object newvalue)
+        {
+            if (bindable is LabelMarkdown labelMarkdown && oldvalue != newvalue)
+            {
+                OnUpdateEventHandler?.Invoke(labelMarkdown, null);
+            }
+        }
+
+
         private static bool OnTextMarkdownValidateValue(BindableObject bindable, object value)
         {
             var str = (string)value;
@@ -186,173 +212,41 @@ namespace Plugin.Label.MarkDown
                 && newvalue is string str)
             {
                 _originalTextMarkdownStr = str;
-                UpdateFormattedText(labelMarkdown);
+
+                OnUpdateEventHandler?.Invoke(labelMarkdown, null);
             }
         }
 
-        private static void OnHeader1StylePropertyChanged(BindableObject bindable, object oldvalue, object newvalue)
-        {
-            if (bindable is LabelMarkdown labelMarkdown
-                && newvalue != oldvalue
-                && newvalue is Style style)
-            {
-                _header1Style = style;
-
-                UpdateFormattedText(labelMarkdown);
-            }
-        }
-
-        private static void OnHeader2StylePropertyChanged(BindableObject bindable, object oldvalue, object newvalue)
-        {
-            if (bindable is LabelMarkdown labelMarkdown
-                && newvalue != oldvalue
-                && newvalue is Style style)
-            {
-                _header2Style = style;
-
-                UpdateFormattedText(labelMarkdown);
-            }
-        }
-
-        private static void OnHeader3StylePropertyChanged(BindableObject bindable, object oldvalue, object newvalue)
-        {
-            if (bindable is LabelMarkdown labelMarkdown
-                && newvalue != oldvalue
-                && newvalue is Style style)
-            {
-                _header3Style = style;
-
-                UpdateFormattedText(labelMarkdown);
-            }
-        }
-
-        private static void OnVariable1PropertyChanged(BindableObject bindable, object oldvalue, object newvalue)
-        {
-            if (bindable is LabelMarkdown lableMarkDown
-                && newvalue != oldvalue
-                && newvalue is string str)
-            {
-                _variable1 = str;
-                UpdateFormattedText(lableMarkDown);
-            }
-        }
-
-        private static void OnVariable2PropertyChanged(BindableObject bindable, object oldvalue, object newvalue)
-        {
-            if (bindable is LabelMarkdown lableMarkDown
-                && newvalue != oldvalue
-                && newvalue is string str)
-            {
-                _variable2 = str;
-                UpdateFormattedText(lableMarkDown);
-            }
-        }
-        private static void OnVariable3PropertyChanged(BindableObject bindable, object oldvalue, object newvalue)
-        {
-            if (bindable is LabelMarkdown lableMarkDown
-                && newvalue != oldvalue
-                && newvalue is string str)
-            {
-                _variable3 = str;
-                UpdateFormattedText(lableMarkDown);
-            }
-        }
-        private static void OnVariable4PropertyChanged(BindableObject bindable, object oldvalue, object newvalue)
-        {
-            if (bindable is LabelMarkdown lableMarkDown
-                && newvalue != oldvalue
-                && newvalue is string str)
-            {
-                _variable4 = str;
-                UpdateFormattedText(lableMarkDown);
-            }
-        }
-        private static void OnVariable5PropertyChanged(BindableObject bindable, object oldvalue, object newvalue)
-        {
-            if (bindable is LabelMarkdown lableMarkDown
-                && newvalue != oldvalue
-                && newvalue is string str)
-            {
-                _variable5 = str;
-                UpdateFormattedText(lableMarkDown);
-            }
-        }
-        private static void OnVariable6PropertyChanged(BindableObject bindable, object oldvalue, object newvalue)
-        {
-            if (bindable is LabelMarkdown lableMarkDown
-                && newvalue != oldvalue
-                && newvalue is string str)
-            {
-                _variable6 = str;
-                UpdateFormattedText(lableMarkDown);
-            }
-        }
-
-
-        private static void UpdateFormattedText(LabelMarkdown labelMarkdown)
+        private void UpdateFormattedText(Xamarin.Forms.Label label)
         {
             AddVariablesToMarkdownString();
 
             if (!string.IsNullOrEmpty(_textMarkdownStr))
             {
-                labelMarkdown.FormattedText = GetFormattedString(_textMarkdownStr);
+                label.FormattedText = GetFormattedString(_textMarkdownStr);
             }
         }
 
-        private static void AddVariablesToMarkdownString()
-        {
-            _textMarkdownStr = _originalTextMarkdownStr;
-
-            if (!string.IsNullOrEmpty(_textMarkdownStr))
-            {
-                if (!string.IsNullOrEmpty(_variable1))
-                {
-                    _textMarkdownStr = _textMarkdownStr.Replace("{{1}}", _variable1);
-                }
-
-                if (!string.IsNullOrEmpty(_variable2))
-                {
-                    _textMarkdownStr = _textMarkdownStr.Replace("{{2}}", _variable2);
-                }
-
-                if (!string.IsNullOrEmpty(_variable3))
-                {
-                    _textMarkdownStr = _textMarkdownStr.Replace("{{3}}", _variable3);
-                }
-
-                if (!string.IsNullOrEmpty(_variable4))
-                {
-                    _textMarkdownStr = _textMarkdownStr.Replace("{{4}}", _variable4);
-                }
-
-                if (!string.IsNullOrEmpty(_variable5))
-                {
-                    _textMarkdownStr = _textMarkdownStr.Replace("{{5}}", _variable5);
-                }
-
-                if (!string.IsNullOrEmpty(_variable6))
-                {
-                    _textMarkdownStr = _textMarkdownStr.Replace("{{6}}", _variable6);
-                }
-            }
-        }
-
-        private static FormattedString GetFormattedString(string str)
+        private FormattedString GetFormattedString(string str)
         {
             var fs = new FormattedString();
 
             var document = new MarkdownDocument();
-            document.Parse(str);
+
+            var markdownStr = str.Replace("\n", "  ");
+            
+            document.Parse(markdownStr);
 
             if (document.Blocks.Any())
             {
                 var renderer = new LabelMarkdownRenderer(
                     document, 
+                    UrlLinkColor,
                     new Dictionary<int, Style>
                     {
-                        {1, _header1Style}, 
-                        {2, _header2Style}, 
-                        {3, _header3Style}
+                        {1, Header1Style}, 
+                        {2, Header2Style}, 
+                        {3, Header3Style}
                     });
 
                 renderer.Render(new RendererContext{Parent = fs});
@@ -361,5 +255,42 @@ namespace Plugin.Label.MarkDown
             return fs;
         }
 
+        private void AddVariablesToMarkdownString()
+        {
+            _textMarkdownStr = _originalTextMarkdownStr;
+
+            if (!string.IsNullOrEmpty(_textMarkdownStr))
+            {
+                if (!string.IsNullOrEmpty(Variable1))
+                {
+                    _textMarkdownStr = _textMarkdownStr.Replace("{{1}}", Variable1);
+                }
+
+                if (!string.IsNullOrEmpty(Variable2))
+                {
+                    _textMarkdownStr = _textMarkdownStr.Replace("{{2}}", Variable2);
+                }
+
+                if (!string.IsNullOrEmpty(Variable3))
+                {
+                    _textMarkdownStr = _textMarkdownStr.Replace("{{3}}", Variable3);
+                }
+
+                if (!string.IsNullOrEmpty(Variable4))
+                {
+                    _textMarkdownStr = _textMarkdownStr.Replace("{{4}}", Variable4);
+                }
+
+                if (!string.IsNullOrEmpty(Variable5))
+                {
+                    _textMarkdownStr = _textMarkdownStr.Replace("{{5}}", Variable5);
+                }
+
+                if (!string.IsNullOrEmpty(Variable6))
+                {
+                    _textMarkdownStr = _textMarkdownStr.Replace("{{6}}", Variable6);
+                }
+            }
+        }
     }
 }

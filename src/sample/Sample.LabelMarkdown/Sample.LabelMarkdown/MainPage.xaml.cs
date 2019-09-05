@@ -13,6 +13,8 @@ namespace Sample.LabelMarkdown
         public MainPage()
         {
             InitializeComponent();
+            
+            //LabelMarkdownTest2.TextMarkdown = "Line one\nLine two\n";
 
             //LabelMarkdownTest.TextMarkdown= "Start _bold text_ stop  \r\n" +
             //                                "Next line";

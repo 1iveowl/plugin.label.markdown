@@ -13,14 +13,19 @@ namespace Plugin.Label.MarkDown.Renderer
     {
         private readonly Stack<MarkdownInlineType> _inlineTypeStack;
 
-        private readonly IDictionary<int, Style> _headerStyles; 
+        private readonly IDictionary<int, Style> _headerStyles;
+        private readonly Color _urlLinkColor;
 
         private int _headerLevel;
 
-        public LabelMarkdownRenderer(MarkdownDocument document, IDictionary<int, Style> headerStyles) : base(document)
+        public LabelMarkdownRenderer(
+            MarkdownDocument document,
+            Color urlLinkColor,
+            IDictionary<int, Style> headerStyles) : base(document)
         {
             _inlineTypeStack = new Stack<MarkdownInlineType>();
             _headerStyles = headerStyles;
+            _urlLinkColor = urlLinkColor;
         }
         
         protected override void RenderParagraph(ParagraphBlock element, IRenderContext context)
@@ -38,14 +43,13 @@ namespace Plugin.Label.MarkDown.Renderer
                     {
                         fs.Spans.Last().Text += Environment.NewLine;
                     }
-                    
                 }
             }
         }
 
         protected override void RenderYamlHeader(YamlHeaderBlock element, IRenderContext context)
         {
-            throw new NotImplementedException();
+            //throw new NotImplementedException();
         }
 
         protected override void RenderHeader(HeaderBlock element, IRenderContext context)
@@ -67,12 +71,12 @@ namespace Plugin.Label.MarkDown.Renderer
 
         protected override void RenderListElement(ListBlock element, IRenderContext context)
         {
-            throw new NotImplementedException();
+            //throw new NotImplementedException();
         }
 
         protected override void RenderHorizontalRule(IRenderContext context)
         {
-            throw new NotImplementedException();
+            //throw new NotImplementedException();
         }
 
         protected override void RenderQuote(QuoteBlock element, IRenderContext context)
@@ -82,17 +86,17 @@ namespace Plugin.Label.MarkDown.Renderer
 
         protected override void RenderCode(CodeBlock element, IRenderContext context)
         {
-            throw new NotImplementedException();
+            //throw new NotImplementedException();
         }
 
         protected override void RenderTable(TableBlock element, IRenderContext context)
         {
-            throw new NotImplementedException();
+            //throw new NotImplementedException();
         }
 
         protected override void RenderEmoji(EmojiInline element, IRenderContext context)
         {
-            throw new NotImplementedException();
+            //throw new NotImplementedException();
         }
 
         protected override void RenderTextRun(TextRunInline element, IRenderContext context)
@@ -159,17 +163,19 @@ namespace Plugin.Label.MarkDown.Renderer
 
         protected override void RenderMarkdownLink(MarkdownLinkInline element, IRenderContext context)
         {
-            throw new NotImplementedException();
+            var text = string.Join(string.Empty, element.Inlines);
+
+            RenderLink(text, element.Url, context);
         }
 
         protected override void RenderImage(ImageInline element, IRenderContext context)
         {
-            throw new NotImplementedException();
+            //throw new NotImplementedException();
         }
 
         protected override void RenderHyperlink(HyperlinkInline element, IRenderContext context)
         {
-            throw new NotImplementedException();
+            RenderLink(element.Text, element.Url, context);
         }
 
         protected override void RenderItalicRun(ItalicTextInline element, IRenderContext context)
@@ -179,22 +185,45 @@ namespace Plugin.Label.MarkDown.Renderer
 
         protected override void RenderStrikethroughRun(StrikethroughTextInline element, IRenderContext context)
         {
-            throw new NotImplementedException();
+            //throw new NotImplementedException();
         }
 
         protected override void RenderSuperscriptRun(SuperscriptTextInline element, IRenderContext context)
         {
-            throw new NotImplementedException();
+            //throw new NotImplementedException();
         }
 
         protected override void RenderSubscriptRun(SubscriptTextInline element, IRenderContext context)
         {
-            throw new NotImplementedException();
+            //throw new NotImplementedException();
         }
 
         protected override void RenderCodeRun(CodeInline element, IRenderContext context)
         {
-            throw new NotImplementedException();
+            //throw new NotImplementedException();
+        }
+
+        private void RenderLink(string text, string url, IRenderContext context)
+        {
+            if (context.Parent is FormattedString fs)
+            {
+                var span = new Span
+                {
+                    Text = text,
+                    TextDecorations = TextDecorations.Underline,
+                    TextColor = _urlLinkColor
+                };
+
+                var tap = new TapGestureRecognizer
+                {
+                    Command = new Command<string>(urlStr => Device.OpenUri(new Uri(urlStr))),
+                    CommandParameter = url
+                };
+
+                span.GestureRecognizers.Add(tap);
+
+                fs.Spans.Add(span);
+            }
         }
 
         private void RenderInlineType(IList<MarkdownInline> inlines, MarkdownInlineType markdownInlineType, IRenderContext context)
@@ -203,47 +232,5 @@ namespace Plugin.Label.MarkDown.Renderer
             RenderInlineChildren(inlines, context);
             _inlineTypeStack.Pop();
         }
-
-        //private void RendererRun(IEnumerable<MarkdownInline> inlines, IRenderContext context)
-        //{
-        //    foreach (var inline in inlines)
-        //    {
-        //        switch (inline.Type)
-        //        {
-        //            case MarkdownInlineType.Comment:
-        //                break;
-        //            case MarkdownInlineType.TextRun:
-        //                RenderTextRun(inline as TextRunInline, context);
-        //                break;
-        //            case MarkdownInlineType.Bold:
-        //                RenderBoldRun(inline as BoldTextInline, context);
-        //                break;
-        //            case MarkdownInlineType.Italic:
-        //                break;
-        //            case MarkdownInlineType.MarkdownLink:
-        //                break;
-        //            case MarkdownInlineType.RawHyperlink:
-        //                break;
-        //            case MarkdownInlineType.RawSubreddit:
-        //                break;
-        //            case MarkdownInlineType.Strikethrough:
-        //                break;
-        //            case MarkdownInlineType.Superscript:
-        //                break;
-        //            case MarkdownInlineType.Subscript:
-        //                break;
-        //            case MarkdownInlineType.Code:
-        //                break;
-        //            case MarkdownInlineType.Image:
-        //                break;
-        //            case MarkdownInlineType.Emoji:
-        //                break;
-        //            case MarkdownInlineType.LinkReference:
-        //                break;
-        //            default:
-        //                throw new ArgumentOutOfRangeException();
-        //        }
-        //    }
-        //}
     }
 }
