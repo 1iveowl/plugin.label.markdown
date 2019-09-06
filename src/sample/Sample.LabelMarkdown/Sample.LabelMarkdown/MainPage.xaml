@@ -50,13 +50,6 @@
                                 HorizontalOptions="Center"
                                 VerticalOptions="CenterAndExpand"></markDown:LabelMd>
 
-
-        <!--<markDown:LabelMd UrlLinkColor="Blue"
-                                TextMarkdown="#Header 1  &#x0a;First _Line_."
-                                HorizontalOptions="Center"
-                                VerticalOptions="CenterAndExpand"></markDown:LabelMd>
-
-
         <markDown:LabelMd x:Name="LabelMarkdownTest2"
                                 UrlLinkColor="Aqua"
                                 Variable1="{Binding Source={x:Reference This}, Path=Var1}"
@@ -66,7 +59,7 @@
                                 Header3Style="{DynamicResource Header3SpanStyle}"
                                 LineHeight="2"
                                 HorizontalOptions="Center"
-                                VerticalOptions="CenterAndExpand"></markDown:LabelMd>-->
+                                VerticalOptions="CenterAndExpand"></markDown:LabelMd>
     </StackLayout>
 
 </ContentPage>

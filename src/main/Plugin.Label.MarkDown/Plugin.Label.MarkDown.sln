@@ -18,6 +18,11 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sample.LabelMarkdown", "..\..\sample\Sample.LabelMarkdown\Sample.LabelMarkdown\Sample.LabelMarkdown.csproj", "{89B3EE46-8333-430E-8DFF-3EA0D7035227}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Build", "Build", "{23A24928-ABFB-4936-BEF6-1C08A838DF5D}"
+	ProjectSection(SolutionItems) = preProject
+		..\..\build\build.ps1 = ..\..\build\build.ps1
+		..\..\build\Plugin.Label.Markdown.nuspec = ..\..\build\Plugin.Label.Markdown.nuspec
+		..\..\build\publish.ps1 = ..\..\build\publish.ps1
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "GitHub", "GitHub", "{DD79C31E-619D-4D2F-BC2B-7BCD2DCA1EF2}"
 	ProjectSection(SolutionItems) = preProject
