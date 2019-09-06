@@ -37,11 +37,11 @@ The easied way to introduce the features introduced by this plugin is by looking
 
 <img src="https://github.com/1iveowl/plugin.label.markdown/blob/develop/images/sample1.png?raw=true" width="320" />
 
-This screenshot generated using the XAML below. As you read through the XAML please notice the following:
+This screenshot above is generated using the XAML below. As you read through the XAML please notice the following:
 
-- A paragraph is ended by adding two spaces and \&#x0a;. \&#x0a; is the unicode notation for New Line (aka. \n) 
-    - E.g. a paragraph ends on: **[space][space]\n**.
-    - For convinience, it is also possible to end a paragraph using: **\r\n**.
+- A paragraph is ended by adding two spaces and \&#x0a;. \&#x0a; is the unicode notation for New Line (aka. \n).
+    - E.g. a paragraph ends on: `<space><space>\n`.
+    - For convinience, it is also possible to end a paragraph using: `\r\n`.
 - There are three styles defined in the ResourceDictionary. They are all set with `TargetType = "Span"`. These three styles is here used to specifically set the styles of each of the headings.
 - `Variable1` and `Variable3` are used in the Markdown string. These are just two of the total of six Bindable Properties that can be utilized. By adding the placeholders `{{1}}` ... `{{6}}` in the Markdown text, each placeholder will be replaced by the value of the bindable property at run time. The bindable property is name `Variable1` ... `Variable6` accordingly.
 - `UrlLinkColor` specifies the color of a hyper link. Default is Blue.
