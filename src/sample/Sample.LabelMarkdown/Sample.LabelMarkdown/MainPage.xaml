@@ -5,7 +5,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:markDown="clr-namespace:Plugin.Label.MarkDown;assembly=Plugin.Label.MarkDown"
              mc:Ignorable="d"
-             BackgroundColor="BurlyWood"
+             BackgroundColor="Bisque"
              x:Name="This"
              x:Class="Sample.LabelMarkdown.MainPage">
 
@@ -38,19 +38,25 @@
 
     
 
-    <StackLayout>
+    <StackLayout VerticalOptions="Center">
         <markDown:LabelMd x:Name="LabelMarkdownTest1"
                                 UrlLinkColor="Purple"
                                 Variable1="{Binding Source={x:Reference This}, Path=Var1}"
                                 Variable3="Var3"
-                                TextMarkdown="#Header A  &#x0a;##Header B  &#x0a;###Header C _with italic_  &#x0a;First Line with some _italic text_.  &#x0a;New Line with Variable 1 in bold: **{{1}}**  &#x0a;New line with variable 3: {{3}}  &#x0a;[Link to Google](https://www.google.com) &#x0a;"
+                                TextMarkdown="#Header A  &#x0a;##Header B  &#x0a;###Header C _with italic_  &#x0a;_First Line is italic text._  &#x0a;New Line with Variable 1 in bold: **{{1}}**  &#x0a;New line with variable 3: {{3}}  &#x0a;[Link to Google](https://www.google.com) &#x0a;"
                                 Header1Style="{DynamicResource Header1SpanStyleA}"
                                 Header2Style="{DynamicResource Header2SpanStyle}"
                                 Header3Style="{DynamicResource Header3SpanStyle}"
                                 HorizontalOptions="Center"
-                                VerticalOptions="CenterAndExpand"></markDown:LabelMd>
+                                VerticalOptions="Start"></markDown:LabelMd>
 
-        <markDown:LabelMd x:Name="LabelMarkdownTest2"
+        <markDown:LabelMd x:Name="Emoji"
+                          TextMarkdown="You rock! :thumbsup:"
+                          LineHeight="2"
+                          HorizontalOptions="Center"
+                          VerticalOptions="Start"></markDown:LabelMd>
+
+        <!--<markDown:LabelMd x:Name="LabelMarkdownTest2"
                                 UrlLinkColor="Aqua"
                                 Variable1="{Binding Source={x:Reference This}, Path=Var1}"
                                 Variable3="Var3"
@@ -59,7 +65,7 @@
                                 Header3Style="{DynamicResource Header3SpanStyle}"
                                 LineHeight="2"
                                 HorizontalOptions="Center"
-                                VerticalOptions="CenterAndExpand"></markDown:LabelMd>
+                                VerticalOptions="CenterAndExpand"></markDown:LabelMd>-->
     </StackLayout>
 
 </ContentPage>

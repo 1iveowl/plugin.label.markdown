@@ -96,7 +96,15 @@ namespace Plugin.Label.MarkDown.Renderer
 
         protected override void RenderEmoji(EmojiInline element, IRenderContext context)
         {
-            //throw new NotImplementedException();
+            if (context.Parent is FormattedString fs)
+            {
+                var span = new Span
+                {
+                    Text = element.Text
+                };
+
+                fs.Spans.Add(span);
+            }
         }
 
         protected override void RenderTextRun(TextRunInline element, IRenderContext context)
