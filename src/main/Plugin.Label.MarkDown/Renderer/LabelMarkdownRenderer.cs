@@ -121,45 +121,8 @@ namespace Plugin.Label.MarkDown.Renderer
                     span.Style = _headerStyles[_headerLevel];
                 }
 
-                foreach (var inlineType in _inlineTypeStack)
-                {
-                    switch (inlineType)
-                    {
-                        case MarkdownInlineType.Comment:
-                        case MarkdownInlineType.TextRun:
-                            break;
-                        case MarkdownInlineType.Bold:
-                            span.FontAttributes += (int)FontAttributes.Bold;
-                            break;
-                        case MarkdownInlineType.Italic:
-                            span.FontAttributes += (int)FontAttributes.Italic;
-                            break;
-                        case MarkdownInlineType.MarkdownLink:
-                            break;
-                        case MarkdownInlineType.RawHyperlink:
-                            break;
-                        case MarkdownInlineType.RawSubreddit:
-                            break;
-                        case MarkdownInlineType.Strikethrough:
-                            span.TextDecorations += (int)TextDecorations.Strikethrough;
-                            break;
-                        case MarkdownInlineType.Superscript:
-                            break;
-                        case MarkdownInlineType.Subscript:
-                            break;
-                        case MarkdownInlineType.Code:
-                            break;
-                        case MarkdownInlineType.Image:
-                            break;
-                        case MarkdownInlineType.Emoji:
-                            break;
-                        case MarkdownInlineType.LinkReference:
-                            break;
-                        default:
-                            throw new ArgumentOutOfRangeException();
-                    }
-                }
-
+                RenderInlineSpan(span);
+                
                 fs.Spans.Add(span);
             }
         }
@@ -222,6 +185,8 @@ namespace Plugin.Label.MarkDown.Renderer
                     TextColor = _urlLinkColor
                 };
 
+                RenderInlineSpan(span);
+
                 var tap = new TapGestureRecognizer
                 {
                     Command = new Command<string>(urlStr => Device.OpenUri(new Uri(urlStr))),
@@ -231,6 +196,48 @@ namespace Plugin.Label.MarkDown.Renderer
                 span.GestureRecognizers.Add(tap);
 
                 fs.Spans.Add(span);
+            }
+        }
+
+        private void RenderInlineSpan(Span span)
+        {
+            foreach (var inlineType in _inlineTypeStack)
+            {
+                switch (inlineType)
+                {
+                    case MarkdownInlineType.Comment:
+                    case MarkdownInlineType.TextRun:
+                        break;
+                    case MarkdownInlineType.Bold:
+                        span.FontAttributes += (int)FontAttributes.Bold;
+                        break;
+                    case MarkdownInlineType.Italic:
+                        span.FontAttributes += (int)FontAttributes.Italic;
+                        break;
+                    case MarkdownInlineType.MarkdownLink:
+                        break;
+                    case MarkdownInlineType.RawHyperlink:
+                        break;
+                    case MarkdownInlineType.RawSubreddit:
+                        break;
+                    case MarkdownInlineType.Strikethrough:
+                        span.TextDecorations += (int)TextDecorations.Strikethrough;
+                        break;
+                    case MarkdownInlineType.Superscript:
+                        break;
+                    case MarkdownInlineType.Subscript:
+                        break;
+                    case MarkdownInlineType.Code:
+                        break;
+                    case MarkdownInlineType.Image:
+                        break;
+                    case MarkdownInlineType.Emoji:
+                        break;
+                    case MarkdownInlineType.LinkReference:
+                        break;
+                    default:
+                        throw new ArgumentOutOfRangeException();
+                }
             }
         }
 
