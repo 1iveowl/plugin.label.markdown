@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>Plugin.Label.Markdown</id>
+    <version>0</version>
+    <title>Xamarin Forms Label Markdown</title>
+    <authors>1iveowl Developement</authors>
+    <owners>Jasper H. Bojsen</owners>
+    <licenseUrl>https://raw.githubusercontent.com/1iveowl/plugin.label.markdown/master/LICENSE</licenseUrl>
+    <projectUrl>https://github.com/1iveowl/plugin.label.markdown</projectUrl>
+    <iconUrl>https://nuget.org/Content/Images/packageDefaultIcon.png</iconUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>
+      Extends the Label control with Markdown capabilities</description>
+    <releaseNotes>
+[All] First release
+    </releaseNotes>
+    <copyright>Copyright 2019</copyright>
+    <tags>xamarin xamarin.forms label markdown netstandard iOS UWP Android macOS</tags>
+    <dependencies>
+
+      <group targetFramework="netstandard2.0">
+        <dependency id="Xamarin.Forms" version="4.2.0.709249" />
+        <dependency id="Microsoft.Toolkit.Parsers" version="5.1.1" />
+      </group>
+
+    </dependencies>
+  </metadata>
+  <files>
+
+    <!--.NET Standard 2.0--> 
+    <file src="..\main\Plugin.Label.MarkDown\bin\Release\netstandard2.0\Plugin.Label.Markdown*" target="lib\netstandard2.0"/>
+    
+  </files>
+</package>
