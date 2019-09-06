@@ -13,7 +13,7 @@
     <description>
       Extends the Label control with Markdown capabilities</description>
     <releaseNotes>
-[All] First release
+Emoji support added.
     </releaseNotes>
     <copyright>Copyright 2019</copyright>
     <tags>xamarin xamarin.forms label markdown netstandard iOS UWP Android macOS</tags>
