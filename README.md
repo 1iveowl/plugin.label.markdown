@@ -11,7 +11,7 @@ And how cool would it be if it was possible to include bindable properties insid
 > `There are {{1}} apples in the basket.`
 
 
-Where `{{1}}` represent a veriable place-holder for the value of a bindable property.
+Where `{{1}}` represent a variable place-holder for the value of a bindable property.
 
 Well, these are the scenarios introduced by this plugin. Please star this project if you find it useful. Thank you.
 
