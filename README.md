@@ -27,6 +27,10 @@ Markdown supported:
 - Italic
 - Bold-Italic
 - Hyperlinks
+- Basic emoji's
+
+_Note_: The emoji's supported depend on the font used as far as I can tell. [Emoji Cheat Sheet](https://gist.github.com/roachhd/1f029bd4b50b8a524f3c)
+
 
 Other features:
 - Bindable Property place-holders (variables in the Markdown text)
@@ -35,7 +39,7 @@ Other features:
 ## XAML Sample
 The easied way to introduce the features introduced by this plugin is by looking at a simple example:
 
-<img src="https://github.com/1iveowl/plugin.label.markdown/blob/develop/images/sample1.png?raw=true" width="320" />
+<img src="https://github.com/1iveowl/plugin.label.markdown/blob/develop/images/sample2.png?raw=true" width="320" />
 
 This screenshot above is generated using the XAML below. As you read through the XAML please notice the following:
 
@@ -90,6 +94,13 @@ This screenshot above is generated using the XAML below. As you read through the
                           HorizontalOptions="Center"
                           VerticalOptions="CenterAndExpand">
         </markDown:LabelMd>
+
+        <markDown:LabelMd x:Name="Emoji"
+                          TextMarkdown="You rock! :thumbsup:"
+                          LineHeight="2"
+                          HorizontalOptions="Center"
+                          VerticalOptions="Start"></markDown:LabelMd>
+
     </StackLayout>
 
 </ContentPage>
