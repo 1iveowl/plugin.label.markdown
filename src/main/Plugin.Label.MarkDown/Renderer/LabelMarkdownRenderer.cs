@@ -39,10 +39,13 @@ namespace Plugin.Label.MarkDown.Renderer
                 
                 if (context.Parent is FormattedString fs)
                 {
-                    if (fs.Spans?.Any() ?? false)
-                    {
-                        fs.Spans.Last().Text += Environment.NewLine;
-                    }
+                    //var span= new Span { Text = Environment.NewLine + Environment.NewLine };
+
+                    //fs.Spans.Add(span);
+
+                    var spanParagraphSpacing = new Span {Text = Environment.NewLine + Environment.NewLine };
+
+                    fs.Spans.Add(spanParagraphSpacing);
                 }
             }
         }
@@ -189,10 +192,14 @@ namespace Plugin.Label.MarkDown.Renderer
 
                 var tap = new TapGestureRecognizer
                 {
-                    Command = new Command<string>(urlStr => Device.OpenUri(new Uri(urlStr))),
+                    Command = new Command<string>(urlStr =>
+                    {
+                        Device.OpenUri(new Uri(urlStr));
+                    }),
                     CommandParameter = url
                 };
 
+                
                 span.GestureRecognizers.Add(tap);
 
                 fs.Spans.Add(span);

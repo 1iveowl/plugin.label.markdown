@@ -39,6 +39,16 @@
     
 
     <StackLayout VerticalOptions="Center">
+
+        <markDown:LabelMd x:Name="LongText"
+                          IsParagraphSpacing="true"
+                          TextMarkdown="Video provides a powerful way to help you prove your point. When you click Online Video, you can paste in the embed code for the video you want to add.  &#x0a;You can also type a keyword to search online for the video that best fits your document. To make your document look professionally produced, Word provides header, footer, cover page, and text box designs that complement each other.  &#x0a;For example, you can add a matching cover page, header, and sidebar. Click Insert and then choose the elements you want from the different galleries."
+                          HorizontalOptions="Center"
+                          HorizontalTextAlignment="Center"
+                          FontSize="12"
+                          Margin="60,0,60,0"
+                          VerticalOptions="Start"></markDown:LabelMd>
+
         <markDown:LabelMd x:Name="LabelMarkdownTest1"
                                 UrlLinkColor="Purple"
                                 Variable1="{Binding Source={x:Reference This}, Path=Var1}"
@@ -55,6 +65,8 @@
                           LineHeight="2"
                           HorizontalOptions="Center"
                           VerticalOptions="Start"></markDown:LabelMd>
+
+
 
         <!--<markDown:LabelMd x:Name="LabelMarkdownTest2"
                                 UrlLinkColor="Aqua"
