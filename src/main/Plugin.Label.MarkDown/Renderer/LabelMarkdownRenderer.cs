@@ -189,10 +189,14 @@ namespace Plugin.Label.MarkDown.Renderer
 
                 var tap = new TapGestureRecognizer
                 {
-                    Command = new Command<string>(urlStr => Device.OpenUri(new Uri(urlStr))),
+                    Command = new Command<string>(urlStr =>
+                    {
+                        Device.OpenUri(new Uri(urlStr));
+                    }),
                     CommandParameter = url
                 };
 
+                
                 span.GestureRecognizers.Add(tap);
 
                 fs.Spans.Add(span);
