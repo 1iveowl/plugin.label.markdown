@@ -12,7 +12,9 @@ And how cool would it be if it was possible to include bindable properties insid
 
 Where `{{1}}` represent a variable place-holder for the value of a bindable property.
 
-Well, these are all scenarios introduced by this very light weigth plugin. I hope others will find it useful too.
+Well, these are all scenarios introduced by this very light weigth plugin which extends the existing Xamarin Forms Label control. 
+
+I hope others will find it useful too.
 
 ## Platforms supported
 
