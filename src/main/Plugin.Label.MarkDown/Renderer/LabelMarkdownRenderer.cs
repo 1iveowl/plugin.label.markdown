@@ -39,10 +39,13 @@ namespace Plugin.Label.MarkDown.Renderer
                 
                 if (context.Parent is FormattedString fs)
                 {
-                    if (fs.Spans?.Any() ?? false)
-                    {
-                        fs.Spans.Last().Text += Environment.NewLine;
-                    }
+                    //var span= new Span { Text = Environment.NewLine + Environment.NewLine };
+
+                    //fs.Spans.Add(span);
+
+                    var spanParagraphSpacing = new Span {Text = Environment.NewLine + Environment.NewLine };
+
+                    fs.Spans.Add(spanParagraphSpacing);
                 }
             }
         }

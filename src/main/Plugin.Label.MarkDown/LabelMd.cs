@@ -42,6 +42,18 @@ namespace Plugin.Label.MarkDown
             set => SetValue(UrlLinkColorProperty, value);
         }
 
+        public static readonly BindableProperty IsParagraphSpacingProperty = BindableProperty.Create(
+            propertyName: "IsParaGraphSpacing",
+            returnType: typeof(bool),
+            declaringType: typeof(LabelMd),
+            defaultValue: true);
+
+        public bool IsParagraphSpacing
+        {
+            get => (bool) GetValue(IsParagraphSpacingProperty);
+            set => SetValue(IsParagraphSpacingProperty, value);
+        }
+
         public static readonly BindableProperty Header1StyleProperty = BindableProperty.Create(
             propertyName: "Header1Style",
             returnType: typeof(Style),
@@ -231,7 +243,9 @@ namespace Plugin.Label.MarkDown
 
             var document = new MarkdownDocument();
 
-            var markdownStr = str.Replace("\r", "  ");
+            var paragraphSpacing = IsParagraphSpacing ? "  \n  \n": "  \n";
+
+            var markdownStr = str.Replace("\r", "  ").Replace("  \n", paragraphSpacing);
             
             document.Parse(markdownStr);
 

@@ -33,8 +33,9 @@ _Note_: The emoji's supported depend on the font used as far as I can tell. [Emo
 
 
 Other features:
-- Bindable Property place-holders (variables in the Markdown text)
-- Header styling
+- Bindable Property place-holders (variables in the Markdown text).
+- Header styling.
+- An extra line is added between paragraphs by default. To remove this spacing set `IsParagraphSpacing="false"`.
 
 ## XAML Sample
 The easied way to introduce the features introduced by this plugin is by looking at a simple example:
