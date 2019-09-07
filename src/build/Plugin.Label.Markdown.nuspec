@@ -13,8 +13,9 @@
     <description>
       Extends the Label control with Markdown capabilities</description>
     <releaseNotes>
-Emoji support added.
-Moved to Xamarin Forms 4.1. Currently too many issues with 4.2.
+      Added extra line between paragraphs. 
+      Emoji support added.
+      Moved to Xamarin Forms 4.1. Currently too many issues with 4.2.
     </releaseNotes>
     <copyright>Copyright 2019</copyright>
     <tags>xamarin xamarin.forms label markdown netstandard iOS UWP Android macOS</tags>

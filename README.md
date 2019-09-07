@@ -13,7 +13,7 @@ And how cool would it be if it was possible to include bindable properties insid
 
 Where `{{1}}` represent a variable place-holder for the value of a bindable property.
 
-Well, these are the scenarios introduced by this plugin. Please star this project if you find it useful. Thank you.
+Well, these are all scenarios introduced by this plugin, I hope others will find it useful.
 
 ## Platforms supported
 
