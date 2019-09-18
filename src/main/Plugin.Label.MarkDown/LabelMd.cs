@@ -201,7 +201,7 @@ namespace Plugin.Label.MarkDown
 
             if (str is null)
             {
-                return false;
+                return true;
             }
 
             var document = new MarkdownDocument();
@@ -262,6 +262,12 @@ namespace Plugin.Label.MarkDown
                     });
 
                 renderer.Render(new RendererContext{Parent = fs});
+            }
+
+            if (fs.Spans.Any())
+            {
+                // Remove the extra New Line feed added to the end, which should not be there.
+                fs.Spans.Remove(fs.Spans.Last());
             }
 
             return fs;
