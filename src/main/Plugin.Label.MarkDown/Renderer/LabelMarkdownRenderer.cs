@@ -48,6 +48,7 @@ namespace Plugin.Label.MarkDown.Renderer
                     fs.Spans.Add(spanParagraphSpacing);
                 }
             }
+
         }
 
         protected override void RenderYamlHeader(YamlHeaderBlock element, IRenderContext context)

@@ -49,6 +49,22 @@
                           Margin="60,0,60,0"
                           VerticalOptions="Start"></markDown:LabelMd>
 
+        <markDown:LabelMd IsParagraphSpacing="true"
+                          TextMarkdown="{Binding Source={x:Reference This}, Path=Null}"
+                          HorizontalOptions="Center"
+                          HorizontalTextAlignment="Center"
+                          FontSize="12"
+                          Margin="60,0,60,0"
+                          VerticalOptions="Start"></markDown:LabelMd>
+
+        <markDown:LabelMd IsParagraphSpacing="true"
+                          TextMarkdown="Test spacing"
+                          HorizontalOptions="Center"
+                          HorizontalTextAlignment="Center"
+                          FontSize="12"
+                          Margin="60,0,60,0"
+                          VerticalOptions="Start"></markDown:LabelMd>
+
         <markDown:LabelMd x:Name="LabelMarkdownTest1"
                                 UrlLinkColor="Purple"
                                 Variable1="{Binding Source={x:Reference This}, Path=Var1}"

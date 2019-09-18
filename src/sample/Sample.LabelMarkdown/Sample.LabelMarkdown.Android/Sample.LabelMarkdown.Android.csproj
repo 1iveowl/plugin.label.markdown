@@ -15,7 +15,6 @@
     <AndroidManifest>Properties\AndroidManifest.xml</AndroidManifest>
     <MonoAndroidResourcePrefix>Resources</MonoAndroidResourcePrefix>
     <MonoAndroidAssetsPrefix>Assets</MonoAndroidAssetsPrefix>
-    <AndroidUseLatestPlatformSdk>false</AndroidUseLatestPlatformSdk>
     <TargetFrameworkVersion>v8.1</TargetFrameworkVersion>
     <AndroidEnableSGenConcurrent>true</AndroidEnableSGenConcurrent>
     <AndroidUseAapt2>true</AndroidUseAapt2>
@@ -94,7 +93,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Sample.LabelMarkdown\Sample.LabelMarkdown.csproj">
-      <Project>{A970D19F-2A70-4358-9FB6-4C449B1E7C88}</Project>
+      <Project>{89B3EE46-8333-430E-8DFF-3EA0D7035227}</Project>
       <Name>Sample.LabelMarkdown</Name>
     </ProjectReference>
   </ItemGroup>

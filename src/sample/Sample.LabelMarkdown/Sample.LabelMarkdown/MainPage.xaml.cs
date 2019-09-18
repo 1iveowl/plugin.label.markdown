@@ -10,6 +10,8 @@ namespace Sample.LabelMarkdown
     {
         public string Var1 { get; set; } = "Var1";
 
+        public string Null { get; set; } = null;
+
         public MainPage()
         {
             InitializeComponent();
