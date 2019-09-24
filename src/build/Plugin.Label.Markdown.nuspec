@@ -12,19 +12,20 @@
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>
       Extends the Label control with Markdown capabilities</description>
-    <releaseNotes>      
-      Fixed extra line at end bug
-      No more exception when TextMarkdown is null
-      Added extra line between paragraphs. 
-      Emoji support added.
-      Moved to Xamarin Forms 4.1. Currently too many issues with 4.2.
+    <releaseNotes>
+Improved handling of null variable values
+Fixed extra line at end bug
+No more exception when TextMarkdown is null
+Added extra line between paragraphs. 
+Emoji support added.
+Moved to Xamarin Forms 4.1. Currently too many issues with 4.2.
     </releaseNotes>
     <copyright>Copyright 2019</copyright>
     <tags>xamarin xamarin.forms label markdown netstandard iOS UWP Android macOS</tags>
     <dependencies>
 
       <group targetFramework="netstandard2.0">
-        <dependency id="Xamarin.Forms" version="4.1.0.709244" />
+        <dependency id="Xamarin.Forms" version="4.1.0.778454" />
         <dependency id="Microsoft.Toolkit.Parsers" version="5.1.1" />
       </group>
 
