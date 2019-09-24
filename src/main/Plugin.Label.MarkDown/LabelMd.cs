@@ -279,35 +279,17 @@ namespace Plugin.Label.MarkDown
 
             if (!string.IsNullOrEmpty(_textMarkdownStr))
             {
-                if (!string.IsNullOrEmpty(Variable1))
-                {
-                    _textMarkdownStr = _textMarkdownStr.Replace("{{1}}", Variable1);
-                }
+                _textMarkdownStr = _textMarkdownStr.Replace("{{1}}", Variable1 ?? string.Empty);
 
-                if (!string.IsNullOrEmpty(Variable2))
-                {
-                    _textMarkdownStr = _textMarkdownStr.Replace("{{2}}", Variable2);
-                }
+                _textMarkdownStr = _textMarkdownStr.Replace("{{2}}", Variable2 ?? string.Empty);
 
-                if (!string.IsNullOrEmpty(Variable3))
-                {
-                    _textMarkdownStr = _textMarkdownStr.Replace("{{3}}", Variable3);
-                }
+                _textMarkdownStr = _textMarkdownStr.Replace("{{3}}", Variable3 ?? string.Empty);
 
-                if (!string.IsNullOrEmpty(Variable4))
-                {
-                    _textMarkdownStr = _textMarkdownStr.Replace("{{4}}", Variable4);
-                }
+                _textMarkdownStr = _textMarkdownStr.Replace("{{4}}", Variable4 ?? string.Empty);
 
-                if (!string.IsNullOrEmpty(Variable5))
-                {
-                    _textMarkdownStr = _textMarkdownStr.Replace("{{5}}", Variable5);
-                }
+                _textMarkdownStr = _textMarkdownStr.Replace("{{5}}", Variable5 ?? string.Empty);
 
-                if (!string.IsNullOrEmpty(Variable6))
-                {
-                    _textMarkdownStr = _textMarkdownStr.Replace("{{6}}", Variable6);
-                }
+                _textMarkdownStr = _textMarkdownStr.Replace("{{6}}", Variable6 ?? string.Empty);
             }
         }
     }
