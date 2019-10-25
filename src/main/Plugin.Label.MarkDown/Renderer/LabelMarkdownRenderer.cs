@@ -5,6 +5,7 @@ using Microsoft.Toolkit.Parsers.Markdown;
 using Microsoft.Toolkit.Parsers.Markdown.Blocks;
 using Microsoft.Toolkit.Parsers.Markdown.Inlines;
 using Microsoft.Toolkit.Parsers.Markdown.Render;
+using Xamarin.Essentials;
 using Xamarin.Forms;
 
 namespace Plugin.Label.MarkDown.Renderer
@@ -193,13 +194,12 @@ namespace Plugin.Label.MarkDown.Renderer
 
                 var tap = new TapGestureRecognizer
                 {
-                    Command = new Command<string>(urlStr =>
+                    Command = new Command<string>(async urlStr =>
                     {
-                        Device.OpenUri(new Uri(urlStr));
+                        await Launcher.OpenAsync(new Uri(urlStr));
                     }),
                     CommandParameter = url
                 };
-
                 
                 span.GestureRecognizers.Add(tap);
 
