@@ -61,6 +61,18 @@ namespace Plugin.Label.MarkDown
             defaultValue: default(Style),
             propertyChanged: OnUpdatePropertyChanged);
 
+        public static readonly BindableProperty IsExtraHeaderSpacingProperty = BindableProperty.Create(
+            propertyName: "IsExtraHeaderSpacing",
+            returnType: typeof(bool),
+            declaringType: typeof(LabelMd),
+            defaultValue: default(bool));
+
+        public bool IsExtraHeaderSpacing
+        {
+            get => (bool) GetValue(IsExtraHeaderSpacingProperty);
+            set => SetValue(IsExtraHeaderSpacingProperty, value);
+        }
+
         public Style Header1Style
         {
             get => (Style) GetValue(Header1StyleProperty);
@@ -251,15 +263,18 @@ namespace Plugin.Label.MarkDown
 
             if (document.Blocks.Any())
             {
+
                 var renderer = new LabelMarkdownRenderer(
                     document, 
+                    Style,
                     UrlLinkColor,
                     new Dictionary<int, Style>
                     {
                         {1, Header1Style}, 
                         {2, Header2Style}, 
                         {3, Header3Style}
-                    });
+                    },
+                    IsExtraHeaderSpacing);
 
                 renderer.Render(new RendererContext{Parent = fs});
             }

@@ -14,42 +14,43 @@ namespace Plugin.Label.MarkDown.Renderer
     {
         private readonly Stack<MarkdownInlineType> _inlineTypeStack;
 
+        private readonly Style _normalStyle;
+
         private readonly IDictionary<int, Style> _headerStyles;
         private readonly Color _urlLinkColor;
 
+        private readonly bool IsExtraHeaderSpacing;
+
         private int _headerLevel;
+        private bool _hasHeaderLevelCompleted;
 
         public LabelMarkdownRenderer(
             MarkdownDocument document,
+            Style normalStyle,
             Color urlLinkColor,
-            IDictionary<int, Style> headerStyles) : base(document)
+            IDictionary<int, Style> headerStyles,
+            bool isExtraHeaderSpacing) : base(document)
         {
             _inlineTypeStack = new Stack<MarkdownInlineType>();
+            _normalStyle = normalStyle;
             _headerStyles = headerStyles;
             _urlLinkColor = urlLinkColor;
+            IsExtraHeaderSpacing = isExtraHeaderSpacing;
         }
         
         protected override void RenderParagraph(ParagraphBlock element, IRenderContext context)
         {
             if (element.Inlines.Any())
             {
-                if (element.Inlines.Any())
-                {
-                    RenderInlineChildren(element.Inlines, context);
-                }
-                
+                RenderInlineChildren(element.Inlines, context);
+
                 if (context.Parent is FormattedString fs)
                 {
-                    //var span= new Span { Text = Environment.NewLine + Environment.NewLine };
-
-                    //fs.Spans.Add(span);
-
                     var spanParagraphSpacing = new Span {Text = Environment.NewLine + Environment.NewLine };
 
                     fs.Spans.Add(spanParagraphSpacing);
                 }
             }
-
         }
 
         protected override void RenderYamlHeader(YamlHeaderBlock element, IRenderContext context)
@@ -60,6 +61,7 @@ namespace Plugin.Label.MarkDown.Renderer
         protected override void RenderHeader(HeaderBlock element, IRenderContext context)
         {
             _headerLevel = element.HeaderLevel;
+
             RenderInlineChildren(element.Inlines, context);
 
             if (context.Parent is FormattedString fs)
@@ -68,9 +70,9 @@ namespace Plugin.Label.MarkDown.Renderer
                 {
                     fs.Spans.Last().Text += Environment.NewLine;
                 }
-
             }
 
+            _hasHeaderLevelCompleted = true;
             _headerLevel = 0;
         }
 
@@ -124,6 +126,17 @@ namespace Plugin.Label.MarkDown.Renderer
                 if (_headerLevel > 0)
                 {
                     span.Style = _headerStyles[_headerLevel];
+                }
+
+                if (_hasHeaderLevelCompleted && IsExtraHeaderSpacing)
+                {
+                    fs.Spans.Add(new Span
+                    {
+                        Text = element.Text = Environment.NewLine,
+                        Style = _normalStyle
+                    });
+
+                    _hasHeaderLevelCompleted= false;
                 }
 
                 RenderInlineSpan(span);
