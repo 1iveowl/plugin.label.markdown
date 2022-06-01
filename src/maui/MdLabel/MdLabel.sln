@@ -3,13 +3,19 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.3.32519.111
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MdLabel", "MdLabel\MdLabel.csproj", "{2DC94993-B9B8-4055-8CEB-4AF4F1911817}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MdLabel", "MdLabel\MdLabel.csproj", "{2DC94993-B9B8-4055-8CEB-4AF4F1911817}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Main", "Main", "{4E4E76A0-D774-4361-8F01-90E79EC765D5}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Demo", "Demo", "{AC3D127C-0824-4932-92A6-F8909E115BB4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MdLabelDemo", "..\..\test\mauiDemo\MdLabelDemo\MdLabelDemo.csproj", "{CD55F0AA-18DD-4995-A777-A8BFFC1F9E43}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MdLabelDemo", "..\..\test\mauiDemo\MdLabelDemo\MdLabelDemo.csproj", "{CD55F0AA-18DD-4995-A777-A8BFFC1F9E43}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Research", "Research", "{85CB0468-3D5C-42EC-9C96-4BD736CAA364}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ResearchMarkDigParser", "..\..\test\researchMaui\ResearchMarkDigParser\ResearchMarkDigParser.csproj", "{36575490-B0D3-446D-9655-64BCA70ADC41}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Markdig", "..\..\..\..\markdig\src\Markdig\Markdig.csproj", "{517FEDAA-C584-4272-B2D1-456BE58D22BA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,6 +33,14 @@ Global
 		{CD55F0AA-18DD-4995-A777-A8BFFC1F9E43}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CD55F0AA-18DD-4995-A777-A8BFFC1F9E43}.Release|Any CPU.Build.0 = Release|Any CPU
 		{CD55F0AA-18DD-4995-A777-A8BFFC1F9E43}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{36575490-B0D3-446D-9655-64BCA70ADC41}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{36575490-B0D3-446D-9655-64BCA70ADC41}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{36575490-B0D3-446D-9655-64BCA70ADC41}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{36575490-B0D3-446D-9655-64BCA70ADC41}.Release|Any CPU.Build.0 = Release|Any CPU
+		{517FEDAA-C584-4272-B2D1-456BE58D22BA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{517FEDAA-C584-4272-B2D1-456BE58D22BA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{517FEDAA-C584-4272-B2D1-456BE58D22BA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{517FEDAA-C584-4272-B2D1-456BE58D22BA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -34,6 +48,7 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{2DC94993-B9B8-4055-8CEB-4AF4F1911817} = {4E4E76A0-D774-4361-8F01-90E79EC765D5}
 		{CD55F0AA-18DD-4995-A777-A8BFFC1F9E43} = {AC3D127C-0824-4932-92A6-F8909E115BB4}
+		{36575490-B0D3-446D-9655-64BCA70ADC41} = {85CB0468-3D5C-42EC-9C96-4BD736CAA364}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {F209035C-8CF5-4852-98FC-DAFE116ABF14}
