@@ -7,8 +7,7 @@ namespace MdLabel
     {
         private static event EventHandler OnUpdateEventHandler;
 
-        private string _textMarkdownStr;
-
+        private string _markdownString;
 
         public static readonly BindableProperty TextMarkdownProperty = BindableProperty.Create(
             propertyName: "TextMarkdown",
@@ -197,7 +196,8 @@ namespace MdLabel
 
         private static void OnUpdatePropertyChanged(BindableObject bindable, object oldvalue, object newvalue)
         {
-            if (bindable is MarkdownLabel labelMarkdown && oldvalue != newvalue)
+            if (bindable is MarkdownLabel labelMarkdown 
+                && oldvalue != newvalue)
             {
                 OnUpdateEventHandler?.Invoke(labelMarkdown, null);
             }
@@ -207,7 +207,7 @@ namespace MdLabel
         {
             var str = (string)value;
 
-            if (str is null)
+            if (str is not null)
             {
                 return true;
             }
@@ -241,23 +241,28 @@ namespace MdLabel
         {
             AddVariablesToMarkdownString();
 
-            if (!string.IsNullOrEmpty(_textMarkdownStr))
+            if (!string.IsNullOrEmpty(_markdownString))
             {
-                FormattedText = GetFormattedString(_textMarkdownStr);
+                FormattedText = GetFormattedString(_markdownString);
             }
         }
 
         private FormattedString GetFormattedString(string str)
         {
-            var fs = new FormattedString();
 
-            var writer = new StringWriter();
+            //var writer = new StringWriter();
 
-            var markdownDocument = Markdown.Convert(str, new MauiRenderer(writer));
+            var renderer = new MauiRenderer(new StringWriter());
+                       
 
-            //var paragraphSpacing = IsParagraphSpacing ? "  \n  \n" : "  \n";
+            var markdownString = str.Replace("\r", "  ")
+                .Replace("  \n", IsParagraphSpacing 
+                                            ? "  \n  \n" 
+                                            : "  \n");
 
-            //var markdownStr = str.Replace("\r", "  ").Replace("  \n", paragraphSpacing);
+            Markdown.Convert(markdownString, renderer);
+
+            return renderer.FormattedString;
 
             //document.Parse(markdownStr);
 
@@ -279,32 +284,32 @@ namespace MdLabel
             //    renderer.Render(new RendererContext { Parent = fs });
             //}
 
-            if (fs.Spans.Any())
-            {
-                // Remove the extra New Line feed added to the end, which should not be there.
-                fs.Spans.Remove(fs.Spans.Last());
-            }
+            //if (fs.Spans.Any())
+            //{
+            //    // Remove the extra New Line feed added to the end, which should not be there.
+            //    fs.Spans.Remove(fs.Spans.Last());
+            //}
 
-            return fs;
+            //return fs;
         }
 
         private void AddVariablesToMarkdownString()
         {
-            _textMarkdownStr = TextMarkdown;
+            _markdownString = TextMarkdown;
 
-            if (!string.IsNullOrEmpty(_textMarkdownStr))
+            if (!string.IsNullOrEmpty(_markdownString))
             {
-                _textMarkdownStr = _textMarkdownStr.Replace("{{1}}", Variable1 ?? string.Empty);
+                _markdownString = _markdownString.Replace("{{1}}", Variable1 ?? string.Empty);
 
-                _textMarkdownStr = _textMarkdownStr.Replace("{{2}}", Variable2 ?? string.Empty);
+                _markdownString = _markdownString.Replace("{{2}}", Variable2 ?? string.Empty);
 
-                _textMarkdownStr = _textMarkdownStr.Replace("{{3}}", Variable3 ?? string.Empty);
+                _markdownString = _markdownString.Replace("{{3}}", Variable3 ?? string.Empty);
 
-                _textMarkdownStr = _textMarkdownStr.Replace("{{4}}", Variable4 ?? string.Empty);
+                _markdownString = _markdownString.Replace("{{4}}", Variable4 ?? string.Empty);
 
-                _textMarkdownStr = _textMarkdownStr.Replace("{{5}}", Variable5 ?? string.Empty);
+                _markdownString = _markdownString.Replace("{{5}}", Variable5 ?? string.Empty);
 
-                _textMarkdownStr = _textMarkdownStr.Replace("{{6}}", Variable6 ?? string.Empty);
+                _markdownString = _markdownString.Replace("{{6}}", Variable6 ?? string.Empty);
             }
         }
     }

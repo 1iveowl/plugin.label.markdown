@@ -30,14 +30,13 @@ namespace MdLabel.Renderer
 
             if (obj.DelimiterChar is '*' or '_')
             {
-
                 if (obj.DelimiterCount == 2)
                 {
-                    renderer.PushInlineType(MarkdownInlineTypeKind.Bold);
+                    renderer.PushInlineType(MarkdownInlineFormatKind.Bold);
                 }
                 else
                 {
-                    renderer.PushInlineType(MarkdownInlineTypeKind.Italic);
+                    renderer.PushInlineType(MarkdownInlineFormatKind.Italic);
                 }
             }
 

@@ -1,6 +1,6 @@
 ﻿namespace MdLabel.Renderer
 {
-    internal enum MarkdownInlineTypeKind
+    internal enum MarkdownInlineFormatKind
     {
         Comment,
         TextRun,

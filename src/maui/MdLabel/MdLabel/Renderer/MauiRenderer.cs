@@ -7,7 +7,7 @@ namespace MdLabel.Renderer
 {
     public class MauiRenderer : TextRendererBase<MauiRenderer>
     {
-        private readonly Stack<MarkdownInlineTypeKind> _markdownLineTypeStack;
+        private readonly Stack<MarkdownInlineFormatKind> _markdownInlineFormatStack;
 
         private static readonly char[] s_writeEscapeIndexOfAnyChars = new[] { '<', '>', '&', '"' };
 
@@ -15,6 +15,8 @@ namespace MdLabel.Renderer
 
         public MauiRenderer(TextWriter writer) : base(writer)
         {
+            _markdownInlineFormatStack = new();
+
             ObjectRenderers.Add(new MauiParagraphRenderer());
             ObjectRenderers.Add(new MauiLiteralInlineRenderer());
             ObjectRenderers.Add(new MauiEmphasisInlineRenderer());
@@ -37,14 +39,14 @@ namespace MdLabel.Renderer
 
         }
 
-        internal void PushInlineType(MarkdownInlineTypeKind markdownLineType)
+        internal void PushInlineType(MarkdownInlineFormatKind markdownLineType)
         {
-            _markdownLineTypeStack.Push(markdownLineType);
+            _markdownInlineFormatStack.Push(markdownLineType);
         }
 
         internal void PopInlineType()
         {
-            _markdownLineTypeStack.Pop();
+            _markdownInlineFormatStack.Pop();
         }
 
         //public override object Render(MarkdownObject markdownObject)
@@ -95,39 +97,39 @@ namespace MdLabel.Renderer
 
         private void SetFormating(Span span)
         {
-            foreach(var attr in _markdownLineTypeStack)
+            foreach(var attr in _markdownInlineFormatStack)
             {
                 switch (attr)
                 {
-                    case MarkdownInlineTypeKind.Comment:
-                    case MarkdownInlineTypeKind.TextRun:
+                    case MarkdownInlineFormatKind.Comment:
+                    case MarkdownInlineFormatKind.TextRun:
                         break;
-                    case MarkdownInlineTypeKind.Bold:
+                    case MarkdownInlineFormatKind.Bold:
                         span.FontAttributes += (int)FontAttributes.Bold;
                         break;
-                    case MarkdownInlineTypeKind.Italic:
+                    case MarkdownInlineFormatKind.Italic:
                         span.FontAttributes += (int)FontAttributes.Italic;
                         break;
-                    case MarkdownInlineTypeKind.MarkdownLink:
+                    case MarkdownInlineFormatKind.MarkdownLink:
                         break;
-                    case MarkdownInlineTypeKind.RawHyperLink:
+                    case MarkdownInlineFormatKind.RawHyperLink:
                         break;
-                    case MarkdownInlineTypeKind.RawSubreditKink:
+                    case MarkdownInlineFormatKind.RawSubreditKink:
                         break;
-                    case MarkdownInlineTypeKind.StrikeThrough:
+                    case MarkdownInlineFormatKind.StrikeThrough:
                         span.TextDecorations += (int)TextDecorations.Strikethrough;
                         break;
-                    case MarkdownInlineTypeKind.SuperScript:
+                    case MarkdownInlineFormatKind.SuperScript:
                         break;
-                    case MarkdownInlineTypeKind.Subscript:
+                    case MarkdownInlineFormatKind.Subscript:
                         break;
-                    case MarkdownInlineTypeKind.Code:
+                    case MarkdownInlineFormatKind.Code:
                         break;
-                    case MarkdownInlineTypeKind.Image:
+                    case MarkdownInlineFormatKind.Image:
                         break;
-                    case MarkdownInlineTypeKind.Emoji:
+                    case MarkdownInlineFormatKind.Emoji:
                         break;
-                    case MarkdownInlineTypeKind.LinkReference:
+                    case MarkdownInlineFormatKind.LinkReference:
                         break;
                     default:
                         throw new ArgumentOutOfRangeException();
