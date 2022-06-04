@@ -11,6 +11,8 @@ namespace MdLabel.Renderer
 
         private Style? _currentStyle;
         private MauiSpanBlock? _currentSpanBlock;
+        private bool _isLink;
+        private Uri? _uri = default;
 
         internal FormattedString GetFormattedString()
         {
@@ -45,6 +47,8 @@ namespace MdLabel.Renderer
             ObjectRenderers.Add(new MauiLiteralInlineRenderer());
             ObjectRenderers.Add(new MauiEmphasisInlineRenderer());
             ObjectRenderers.Add(new MauiHeadingRenderer());
+            ObjectRenderers.Add(new MauiLineBreakInlineRenderer());
+            ObjectRenderers.Add(new MauiLinkInlineRenderer());
 
             ObjectWriteBefore += MdRenderer_ObjectWriteBefore;
             ObjectWriteAfter += MdRenderer_ObjectWriteAfter;
@@ -93,16 +97,61 @@ namespace MdLabel.Renderer
                 throw new NullReferenceException($"{nameof(MauiSpanBlock)} cannot be null");
             }
 
-            var span = new Span()
+            Span? span = default;
+
+            if (_isLink && _uri is not null)
             {
-                Text = slice.ToString(),
-                FontAttributes = GetFontAttributes(),
-                Style = _currentStyle
-            };
+                var urlText = slice.ToString();
+
+                span = new Span()
+                {
+                    Text = urlText,
+                    TextDecorations = TextDecorations.Underline,
+                    TextColor = UrlLinkColor,
+                    FontAttributes = GetFontAttributes(),
+                    Style = _currentStyle
+                };
+
+                var tap = new TapGestureRecognizer()
+                {
+                    Command = new Command<string>(async _ =>
+                    {
+                        await Launcher.OpenAsync(_uri);
+                    }),
+                    CommandParameter = urlText
+                };
+
+                span.GestureRecognizers.Add(tap);
+            }
+            else
+            {
+                span = new Span()
+                {
+                    Text = slice.ToString(),
+                    FontAttributes = GetFontAttributes(),
+                    Style = _currentStyle
+                };
+            }
 
             _currentSpanBlock?.AddSpan(span);
 
             return this;
+        }
+
+        internal void OpenLink(Uri uri)
+        {
+            if (_currentSpanBlock is null)
+            {
+                throw new NullReferenceException($"{nameof(MauiSpanBlock)} cannot be null");
+            }
+
+            _isLink = true;
+            _uri = uri;     
+        }
+        internal void CloseLink()
+        {
+            _isLink = false;
+            _uri = default;
         }
 
         internal void AddNewLine()
@@ -116,6 +165,7 @@ namespace MdLabel.Renderer
                 throw new NullReferenceException($"{nameof(MauiSpanBlock)} cannot be null");
             }
         }
+
 
         internal void OpenBlock()
         {

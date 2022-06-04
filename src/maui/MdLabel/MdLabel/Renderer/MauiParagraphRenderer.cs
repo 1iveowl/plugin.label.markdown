@@ -1,4 +1,5 @@
-﻿using Markdig.Syntax;
+﻿using Markdig.Helpers;
+using Markdig.Syntax;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,7 +14,12 @@ namespace MdLabel.Renderer
         {
             renderer.OpenBlock(); 
             renderer.WriteLeafInline(obj);
-            renderer.AddNewLine();
+
+            if (obj.NewLine != NewLine.None)
+            {
+                renderer.AddNewLine();
+            }
+            
             renderer.CloseBlock();
         }
     }
