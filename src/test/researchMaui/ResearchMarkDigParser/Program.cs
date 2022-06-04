@@ -3,13 +3,13 @@ using ResearchMarkDigParser;
 using System.Text;
 
 string? html = null;
-var testString = "This is a *test*.";
+var testString = "## This is a *test*.";
 
 //var parsers = new MarkdownPipelineBuilder().DisableHtml().InlineParsers;
 
 //var firstParser = parsers.FirstOrDefault();
 
-//html = Markdown.ToHtml(testString);
+html = Markdown.ToHtml(testString);
 
 Console.WriteLine(html ?? "skip");
 

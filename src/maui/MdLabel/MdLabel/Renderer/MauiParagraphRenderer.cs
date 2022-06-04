@@ -11,12 +11,10 @@ namespace MdLabel.Renderer
     {
         protected override void Write(MauiRenderer renderer, ParagraphBlock obj)
         {
-            if (!renderer.ImplicitParagraph)
-            {
-                renderer.FormattedString.Spans.Add(new Span { Text = Environment.NewLine + Environment.NewLine });
-            }
-
+            renderer.OpenBlock(); 
             renderer.WriteLeafInline(obj);
+            renderer.AddNewLine();
+            renderer.CloseBlock();
         }
     }
 }

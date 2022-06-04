@@ -3,7 +3,33 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:md="clr-namespace:MdLabel;assembly=MdLabel"
              x:Class="MdLabelDemo.MainPage">
-			 
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+
+            <Style TargetType="Span" x:Key="Header1SpanStyleA">
+                <Setter Property="FontSize" Value="32"></Setter>
+                <Setter Property="TextColor" Value="Blue"></Setter>
+            </Style>
+
+            <Style TargetType="Span" x:Key="Header1SpanStyleB">
+                <Setter Property="FontSize" Value="32"></Setter>
+
+                <Setter Property="TextColor" Value="Red"></Setter>
+            </Style>
+
+            <Style TargetType="Span" x:Key="Header2SpanStyle">
+                <Setter Property="FontSize" Value="16"></Setter>
+                <Setter Property="FontAttributes" Value="Italic"></Setter>
+            </Style>
+
+            <Style TargetType="Span" x:Key="Header3SpanStyle">
+                <Setter Property="FontSize" Value="12"></Setter>
+            </Style>
+
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
     <ScrollView>
         <VerticalStackLayout 
             Spacing="25" 
@@ -37,12 +63,42 @@
                 HorizontalOptions="Center" />
 
             <md:MarkdownLabel 
-                TextMarkdown="This is a **test**."
+                TextMarkdown="# {{2}}Header A    ## Header B    ### Header C   _with italic_  _First Line is italic text._  New Line with Variable 1 in bold: **{{1}}**    New line with variable 3: {{3}}  *Italic Link: [Microsoft Azure B2C login](https://blogs.msdn.microsoft.com/azureadb2c/2018/10/05/b2clogin-com-is-now-generally-available/)*"
+                Header1Style="{DynamicResource Header1SpanStyleA}"
+                Header2Style="{DynamicResource Header2SpanStyle}"
+                Header3Style="{DynamicResource Header3SpanStyle}"
+                Variable1="{Binding Source=Var1}"
+                Variable3="Var3"
                 FontSize="12"
                 Margin="60,0,60,0"
                 VerticalOptions="Start"
                 HorizontalOptions="Center"
-                HorizontalTextAlignment="Center"></md:MarkdownLabel>
+                HorizontalTextAlignment="Center">
+            </md:MarkdownLabel>
+
+            <!--<md:MarkdownLabel 
+                TextMarkdown="# {{2}}Header A  ## Header B  ### Header C _with italic_  _First Line is italic text._  New Line with Variable 1 in bold: **{{1}}**  New line with variable 3: {{3}}  *Italic Link: [Microsoft Azure B2C login](https://blogs.msdn.microsoft.com/azureadb2c/2018/10/05/b2clogin-com-is-now-generally-available/)*"
+                Header1Style="{DynamicResource Header1SpanStyleA}"
+                Header2Style="{DynamicResource Header2SpanStyle}"
+                Header3Style="{DynamicResource Header3SpanStyle}"
+                FontSize="12"
+                Margin="60,0,60,0"
+                VerticalOptions="Start"
+                HorizontalOptions="Center"
+                HorizontalTextAlignment="Center">
+            </md:MarkdownLabel>-->
+
+            <!--<md:MarkdownLabel 
+                TextMarkdown="# {{2}}Header A  &#x0a;## Header B  &#x0a;### Header C _with italic_  &#x0a;_First Line is italic text._  &#x0a;New Line with Variable 1 in bold: **{{1}}**  &#x0a;New line with variable 3: {{3}}  &#x0a;*Italic Link: [Microsoft Azure B2C login](https://blogs.msdn.microsoft.com/azureadb2c/2018/10/05/b2clogin-com-is-now-generally-available/)*"
+                Header1Style="{DynamicResource Header1SpanStyleA}"
+                Header2Style="{DynamicResource Header2SpanStyle}"
+                Header3Style="{DynamicResource Header3SpanStyle}"
+                FontSize="12"
+                Margin="60,0,60,0"
+                VerticalOptions="Start"
+                HorizontalOptions="Center"
+                HorizontalTextAlignment="Center">            
+            </md:MarkdownLabel>-->
 
         </VerticalStackLayout>
     </ScrollView>

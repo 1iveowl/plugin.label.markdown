@@ -5,12 +5,11 @@ namespace MdLabel
 {
     public class MarkdownLabel : Label, IMarkdownLabel
     {
-        private static event EventHandler OnUpdateEventHandler;
+        private static event EventHandler? OnUpdateTextEventHandler;
 
-        private string _markdownString;
 
         public static readonly BindableProperty TextMarkdownProperty = BindableProperty.Create(
-            propertyName: "TextMarkdown",
+            propertyName: nameof(TextMarkdown),
             returnType: typeof(string),
             declaringType: typeof(MarkdownLabel),
             defaultValue: default(string),
@@ -25,7 +24,7 @@ namespace MdLabel
         }
 
         public static readonly BindableProperty UrlLinkColorProperty = BindableProperty.Create(
-            propertyName: "UrlLinkColor",
+            propertyName: nameof(UrlLinkColor),
             returnType: typeof(Color),
             declaringType: typeof(MarkdownLabel),
             defaultValue: Colors.Blue,
@@ -38,7 +37,7 @@ namespace MdLabel
         }
 
         public static readonly BindableProperty IsParagraphSpacingProperty = BindableProperty.Create(
-            propertyName: "IsParaGraphSpacing",
+            propertyName: nameof(IsParagraphSpacing),
             returnType: typeof(bool),
             declaringType: typeof(MarkdownLabel),
             defaultValue: true);
@@ -49,15 +48,8 @@ namespace MdLabel
             set => SetValue(IsParagraphSpacingProperty, value);
         }
 
-        public static readonly BindableProperty Header1StyleProperty = BindableProperty.Create(
-            propertyName: "Header1Style",
-            returnType: typeof(Style),
-            declaringType: typeof(MarkdownLabel),
-            defaultValue: default(Style),
-            propertyChanged: OnUpdatePropertyChanged);
-
         public static readonly BindableProperty IsExtraHeaderSpacingProperty = BindableProperty.Create(
-            propertyName: "IsExtraHeaderSpacing",
+            propertyName: nameof(IsExtraHeaderSpacing),
             returnType: typeof(bool),
             declaringType: typeof(MarkdownLabel),
             defaultValue: default(bool));
@@ -68,6 +60,15 @@ namespace MdLabel
             set => SetValue(IsExtraHeaderSpacingProperty, value);
         }
 
+        #region headers
+
+        public static readonly BindableProperty Header1StyleProperty = BindableProperty.Create(
+            propertyName: nameof(Header1Style),
+            returnType: typeof(Style),
+            declaringType: typeof(MarkdownLabel),
+            defaultValue: default(Style),
+            propertyChanged: OnUpdatePropertyChanged);
+
         public Style Header1Style
         {
             get => (Style)GetValue(Header1StyleProperty);
@@ -75,7 +76,7 @@ namespace MdLabel
         }
 
         public static readonly BindableProperty Header2StyleProperty = BindableProperty.Create(
-            propertyName: "Header2Style",
+            propertyName: nameof(Header2Style),
             returnType: typeof(Style),
             declaringType: typeof(MarkdownLabel),
             defaultValue: default(Style),
@@ -88,7 +89,7 @@ namespace MdLabel
         }
 
         public static readonly BindableProperty Header3StyleProperty = BindableProperty.Create(
-            propertyName: "Header3Style",
+            propertyName: nameof(Header3Style),
             returnType: typeof(Style),
             declaringType: typeof(MarkdownLabel),
             defaultValue: default(Style),
@@ -101,14 +102,58 @@ namespace MdLabel
             set => SetValue(Header3StyleProperty, value);
         }
 
+        public static readonly BindableProperty Header4StyleProperty = BindableProperty.Create(
+            propertyName: nameof(Header4Style),
+            returnType: typeof(Style),
+            declaringType: typeof(MarkdownLabel),
+            defaultValue: default(Style),
+            propertyChanged: OnUpdatePropertyChanged);
+
+
+        public Style Header4Style
+        {
+            get => (Style)GetValue(Header4StyleProperty);
+            set => SetValue(Header4StyleProperty, value);
+        }
+
+        public static readonly BindableProperty Header5StyleProperty = BindableProperty.Create(
+            propertyName: nameof(Header5Style),
+            returnType: typeof(Style),
+            declaringType: typeof(MarkdownLabel),
+            defaultValue: default(Style),
+            propertyChanged: OnUpdatePropertyChanged);
+
+
+        public Style Header5Style
+        {
+            get => (Style)GetValue(Header5StyleProperty);
+            set => SetValue(Header5StyleProperty, value);
+        }
+
+        public static readonly BindableProperty Header6StyleProperty = BindableProperty.Create(
+            propertyName: nameof(Header6Style),
+            returnType: typeof(Style),
+            declaringType: typeof(MarkdownLabel),
+            defaultValue: default(Style),
+            propertyChanged: OnUpdatePropertyChanged);
+
+
+        public Style Header6Style
+        {
+            get => (Style)GetValue(Header6StyleProperty);
+            set => SetValue(Header6StyleProperty, value);
+        }
+
         public static readonly BindableProperty Variable1Property = BindableProperty.Create(
-            propertyName: "Variable1",
+            propertyName: nameof(Variable1),
             returnType: typeof(string),
             declaringType: typeof(MarkdownLabel),
             defaultValue: default(string),
             propertyChanged: OnUpdatePropertyChanged);
 
+        #endregion
 
+        #region variables
         public string Variable1
         {
             get => (string)GetValue(Variable1Property);
@@ -116,7 +161,7 @@ namespace MdLabel
         }
 
         public static readonly BindableProperty Variable2Property = BindableProperty.Create(
-            propertyName: "Variable2",
+            propertyName: nameof(Variable2),
             returnType: typeof(string),
             declaringType: typeof(MarkdownLabel),
             defaultValue: default(string),
@@ -129,7 +174,7 @@ namespace MdLabel
         }
 
         public static readonly BindableProperty Variable3Property = BindableProperty.Create(
-            propertyName: "Variable3",
+            propertyName: nameof(Variable3),
             returnType: typeof(string),
             declaringType: typeof(MarkdownLabel),
             defaultValue: default(string),
@@ -142,7 +187,7 @@ namespace MdLabel
         }
 
         public static readonly BindableProperty Variable4Property = BindableProperty.Create(
-            propertyName: "Variable4",
+            propertyName: nameof(Variable4),
             returnType: typeof(string),
             declaringType: typeof(MarkdownLabel),
             defaultValue: default(string),
@@ -155,7 +200,7 @@ namespace MdLabel
         }
 
         public static readonly BindableProperty Variable5Property = BindableProperty.Create(
-            propertyName: "Variable5",
+            propertyName: nameof(Variable5),
             returnType: typeof(string),
             declaringType: typeof(MarkdownLabel),
             defaultValue: default(string),
@@ -168,7 +213,7 @@ namespace MdLabel
         }
 
         public static readonly BindableProperty Variable6Property = BindableProperty.Create(
-            propertyName: "Variable6",
+            propertyName: nameof(Variable6),
             returnType: typeof(string),
             declaringType: typeof(MarkdownLabel),
             defaultValue: default(string),
@@ -180,14 +225,16 @@ namespace MdLabel
             set => SetValue(Variable6Property, value);
         }
 
+        #endregion
+
         public MarkdownLabel()
         {
-            OnUpdateEventHandler += OnUpdateEvent;
+            OnUpdateTextEventHandler += OnUpdateEvent;
         }
 
-        private void OnUpdateEvent(object sender, EventArgs e)
+        private void OnUpdateEvent(object? sender, EventArgs? e)
         {
-            if (sender is MarkdownLabel labelMarkdown)
+            if (sender is MarkdownLabel)
             {
                 UpdateFormattedText();
             }
@@ -196,10 +243,10 @@ namespace MdLabel
 
         private static void OnUpdatePropertyChanged(BindableObject bindable, object oldvalue, object newvalue)
         {
-            if (bindable is MarkdownLabel labelMarkdown 
+            if (bindable is MarkdownLabel labelMarkdown
                 && oldvalue != newvalue)
             {
-                OnUpdateEventHandler?.Invoke(labelMarkdown, null);
+                OnUpdateTextEventHandler?.Invoke(labelMarkdown, EventArgs.Empty);
             }
         }
 
@@ -213,104 +260,69 @@ namespace MdLabel
             }
 
             return false;
-
-            //var document = new MarkdownDocument();
-
-            //try
-            //{
-            //    document.Parse(str);
-            //    return true;
-            //}
-            //catch (Exception)
-            //{
-            //    return false;
-            //}
         }
 
         private static void OnTextMarkdownPropertyChanged(BindableObject bindable, object oldvalue, object newvalue)
         {
             if (bindable is MarkdownLabel labelMarkdown
-                && newvalue != oldvalue
-                && newvalue is string str)
-            {
-                OnUpdateEventHandler?.Invoke(labelMarkdown, null);
+                && newvalue is string
+                && (!oldvalue?.Equals(newvalue) ?? true))
+            {                
+                OnUpdateTextEventHandler?.Invoke(labelMarkdown, EventArgs.Empty);
             }
         }
 
         private void UpdateFormattedText()
         {
-            AddVariablesToMarkdownString();
+            var markdownString = AddVariablesToMarkdownString();
 
-            if (!string.IsNullOrEmpty(_markdownString))
+            if (!string.IsNullOrEmpty(markdownString))
             {
-                FormattedText = GetFormattedString(_markdownString);
+                FormattedText = GetFormattedString(markdownString);
             }
         }
 
-        private FormattedString GetFormattedString(string str)
+        private FormattedString GetFormattedString(string markdownString)
         {
+            var renderer = new MauiRenderer(new StringWriter(), Style)
+            {
+                UrlLinkColor = UrlLinkColor,
+                IsExtraHeaderSpacing = IsExtraHeaderSpacing,
+                HeaderStyles = new Dictionary<int, Style>
+                {
+                    {1, Header1Style},
+                    {2, Header2Style},
+                    {3, Header3Style},
+                    {4, Header4Style},
+                    {5, Header5Style},
+                    {6, Header6Style},
+                }
+            };
 
-            //var writer = new StringWriter();
-
-            var renderer = new MauiRenderer(new StringWriter());
-                       
-
-            var markdownString = str.Replace("\r", "  ")
-                .Replace("  \n", IsParagraphSpacing 
-                                            ? "  \n  \n" 
-                                            : "  \n");
+            markdownString = markdownString
+                //.Replace("    ", Environment.NewLine + Environment.NewLine + Environment.NewLine)
+                .Replace("  ", Environment.NewLine + Environment.NewLine);
 
             Markdown.Convert(markdownString, renderer);
 
-            return renderer.FormattedString;
-
-            //document.Parse(markdownStr);
-
-            //if (document.Blocks.Any())
-            //{
-
-            //    var renderer = new LabelMarkdownRenderer(
-            //        document,
-            //        Style,
-            //        UrlLinkColor,
-            //        new Dictionary<int, Style>
-            //        {
-            //            {1, Header1Style},
-            //            {2, Header2Style},
-            //            {3, Header3Style}
-            //        },
-            //        IsExtraHeaderSpacing);
-
-            //    renderer.Render(new RendererContext { Parent = fs });
-            //}
-
-            //if (fs.Spans.Any())
-            //{
-            //    // Remove the extra New Line feed added to the end, which should not be there.
-            //    fs.Spans.Remove(fs.Spans.Last());
-            //}
-
-            //return fs;
+            return renderer.GetFormattedString();
         }
 
-        private void AddVariablesToMarkdownString()
+        private string AddVariablesToMarkdownString()
         {
-            _markdownString = TextMarkdown;
+            var markdownString = TextMarkdown;
 
-            if (!string.IsNullOrEmpty(_markdownString))
+            if (!string.IsNullOrEmpty(TextMarkdown))
             {
-                _markdownString = _markdownString.Replace("{{1}}", Variable1 ?? string.Empty);
-
-                _markdownString = _markdownString.Replace("{{2}}", Variable2 ?? string.Empty);
-
-                _markdownString = _markdownString.Replace("{{3}}", Variable3 ?? string.Empty);
-
-                _markdownString = _markdownString.Replace("{{4}}", Variable4 ?? string.Empty);
-
-                _markdownString = _markdownString.Replace("{{5}}", Variable5 ?? string.Empty);
-
-                _markdownString = _markdownString.Replace("{{6}}", Variable6 ?? string.Empty);
+                markdownString = TextMarkdown.Replace("{{1}}", Variable1 ?? string.Empty)
+                    .Replace("{{2}}", Variable2 ?? string.Empty)
+                    .Replace("{{3}}", Variable3 ?? string.Empty)
+                    .Replace("{{4}}", Variable4 ?? string.Empty)
+                    .Replace("{{5}}", Variable5 ?? string.Empty)
+                    .Replace("{{6}}", Variable6 ?? string.Empty);
             }
+
+            return markdownString;
         }
     }
 }

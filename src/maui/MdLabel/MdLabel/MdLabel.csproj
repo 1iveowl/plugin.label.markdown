@@ -6,6 +6,7 @@
 		<!-- Uncomment to also build the tizen app. You will need to install tizen by following this: https://github.com/Samsung/Tizen.NET -->
 		<!-- <TargetFrameworks>$(TargetFrameworks);net6.0-tizen</TargetFrameworks> -->
 		<UseMaui>true</UseMaui>
+		<Nullable>enable</Nullable>
 		<SingleProject>true</SingleProject>
 		<ImplicitUsings>enable</ImplicitUsings>
 
@@ -23,6 +24,14 @@
 
 	<ItemGroup>
 	  <Folder Include="Handler\" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <EditorConfigFiles Remove="V:\GitHub\plugin.label.markdown\src\maui\MdLabel\MdLabel\Renderer\.editorconfig" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <None Include="V:\GitHub\plugin.label.markdown\src\maui\MdLabel\MdLabel\Renderer\.editorconfig" />
 	</ItemGroup>
 
 </Project>

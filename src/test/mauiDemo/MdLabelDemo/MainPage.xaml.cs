@@ -3,6 +3,7 @@
     public partial class MainPage : ContentPage
     {
         int count = 0;
+        public string Var1 { get; set; } = "Var1";
 
         public MainPage()
         {

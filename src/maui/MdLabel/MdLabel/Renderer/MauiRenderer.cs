@@ -1,42 +1,58 @@
 ﻿using Markdig.Helpers;
 using Markdig.Renderers;
 using Markdig.Syntax;
-using System.Runtime.CompilerServices;
 
 namespace MdLabel.Renderer
 {
     public class MauiRenderer : TextRendererBase<MauiRenderer>
     {
-        private readonly Stack<MarkdownInlineFormatKind> _markdownInlineFormatStack;
+        private readonly Stack<MarkdownInlineFormatKind> _markdownInlineFormatStack = new();
+        private readonly List<MauiSpanBlock> _mauiSpanBlocks = new();
 
-        private static readonly char[] s_writeEscapeIndexOfAnyChars = new[] { '<', '>', '&', '"' };
+        private Style? _currentStyle;
+        private MauiSpanBlock? _currentSpanBlock;
 
-        internal FormattedString FormattedString { get; private set; } = new();
-
-        public MauiRenderer(TextWriter writer) : base(writer)
+        internal FormattedString GetFormattedString()
         {
-            _markdownInlineFormatStack = new();
+            var formattedString = new FormattedString();
+
+            foreach (var span in _mauiSpanBlocks.SelectMany(block => block.GetSpans()))
+            {
+                formattedString.Spans.Add(span);
+            }
+
+            return formattedString;
+        }
+        internal Style? Style { get; init; }
+
+        internal Color? UrlLinkColor { get; init; }        
+        internal Dictionary<int, Style>? HeaderStyles { get; init; }
+        internal bool IsExtraHeaderSpacing { get; init; }
+
+        public bool EnableHtmlForBlock { get; set; }
+        public bool EnableHtmlForInline { get; set; }
+        public bool EnableHtmlEscape { get; set; }
+        public bool ImplicitParagraph { get; set; }
+
+        public Uri? BaseUrl { get; set; }
+
+        public MauiRenderer(TextWriter writer, Style style) : base(writer)
+        {
+            Style = style;
+            _currentStyle = style;
 
             ObjectRenderers.Add(new MauiParagraphRenderer());
             ObjectRenderers.Add(new MauiLiteralInlineRenderer());
             ObjectRenderers.Add(new MauiEmphasisInlineRenderer());
+            ObjectRenderers.Add(new MauiHeadingRenderer());
 
             ObjectWriteBefore += MdRenderer_ObjectWriteBefore;
             ObjectWriteAfter += MdRenderer_ObjectWriteAfter;
 
+            //ImplicitParagraph = true;
             EnableHtmlForBlock = true;
             EnableHtmlForInline = true;
             EnableHtmlEscape = false;
-        }
-
-        private void MdRenderer_ObjectWriteAfter(IMarkdownRenderer arg1, MarkdownObject arg2)
-        {
-
-        }
-
-        private void MdRenderer_ObjectWriteBefore(IMarkdownRenderer arg1, MarkdownObject arg2)
-        {
-
         }
 
         internal void PushInlineType(MarkdownInlineFormatKind markdownLineType)
@@ -46,69 +62,97 @@ namespace MdLabel.Renderer
 
         internal void PopInlineType()
         {
-            _markdownInlineFormatStack.Pop();
+            if (_markdownInlineFormatStack.Count > 0)
+            {
+                _markdownInlineFormatStack.Pop();
+            }
         }
 
-        //public override object Render(MarkdownObject markdownObject)
-        //{
-        //    Write(markdownObject);
-
-
-        //    return "Bla bla.";
-        //}
-
-        public bool EnableHtmlForBlock { get; set; }
-
-        public bool EnableHtmlForInline { get; set; }
-
-        public bool EnableHtmlEscape { get; set; }
-
-        /// <summary>
-        /// Gets or sets a value indicating whether to use implicit paragraph (optional &lt;p&gt;)
-        /// </summary>
-        public bool ImplicitParagraph { get; set; }
-
-
-        /// <summary>
-        /// Gets a value to use as the base url for all relative links
-        /// </summary>
-        public Uri BaseUrl { get; set; }
-
-        /// <summary>
-        /// Writes the content escaped for HTML.
-        /// </summary>
-        /// <param name="slice">The slice.</param>
-        /// <param name="softEscape">Only escape &lt; and &amp;</param>
-        /// <returns>This instance</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public MauiRenderer WriteTextToSpan(string slice, bool softEscape = false)
+        internal void SetHeaderStyle(int i)
         {
-            var span = new Span
+            if (HeaderStyles is not null
+                && i >= 1 
+                && i <= HeaderStyles?.Count)
             {
-                Text = slice.Replace("\n\r", Environment.NewLine)
+                if (HeaderStyles.TryGetValue(i, out var style))
+                {
+                    _currentStyle = style;
+                }                
+            }            
+        }
+
+        internal void RemoveHeaderStyle()
+        {
+            _currentStyle = Style;
+        }
+
+        internal MauiRenderer WriteInline(ref StringSlice slice)
+        {
+            if (_currentSpanBlock is null)
+            {
+                throw new NullReferenceException($"{nameof(MauiSpanBlock)} cannot be null");
+            }
+
+            var span = new Span()
+            {
+                Text = slice.ToString(),
+                FontAttributes = GetFontAttributes(),
+                Style = _currentStyle
             };
 
-            SetFormating(span);
-
-            FormattedString.Spans.Add(span);
+            _currentSpanBlock?.AddSpan(span);
 
             return this;
         }
 
-        private void SetFormating(Span span)
+        internal void AddNewLine()
         {
-            foreach(var attr in _markdownInlineFormatStack)
+            if (_currentSpanBlock is not null)
             {
-                switch (attr)
+                _currentSpanBlock.TrailingNewLine++;
+            }
+            else
+            {
+                throw new NullReferenceException($"{nameof(MauiSpanBlock)} cannot be null");
+            }
+        }
+
+        internal void OpenBlock()
+        {
+            if (_currentSpanBlock is not null)
+            {
+                CloseBlock();
+            }
+
+            _currentSpanBlock = new MauiSpanBlock();
+        }
+
+        internal void CloseBlock()
+        {
+            if (_currentSpanBlock is not null)
+            {
+                _mauiSpanBlocks.Add(_currentSpanBlock);
+            }
+
+            _currentSpanBlock = default;
+        }
+
+        private FontAttributes GetFontAttributes()
+        {
+            FontAttributes fontAttributes = FontAttributes.None;
+
+            foreach (var inlineFormat in _markdownInlineFormatStack)
+            {
+                switch (inlineFormat)
                 {
                     case MarkdownInlineFormatKind.Comment:
                     case MarkdownInlineFormatKind.TextRun:
                         break;
                     case MarkdownInlineFormatKind.Bold:
-                        span.FontAttributes += (int)FontAttributes.Bold;
+                        fontAttributes += (int)FontAttributes.Bold;
                         break;
                     case MarkdownInlineFormatKind.Italic:
-                        span.FontAttributes += (int)FontAttributes.Italic;
+                        fontAttributes += (int)FontAttributes.Italic;
                         break;
                     case MarkdownInlineFormatKind.MarkdownLink:
                         break;
@@ -117,7 +161,7 @@ namespace MdLabel.Renderer
                     case MarkdownInlineFormatKind.RawSubreditKink:
                         break;
                     case MarkdownInlineFormatKind.StrikeThrough:
-                        span.TextDecorations += (int)TextDecorations.Strikethrough;
+                        fontAttributes += (int)TextDecorations.Strikethrough;
                         break;
                     case MarkdownInlineFormatKind.SuperScript:
                         break;
@@ -135,124 +179,19 @@ namespace MdLabel.Renderer
                         throw new ArgumentOutOfRangeException();
                 }
             }
+
+            return fontAttributes;
         }
 
-        /// <summary>
-        /// Writes the content escaped for HTML.
-        /// </summary>
-        /// <param name="slice">The slice.</param>
-        /// <param name="softEscape">Only escape &lt; and &amp;</param>
-        /// <returns>This instance</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public MauiRenderer WriteEscape(ref StringSlice slice, bool softEscape = false)
+        private void MdRenderer_ObjectWriteAfter(IMarkdownRenderer arg1, MarkdownObject arg2)
         {
-            WriteEscape(slice.AsSpan(), softEscape);
-            return this;
+
         }
 
-        /// <summary>
-        /// Writes the content escaped for HTML.
-        /// </summary>
-        /// <param name="content">The content.</param>
-        /// <param name="softEscape">Only escape &lt; and &amp;</param>
-        public void WriteEscape(ReadOnlySpan<char> content, bool softEscape = false)
+        private void MdRenderer_ObjectWriteBefore(IMarkdownRenderer arg1, MarkdownObject arg2)
         {
-            if (!content.IsEmpty)
-            {
-                int nextIndex = content.IndexOfAny(s_writeEscapeIndexOfAnyChars);
-                if (nextIndex == -1)
-                {
-                    Write(content);
-                }
-                else
-                {
-                    WriteEscapeSlow(content, softEscape);
-                }
-            }
+
         }
-
-        private void WriteEscapeSlow(ReadOnlySpan<char> content, bool softEscape = false)
-        {
-            WriteIndent();
-
-            int previousOffset = 0;
-            for (int i = 0; i < content.Length; i++)
-            {
-                switch (content[i])
-                {
-                    case '<':
-                        WriteRaw(content[previousOffset..i]);
-                        //if (EnableHtmlEscape)
-                        //{
-                        //    WriteRaw("&lt;");
-                        //}
-                        previousOffset = i + 1;
-                        break;
-                    case '>':
-                        if (!softEscape)
-                        {
-                            WriteRaw(content[previousOffset..i]);
-                            //if (EnableHtmlEscape)
-                            //{
-                            //    WriteRaw("&gt;");
-                            //}
-                            previousOffset = i + 1;
-                        }
-                        break;
-                    case '&':
-                        WriteRaw(content[previousOffset..i]);
-                        //if (EnableHtmlEscape)
-                        //{
-                        //    WriteRaw("&amp;");
-                        //}
-                        previousOffset = i + 1;
-                        break;
-                    case '"':
-                        if (!softEscape)
-                        {
-                            WriteRaw(content[previousOffset..i]);
-                            //if (EnableHtmlEscape)
-                            //{
-                            //    WriteRaw("&quot;");
-                            //}
-                            previousOffset = i + 1;
-                        }
-                        break;
-                }
-            }
-
-            WriteRaw(content[previousOffset..]);
-        }
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private protected void WriteIndent()
-        {
-            if (previousWasLine)
-            {
-                //WriteIndentCore();
-            }
-        }
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        internal void WriteRaw(ReadOnlySpan<char> content)
-        {
-#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP3_1_OR_GREATER
-            Writer.Write(content);
-#else
-            if (content.Length > buffer.Length)
-            {
-                buffer = content.ToArray();
-            }
-            else
-            {
-                content.CopyTo(buffer);
-            }
-            Writer.Write(buffer, 0, content.Length);
-#endif
-        }
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        internal void WriteRaw(char content) => Writer.Write(content);
     }
 }
 
