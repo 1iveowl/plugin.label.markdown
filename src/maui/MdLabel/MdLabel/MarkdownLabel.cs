@@ -1,15 +1,17 @@
 ﻿using Markdig;
 using MdLabel.Renderer;
+using System.ComponentModel;
 
 namespace MdLabel
 {
     public class MarkdownLabel : Label, IMarkdownLabel
     {
         private static event EventHandler? OnUpdateTextEventHandler;
+        private static event EventHandler? OnUpdateEventHandler;
 
 
-        public static readonly BindableProperty TextMarkdownProperty = BindableProperty.Create(
-            propertyName: nameof(TextMarkdown),
+        public static new readonly BindableProperty TextProperty = BindableProperty.Create(
+            propertyName: nameof(Text),
             returnType: typeof(string),
             declaringType: typeof(MarkdownLabel),
             defaultValue: default(string),
@@ -17,10 +19,10 @@ namespace MdLabel
             OnTextMarkdownValidateValue,
             OnTextMarkdownPropertyChanged);
 
-        public string TextMarkdown
+        public new string Text
         {
-            get => (string)GetValue(TextMarkdownProperty);
-            set => SetValue(TextMarkdownProperty, value);
+            get => (string)GetValue(TextProperty);
+            set => SetValue(TextProperty, value);
         }
 
         public static readonly BindableProperty UrlLinkColorProperty = BindableProperty.Create(
@@ -229,10 +231,50 @@ namespace MdLabel
 
         public MarkdownLabel()
         {
-            OnUpdateTextEventHandler += OnUpdateEvent;
+
+            //LabelHandler.Mapper.AppendToMapping(nameof(IView.Visibility), (handler, view) =>
+            //{
+            //    if (view is MarkdownLabel markdownLabel)
+            //    {
+            //        UpdateFormattedText();
+
+            //    }
+            //});
         }
 
-        private void OnUpdateEvent(object? sender, EventArgs? e)
+        protected override void OnHandlerChanging(HandlerChangingEventArgs args)
+        {
+            base.OnHandlerChanging(args);
+        }
+
+        protected override void OnHandlerChanged()
+        {
+            OnUpdateTextEventHandler += MarkdownLabel_OnUpdateTextEventHandler;
+            OnUpdateEventHandler += MarkdownLabel_OnUpdateEventHandler;
+        }
+
+        private void MarkdownLabel_PropertyChanged(object? sender, PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == "Window")
+            {
+
+            }
+        }
+
+        private void MarkdownLabel_Loaded(object? sender, EventArgs e)
+        {
+            if (sender is MarkdownLabel)
+            {
+                UpdateFormattedText();
+            }
+        }
+
+        private void MarkdownLabel_OnUpdateEventHandler(object? sender, EventArgs e)
+        {
+
+        }
+
+        private void MarkdownLabel_OnUpdateTextEventHandler(object? sender, EventArgs? e)
         {
             if (sender is MarkdownLabel)
             {
@@ -246,7 +288,7 @@ namespace MdLabel
             if (bindable is MarkdownLabel labelMarkdown
                 && oldvalue != newvalue)
             {
-                OnUpdateTextEventHandler?.Invoke(labelMarkdown, EventArgs.Empty);
+                OnUpdateEventHandler?.Invoke(labelMarkdown, EventArgs.Empty);
             }
         }
 
@@ -300,7 +342,6 @@ namespace MdLabel
             };
 
             markdownString = markdownString
-                //.Replace("    ", Environment.NewLine + Environment.NewLine + Environment.NewLine)
                 .Replace("  ", Environment.NewLine + Environment.NewLine);
 
             var pipeline = new MarkdownPipelineBuilder().UseEmojiAndSmiley().UseEmphasisExtras().Build();
@@ -312,11 +353,11 @@ namespace MdLabel
 
         private string AddVariablesToMarkdownString()
         {
-            var markdownString = TextMarkdown;
+            var markdownString = Text;
 
-            if (!string.IsNullOrEmpty(TextMarkdown))
+            if (!string.IsNullOrEmpty(Text))
             {
-                markdownString = TextMarkdown.Replace("{{1}}", Variable1 ?? string.Empty)
+                markdownString = Text.Replace("{{1}}", Variable1 ?? string.Empty)
                     .Replace("{{2}}", Variable2 ?? string.Empty)
                     .Replace("{{3}}", Variable3 ?? string.Empty)
                     .Replace("{{4}}", Variable4 ?? string.Empty)

@@ -1,7 +1,9 @@
 ﻿namespace MdLabel
 {
-    public interface IMarkdownLabel
+    public interface IMarkdownLabel : IView, ILabel
     {
+        new string Text { get; set; }
+
         Style Header1Style { get; set; }
         Style Header2Style { get; set; }
         Style Header3Style { get; set; }
@@ -11,7 +13,7 @@
 
         bool IsExtraHeaderSpacing { get; set; }
         bool IsParagraphSpacing { get; set; }
-        string TextMarkdown { get; set; }
+        // string TextMarkdown { get; set; }
         Color UrlLinkColor { get; set; }
 
         string Variable1 { get; set; }
