@@ -2,19 +2,19 @@
 {
     internal enum MarkdownInlineFormatKind
     {
+        None,
         Comment,
         TextRun,
         Bold,
         Italic,
-        MarkdownLink,
-        RawHyperLink,
-        RawSubreditKink,
+        Underline,
         StrikeThrough,
         SuperScript,
         Subscript,
+        Inserted,
+        Marked,
         Code,
         Image,
-        Emoji,
-        LinkReference
+        Link
     }
 }

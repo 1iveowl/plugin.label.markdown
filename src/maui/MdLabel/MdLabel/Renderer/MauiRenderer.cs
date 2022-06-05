@@ -11,7 +11,6 @@ namespace MdLabel.Renderer
 
         private Style? _currentStyle;
         private MauiSpanBlock? _currentSpanBlock;
-        private bool _isLink;
         private Uri? _uri = default;
 
         internal FormattedString GetFormattedString()
@@ -59,19 +58,6 @@ namespace MdLabel.Renderer
             EnableHtmlEscape = false;
         }
 
-        internal void PushInlineType(MarkdownInlineFormatKind markdownLineType)
-        {
-            _markdownInlineFormatStack.Push(markdownLineType);
-        }
-
-        internal void PopInlineType()
-        {
-            if (_markdownInlineFormatStack.Count > 0)
-            {
-                _markdownInlineFormatStack.Pop();
-            }
-        }
-
         internal void SetHeaderStyle(int i)
         {
             if (HeaderStyles is not null
@@ -99,16 +85,19 @@ namespace MdLabel.Renderer
 
             Span? span = default;
 
-            if (_isLink && _uri is not null)
+            var (attributes, decorations) = GetInlineFormating();
+
+            if (_markdownInlineFormatStack.Any(inlineFormat => inlineFormat == MarkdownInlineFormatKind.Link)
+                && _uri is not null)
             {
                 var urlText = slice.ToString();
 
                 span = new Span()
                 {
                     Text = urlText,
-                    TextDecorations = TextDecorations.Underline,
+                    TextDecorations = decorations,
                     TextColor = UrlLinkColor,
-                    FontAttributes = GetFontAttributes(),
+                    FontAttributes = attributes,
                     Style = _currentStyle
                 };
 
@@ -128,7 +117,8 @@ namespace MdLabel.Renderer
                 span = new Span()
                 {
                     Text = slice.ToString(),
-                    FontAttributes = GetFontAttributes(),
+                    FontAttributes = attributes,
+                    TextDecorations = decorations,
                     Style = _currentStyle
                 };
             }
@@ -145,13 +135,26 @@ namespace MdLabel.Renderer
                 throw new NullReferenceException($"{nameof(MauiSpanBlock)} cannot be null");
             }
 
-            _isLink = true;
+            PushInlineType(MarkdownInlineFormatKind.Link);
             _uri = uri;     
         }
         internal void CloseLink()
         {
-            _isLink = false;
+            PopInlineType();
             _uri = default;
+        }
+
+        internal void PushInlineType(MarkdownInlineFormatKind markdownLineType)
+        {
+            _markdownInlineFormatStack.Push(markdownLineType);
+        }
+
+        internal void PopInlineType()
+        {
+            if (_markdownInlineFormatStack.Count > 0)
+            {
+                _markdownInlineFormatStack.Pop();
+            }
         }
 
         internal void AddNewLine()
@@ -187,14 +190,20 @@ namespace MdLabel.Renderer
             _currentSpanBlock = default;
         }
 
-        private FontAttributes GetFontAttributes()
+        private (FontAttributes attributes, TextDecorations decorations) GetInlineFormating()
         {
             FontAttributes fontAttributes = FontAttributes.None;
+            TextDecorations decorations = TextDecorations.None;
 
             foreach (var inlineFormat in _markdownInlineFormatStack)
             {
                 switch (inlineFormat)
                 {
+                    case MarkdownInlineFormatKind.None:
+                        break;
+                    case MarkdownInlineFormatKind.Link:
+                        decorations += (int)TextDecorations.Underline;
+                        break;
                     case MarkdownInlineFormatKind.Comment:
                     case MarkdownInlineFormatKind.TextRun:
                         break;
@@ -204,14 +213,11 @@ namespace MdLabel.Renderer
                     case MarkdownInlineFormatKind.Italic:
                         fontAttributes += (int)FontAttributes.Italic;
                         break;
-                    case MarkdownInlineFormatKind.MarkdownLink:
-                        break;
-                    case MarkdownInlineFormatKind.RawHyperLink:
-                        break;
-                    case MarkdownInlineFormatKind.RawSubreditKink:
+                    case MarkdownInlineFormatKind.Underline:
+                        decorations += (int)TextDecorations.Underline;
                         break;
                     case MarkdownInlineFormatKind.StrikeThrough:
-                        fontAttributes += (int)TextDecorations.Strikethrough;
+                        decorations += (int)TextDecorations.Strikethrough;
                         break;
                     case MarkdownInlineFormatKind.SuperScript:
                         break;
@@ -221,16 +227,16 @@ namespace MdLabel.Renderer
                         break;
                     case MarkdownInlineFormatKind.Image:
                         break;
-                    case MarkdownInlineFormatKind.Emoji:
+                    case MarkdownInlineFormatKind.Inserted:
                         break;
-                    case MarkdownInlineFormatKind.LinkReference:
+                    case MarkdownInlineFormatKind.Marked:
                         break;
                     default:
                         throw new ArgumentOutOfRangeException();
                 }
             }
 
-            return fontAttributes;
+            return (fontAttributes, decorations);
         }
 
         private void MdRenderer_ObjectWriteAfter(IMarkdownRenderer arg1, MarkdownObject arg2)

@@ -8,21 +8,32 @@ namespace MdLabel.Renderer
     /// <seealso cref="MauiObjectRenderer{EmphasisInline}"></seealso> 
     public class MauiEmphasisInlineRenderer : MauiObjectRenderer<EmphasisInline>
     {
-        protected override void Write(MauiRenderer renderer, EmphasisInline obj)
+        protected override void Write(MauiRenderer renderer, EmphasisInline emphasisInline)
         {
-            if (obj.DelimiterChar is '*' or '_')
+            switch(emphasisInline.DelimiterChar)
             {
-                if (obj.DelimiterCount == 2)
-                {
-                    renderer.PushInlineType(MarkdownInlineFormatKind.Bold);
-                }
-                else
-                {
-                    renderer.PushInlineType(MarkdownInlineFormatKind.Italic);
-                }
+                case '*' or '_':
+                    renderer.PushInlineType(emphasisInline.DelimiterCount == 2
+                        ? MarkdownInlineFormatKind.Bold
+                        : MarkdownInlineFormatKind.Italic);
+                    break;
+                case '~':
+                    renderer.PushInlineType(emphasisInline.DelimiterCount == 2
+                        ? MarkdownInlineFormatKind.StrikeThrough
+                        : MarkdownInlineFormatKind.SuperScript);
+                    break;
+                case '^':
+                    renderer.PushInlineType(MarkdownInlineFormatKind.SuperScript);
+                    break;
+                case '+':
+                    renderer.PushInlineType(MarkdownInlineFormatKind.Inserted);
+                    break;
+                case '=':
+                    renderer.PushInlineType(MarkdownInlineFormatKind.Marked);
+                    break;
             }
 
-            renderer.WriteChildren(obj);
+            renderer.WriteChildren(emphasisInline);
 
             renderer.PopInlineType();
         }

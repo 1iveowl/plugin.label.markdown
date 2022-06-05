@@ -303,7 +303,9 @@ namespace MdLabel
                 //.Replace("    ", Environment.NewLine + Environment.NewLine + Environment.NewLine)
                 .Replace("  ", Environment.NewLine + Environment.NewLine);
 
-            Markdown.Convert(markdownString, renderer);
+            var pipeline = new MarkdownPipelineBuilder().UseEmojiAndSmiley().UseEmphasisExtras().Build();
+
+            Markdown.Convert(markdownString, renderer, pipeline);
 
             return renderer.GetFormattedString();
         }
