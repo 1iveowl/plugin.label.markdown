@@ -1,4 +1,5 @@
-﻿#if IOS || MACCATALYST
+﻿using Microsoft.Maui.Handlers;
+#if IOS || MACCATALYST
 //using PlatformView = UIKit.UIView;
 using PlatformView = Microsoft.Maui.Platform.MauiLabel;
 #elif ANDROID
@@ -8,23 +9,16 @@ using PlatformView = AndroidX.AppCompat.Widget.AppCompatTextView;
 using PlatformView = Microsoft.UI.Xaml.Controls.TextBlock;
 //using PlatformView = Microsoft.UI.Xaml.FrameworkElement;
 #elif TIZEN
-using PlatformView = Microsoft.Maui.Platform.ContentCanvas;
+using PlatformView = Tizen.UIExtensions.ElmSharp.Label;
 #elif (NETSTANDARD || !PLATFORM) || (NET6_0 && !IOS && !ANDROID && !TIZEN)
-using PlatformView = System.Object;
+using PlatformView = Microsoft.Maui.Controls.Label;
 #endif
-
-//#if ANDROID
-//using PlatformView = Android.Views.View;
-//#elif IOS || MACCATALYST
-//using PlatformView = Microsoft.Maui.Platform.View;
-//#endif
 
 namespace MdLabel.Handler
 {
-    public interface IMarkdownLabelHandler : IViewHandler
+    public partial interface IMarkdownLabelHandler : IViewHandler
     {
-        //new IMarkdownLabel VirtualView { get; }
-
-        //new PlatformView PlatformView { get; }
+        new IMarkdownLabel VirtualView { get; }
+        new PlatformView PlatformView { get; }
     }
 }

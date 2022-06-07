@@ -17,7 +17,7 @@ namespace MdLabelDemo
                 })
                 .ConfigureMauiHandlers(handlers =>
                 {
-                    handlers.AddHandler(typeof(MarkdownLabel), typeof(MarkdownLabelHandler));
+                    //handlers.AddHandler(typeof(MarkdownLabel), typeof(MarkdownLabelHandler));
                 });
 
             return builder.Build();

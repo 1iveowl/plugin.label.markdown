@@ -7,38 +7,39 @@ using PlatformView = Microsoft.Maui.Platform.MauiLabel;
 using PlatformView = AndroidX.AppCompat.Widget.AppCompatTextView;
 #elif WINDOWS
 using PlatformView = Microsoft.UI.Xaml.Controls.TextBlock;
-//using PlatformView = Microsoft.UI.Xaml.FrameworkElement;
+//using Microsoft.UI.Xaml.FrameworkElement;
 #elif TIZEN
 using PlatformView = Microsoft.Maui.Platform.ContentCanvas;
 #elif (NETSTANDARD || !PLATFORM) || (NET6_0 && !IOS && !ANDROID && !TIZEN)
-using PlatformView = System.Object;
+using PlatformView = Microsoft.Maui.Controls.Label;
 #endif
-
-//#if ANDROID
-//using PlatformView = Android.Views.View;
-//#endif
 
 namespace MdLabel.Handler
 {
-    //public partial class MarkdownLabelHandler : ViewHandler<IMarkdownLabel, PlatformView>, IMarkdownLabelHandler
-    public partial class MarkdownLabelHandler : LabelHandler, IMarkdownLabelHandler
+    //public partial class MarkdownLabelHandler : LabelHandler, IMarkdownLabelHandler
+    public partial class MarkdownLabelHandler : ViewHandler<IMarkdownLabel, PlatformView>, IMarkdownLabelHandler
     {
-        public static PropertyMapper<IMarkdownLabel, IMarkdownLabelHandler> MarkdownLabelMapper = 
-            new PropertyMapper<IMarkdownLabel, IMarkdownLabelHandler>(LabelHandler.ViewMapper)
-        {
-            [nameof(IMarkdownLabel.Text)] = MapText,
-        };
-
-        //IMarkdownLabel IMarkdownLabelHandler.VirtualView => VirtualView;
-        //PlatformView IMarkdownLabelHandler.PlatformView => PlatformView;
+        public static PropertyMapper<IMarkdownLabel, MarkdownLabelHandler> MarkdownLabelMapper = 
+            new PropertyMapper<IMarkdownLabel, MarkdownLabelHandler>(LabelHandler.ViewMapper)
+            {
+                [nameof(IMarkdownLabel.Text)] = MapMarkdownText,
+                [nameof(IContentView.Content)] = MapContent,
+                
+            };
 
 #if (NET6_0 && !IOS && !MACCATALYST && !WINDOWS && !ANDROID && !TIZEN)
         protected override PlatformView CreatePlatformView() => new();
 #endif
 
-        public static void MapText(IMarkdownLabelHandler handler, IMarkdownLabel label)
+        public static void MapContent(IMarkdownLabelHandler handler, IMarkdownLabel label)
         {
 
+        }
+
+        public static void MapMarkdownText(IMarkdownLabelHandler handler, IMarkdownLabel label)
+        {
+            var markdownLabel = (MarkdownLabel)label;
+            markdownLabel.FormattedText = handler.VirtualView.UpdateFormattedText();
         }
 
         public MarkdownLabelHandler() : base(MarkdownLabelMapper)
@@ -52,13 +53,6 @@ namespace MdLabel.Handler
 
         }
 
-        //public MarkdownLabelHandler(
-        //    IPropertyMapper mapper, 
-        //    CommandMapper? commandMapper = null) : base(mapper, commandMapper)
-        //{
-
-        //}
-
         protected override void ConnectHandler(PlatformView platformView)
         {
             base.ConnectHandler(platformView);
@@ -69,6 +63,9 @@ namespace MdLabel.Handler
             base.DisconnectHandler(platformView);
         }
 
+        IMarkdownLabel IMarkdownLabelHandler.VirtualView => VirtualView;
+
+        PlatformView IMarkdownLabelHandler.PlatformView => PlatformView;
 
     }
 }

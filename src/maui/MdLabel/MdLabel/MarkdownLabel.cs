@@ -1,5 +1,6 @@
 ﻿using Markdig;
 using MdLabel.Renderer;
+using Microsoft.Maui.Handlers;
 using System.ComponentModel;
 
 namespace MdLabel
@@ -8,7 +9,6 @@ namespace MdLabel
     {
         private static event EventHandler? OnUpdateTextEventHandler;
         private static event EventHandler? OnUpdateEventHandler;
-
 
         public static new readonly BindableProperty TextProperty = BindableProperty.Create(
             propertyName: nameof(Text),
@@ -232,14 +232,16 @@ namespace MdLabel
         public MarkdownLabel()
         {
 
-            //LabelHandler.Mapper.AppendToMapping(nameof(IView.Visibility), (handler, view) =>
-            //{
-            //    if (view is MarkdownLabel markdownLabel)
-            //    {
-            //        UpdateFormattedText();
+            //OnUpdateTextEventHandler += MarkdownLabel_OnUpdateTextEventHandler;
+            //OnUpdateEventHandler += MarkdownLabel_OnUpdateEventHandler;
+            LabelHandler.Mapper.AppendToMapping(nameof(ILabel.Text), (handler, view) =>
+            {
+                if (view is MarkdownLabel markdownLabel)
+                {
+                    UpdateFormattedText();
 
-            //    }
-            //});
+                }
+            });
         }
 
         protected override void OnHandlerChanging(HandlerChangingEventArgs args)
@@ -249,8 +251,7 @@ namespace MdLabel
 
         protected override void OnHandlerChanged()
         {
-            OnUpdateTextEventHandler += MarkdownLabel_OnUpdateTextEventHandler;
-            OnUpdateEventHandler += MarkdownLabel_OnUpdateEventHandler;
+
         }
 
         private void MarkdownLabel_PropertyChanged(object? sender, PropertyChangedEventArgs e)
@@ -271,7 +272,10 @@ namespace MdLabel
 
         private void MarkdownLabel_OnUpdateEventHandler(object? sender, EventArgs e)
         {
-
+            //if (sender is MarkdownLabel)
+            //{
+            //    UpdateFormattedText();
+            //}
         }
 
         private void MarkdownLabel_OnUpdateTextEventHandler(object? sender, EventArgs? e)
@@ -314,14 +318,20 @@ namespace MdLabel
             }
         }
 
-        private void UpdateFormattedText()
+        public FormattedString? UpdateFormattedText()
         {
             var markdownString = AddVariablesToMarkdownString();
 
             if (!string.IsNullOrEmpty(markdownString))
             {
-                FormattedText = GetFormattedString(markdownString);
+                var formattedText = GetFormattedString(markdownString);
+
+                FormattedText = formattedText;
+
+                return formattedText;
             }
+
+            return default;
         }
 
         private FormattedString GetFormattedString(string markdownString)
