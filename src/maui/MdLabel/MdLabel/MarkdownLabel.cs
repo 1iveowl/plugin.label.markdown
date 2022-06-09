@@ -2,6 +2,7 @@
 using MdLabel.Renderer;
 using Microsoft.Maui.Handlers;
 using System.ComponentModel;
+using System.Runtime.CompilerServices;
 
 namespace MdLabel
 {
@@ -234,48 +235,54 @@ namespace MdLabel
 
             //OnUpdateTextEventHandler += MarkdownLabel_OnUpdateTextEventHandler;
             //OnUpdateEventHandler += MarkdownLabel_OnUpdateEventHandler;
-            LabelHandler.Mapper.AppendToMapping(nameof(ILabel.Text), (handler, view) =>
-            {
-                if (view is MarkdownLabel markdownLabel)
-                {
-                    UpdateFormattedText();
+            //LabelHandler.Mapper.AppendToMapping(nameof(ILabel.Text), (handler, view) =>
+            //{
+            //    if (view is MarkdownLabel markdownLabel)
+            //    {
+            //        UpdateFormattedText();
 
-                }
-            });
+            //    }
+            //});
         }
 
         protected override void OnHandlerChanging(HandlerChangingEventArgs args)
         {
             base.OnHandlerChanging(args);
+            OnUpdateTextEventHandler -= MarkdownLabel_OnUpdateTextEventHandler;
+            OnUpdateEventHandler -= MarkdownLabel_OnUpdateEventHandler;
         }
 
         protected override void OnHandlerChanged()
         {
+            //UpdateFormattedText();
+            OnUpdateTextEventHandler += MarkdownLabel_OnUpdateTextEventHandler;
+            OnUpdateEventHandler += MarkdownLabel_OnUpdateEventHandler;
 
+            OnUpdateTextEventHandler?.Invoke(this, EventArgs.Empty);
         }
 
-        private void MarkdownLabel_PropertyChanged(object? sender, PropertyChangedEventArgs e)
-        {
-            if (e.PropertyName == "Window")
-            {
+        //private void MarkdownLabel_PropertyChanged(object? sender, PropertyChangedEventArgs e)
+        //{
+        //    if (e.PropertyName == "Window")
+        //    {
 
-            }
-        }
+        //    }
+        //}
 
-        private void MarkdownLabel_Loaded(object? sender, EventArgs e)
+        //private void MarkdownLabel_Loaded(object? sender, EventArgs e)
+        //{
+        //    if (sender is MarkdownLabel)
+        //    {
+        //        UpdateFormattedText();
+        //    }
+        //}
+
+        private void MarkdownLabel_OnUpdateEventHandler(object? sender, EventArgs e)
         {
             if (sender is MarkdownLabel)
             {
                 UpdateFormattedText();
             }
-        }
-
-        private void MarkdownLabel_OnUpdateEventHandler(object? sender, EventArgs e)
-        {
-            //if (sender is MarkdownLabel)
-            //{
-            //    UpdateFormattedText();
-            //}
         }
 
         private void MarkdownLabel_OnUpdateTextEventHandler(object? sender, EventArgs? e)
