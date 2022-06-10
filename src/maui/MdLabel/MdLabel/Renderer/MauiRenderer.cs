@@ -9,8 +9,8 @@ namespace MdLabel.Renderer
         private readonly Stack<MarkdownInlineFormatKind> _markdownInlineFormatStack = new();
         private readonly List<MauiSpanBlock> _mauiSpanBlocks = new();
 
-        private Style? _currentStyle;
-        private MauiSpanBlock? _currentSpanBlock;
+        private Style? _currentStyle = default;
+        private MauiSpanBlock? _currentSpanBlock = default;
         private Uri? _uri = default;
 
         internal FormattedString GetFormattedString()
@@ -168,7 +168,6 @@ namespace MdLabel.Renderer
                 throw new NullReferenceException($"{nameof(MauiSpanBlock)} cannot be null");
             }
         }
-
 
         internal void OpenBlock()
         {
