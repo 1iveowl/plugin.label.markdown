@@ -32,13 +32,11 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <Folder Include="Platforms\Android\" />
+	  <Folder Include="Platforms\iOS\" />
+	  <Folder Include="Platforms\MacCatalyst\" />
 	  <Folder Include="Platforms\Tizen\" />
-	</ItemGroup>
-
-	<ItemGroup>
-	  <MauiXaml Update="MarkdownView.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
+	  <Folder Include="Platforms\Windows\" />
 	</ItemGroup>
 
 </Project>

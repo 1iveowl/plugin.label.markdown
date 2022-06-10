@@ -1,5 +1,4 @@
 ﻿using MdLabel;
-using MdLabel.Handler;
 
 namespace MdLabelDemo
 {
@@ -17,7 +16,7 @@ namespace MdLabelDemo
                 })
                 .ConfigureMauiHandlers(handlers =>
                 {
-                    //handlers.AddHandler(typeof(MarkdownLabel), typeof(MarkdownLabelHandler));
+
                 });
 
             return builder.Build();

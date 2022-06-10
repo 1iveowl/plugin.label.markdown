@@ -4,11 +4,11 @@ namespace MdLabel.Renderer
 {
     internal record MauiSpanBlock
     {
-        private readonly List<Span>? _spans = new();
+        private readonly List<MauiSpan>? _spans = new();
                 
         internal int TrailingNewLine { get; set; }
 
-        internal IEnumerable<Span> GetSpans()
+        internal IEnumerable<MauiSpan> GetSpans()
         {
             if (_spans?.Any() ?? false)
             {
@@ -20,11 +20,11 @@ namespace MdLabel.Renderer
             }
             else
             {
-                return new List<Span>();
+                return new List<MauiSpan>();
             }
         }
 
-        internal void AddSpan(Span span)
+        internal void AddSpan(MauiSpan span)
         {
             if (span is not null)
             {

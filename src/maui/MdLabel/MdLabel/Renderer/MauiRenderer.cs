@@ -83,7 +83,7 @@ namespace MdLabel.Renderer
                 throw new NullReferenceException($"{nameof(MauiSpanBlock)} cannot be null");
             }
 
-            Span? span = default;
+            MauiSpan? span = default;
 
             var (attributes, decorations) = GetInlineFormating();
 
@@ -92,13 +92,13 @@ namespace MdLabel.Renderer
             {
                 var urlText = slice.ToString();
 
-                span = new Span()
+                span = new MauiSpan()
                 {
                     Text = urlText,
                     TextDecorations = decorations,
                     TextColor = UrlLinkColor,
                     FontAttributes = attributes,
-                    Style = _currentStyle
+                    SpanStyle = _currentStyle
                 };
 
                 var tap = new TapGestureRecognizer()
@@ -114,12 +114,12 @@ namespace MdLabel.Renderer
             }
             else
             {
-                span = new Span()
+                span = new MauiSpan()
                 {
                     Text = slice.ToString(),
                     FontAttributes = attributes,
                     TextDecorations = decorations,
-                    Style = _currentStyle
+                    SpanStyle = _currentStyle
                 };
             }
 

@@ -1,15 +1,11 @@
 ﻿using Markdig;
 using MdLabel.Renderer;
-using Microsoft.Maui.Handlers;
-using System.ComponentModel;
-using System.Runtime.CompilerServices;
 
 namespace MdLabel
 {
     public class MarkdownLabel : Label, IMarkdownLabel
     {
         private static event EventHandler? OnUpdateTextEventHandler;
-        private static event EventHandler? OnUpdateEventHandler;
 
         public static new readonly BindableProperty TextProperty = BindableProperty.Create(
             propertyName: nameof(Text),
@@ -17,8 +13,7 @@ namespace MdLabel
             declaringType: typeof(MarkdownLabel),
             defaultValue: default(string),
             defaultBindingMode: BindingMode.OneWay,
-            OnTextMarkdownValidateValue,
-            OnTextMarkdownPropertyChanged);
+            propertyChanged: OnTextMarkdownPropertyChanged);
 
         public new string Text
         {
@@ -233,56 +228,20 @@ namespace MdLabel
         public MarkdownLabel()
         {
 
-            //OnUpdateTextEventHandler += MarkdownLabel_OnUpdateTextEventHandler;
-            //OnUpdateEventHandler += MarkdownLabel_OnUpdateEventHandler;
-            //LabelHandler.Mapper.AppendToMapping(nameof(ILabel.Text), (handler, view) =>
-            //{
-            //    if (view is MarkdownLabel markdownLabel)
-            //    {
-            //        UpdateFormattedText();
-
-            //    }
-            //});
         }
 
         protected override void OnHandlerChanging(HandlerChangingEventArgs args)
         {
             base.OnHandlerChanging(args);
             OnUpdateTextEventHandler -= MarkdownLabel_OnUpdateTextEventHandler;
-            OnUpdateEventHandler -= MarkdownLabel_OnUpdateEventHandler;
         }
 
         protected override void OnHandlerChanged()
         {
-            //UpdateFormattedText();
             OnUpdateTextEventHandler += MarkdownLabel_OnUpdateTextEventHandler;
-            OnUpdateEventHandler += MarkdownLabel_OnUpdateEventHandler;
 
-            OnUpdateTextEventHandler?.Invoke(this, EventArgs.Empty);
-        }
-
-        //private void MarkdownLabel_PropertyChanged(object? sender, PropertyChangedEventArgs e)
-        //{
-        //    if (e.PropertyName == "Window")
-        //    {
-
-        //    }
-        //}
-
-        //private void MarkdownLabel_Loaded(object? sender, EventArgs e)
-        //{
-        //    if (sender is MarkdownLabel)
-        //    {
-        //        UpdateFormattedText();
-        //    }
-        //}
-
-        private void MarkdownLabel_OnUpdateEventHandler(object? sender, EventArgs e)
-        {
-            if (sender is MarkdownLabel)
-            {
-                UpdateFormattedText();
-            }
+            UpdateFormattedText();
+            //OnUpdateTextEventHandler?.Invoke(this, EventArgs.Empty);
         }
 
         private void MarkdownLabel_OnUpdateTextEventHandler(object? sender, EventArgs? e)
@@ -293,27 +252,26 @@ namespace MdLabel
             }
         }
 
-
         private static void OnUpdatePropertyChanged(BindableObject bindable, object oldvalue, object newvalue)
         {
             if (bindable is MarkdownLabel labelMarkdown
                 && oldvalue != newvalue)
             {
-                OnUpdateEventHandler?.Invoke(labelMarkdown, EventArgs.Empty);
+                OnUpdateTextEventHandler?.Invoke(labelMarkdown, EventArgs.Empty);
             }
         }
 
-        private static bool OnTextMarkdownValidateValue(BindableObject bindable, object value)
-        {
-            var str = (string)value;
+        //private static bool OnTextMarkdownValidateValue(BindableObject bindable, object value)
+        //{
+        //    var str = (string)value;
 
-            if (str is not null)
-            {
-                return true;
-            }
+        //    if (str is not null)
+        //    {
+        //        return true;
+        //    }
 
-            return false;
-        }
+        //    return false;
+        //}
 
         private static void OnTextMarkdownPropertyChanged(BindableObject bindable, object oldvalue, object newvalue)
         {
@@ -325,7 +283,7 @@ namespace MdLabel
             }
         }
 
-        public FormattedString? UpdateFormattedText()
+        private FormattedString? UpdateFormattedText()
         {
             var markdownString = AddVariablesToMarkdownString();
 

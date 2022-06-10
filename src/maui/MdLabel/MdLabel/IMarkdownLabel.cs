@@ -1,6 +1,8 @@
-﻿namespace MdLabel
+﻿using Microsoft.Maui;
+
+namespace MdLabel
 {
-    public interface IMarkdownLabel //: ILabel
+    public interface IMarkdownLabel : ILabel
     {
         new string Text { get; set; }
 
@@ -21,7 +23,5 @@
         string Variable4 { get; set; }
         string Variable5 { get; set; }
         string Variable6 { get; set; }
-
-        FormattedString? UpdateFormattedText();
     }
 }
