@@ -62,19 +62,17 @@
                 Clicked="OnCounterClicked"
                 HorizontalOptions="Center" />
 
-            <md:MarkdownLabel 
+            <md:MarkdownView 
                 Text="# {{2}}Header A  ## Header B  ### Header C _with italic_  _First Line is italic text._    New Line with Variable 1 in bold: **{{1}}**    ~~New line with variable 3: {{3}}~~  *Italic Link: [Microsoft Azure B2C login](https://blogs.msdn.microsoft.com/azureadb2c/2018/10/05/b2clogin-com-is-now-generally-available/)*  Final Line... :thumbsup:"
                 Header1Style="{DynamicResource Header1SpanStyleA}"
                 Header2Style="{DynamicResource Header2SpanStyle}"
                 Header3Style="{DynamicResource Header3SpanStyle}"
                 Variable1="{Binding Source=Var1}"
                 Variable3="Var3"
-                FontSize="12"
                 Margin="60,0,60,0"
                 VerticalOptions="Start"
-                HorizontalOptions="Center"
-                HorizontalTextAlignment="Center">
-            </md:MarkdownLabel>
+                HorizontalOptions="Center">
+            </md:MarkdownView>
 
             <!--<md:MarkdownLabel 
                 TextMarkdown="# {{2}}Header A  ## Header B  ### Header C _with italic_  _First Line is italic text._  New Line with Variable 1 in bold: **{{1}}**  New line with variable 3: {{3}}  *Italic Link: [Microsoft Azure B2C login](https://blogs.msdn.microsoft.com/azureadb2c/2018/10/05/b2clogin-com-is-now-generally-available/)*"

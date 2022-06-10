@@ -35,4 +35,10 @@
 	  <Folder Include="Platforms\Tizen\" />
 	</ItemGroup>
 
+	<ItemGroup>
+	  <MauiXaml Update="MarkdownView.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	</ItemGroup>
+
 </Project>
