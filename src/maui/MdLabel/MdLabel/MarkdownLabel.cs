@@ -227,7 +227,10 @@ namespace MdLabel
 
         public MarkdownLabel()
         {
+            var rd = new ResourceDictionary();
+            //var style = new Style(typeof(Element)) { Key = "" };
 
+            Resources.MergedDictionaries.Add(rd);
         }
 
         protected override void OnHandlerChanging(HandlerChangingEventArgs args)

@@ -8,6 +8,13 @@
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="Resources/Styles/Colors.xaml" />
                 <ResourceDictionary Source="Resources/Styles/Styles.xaml" />
+                <ResourceDictionary>
+                    <Style x:Key="Header1StyleBase" TargetType="Element"></Style>
+                    <Style x:Key="Header1StyleA" TargetType="Span" BasedOn="{StaticResource Header1StyleBase}">
+                        <Setter Property="FontSize" Value="24"></Setter>
+                        <Setter Property="TextColor" Value="Yellow"></Setter>
+                    </Style>
+                </ResourceDictionary>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>
