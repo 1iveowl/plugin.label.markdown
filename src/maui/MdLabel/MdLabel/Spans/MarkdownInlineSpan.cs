@@ -1,4 +1,4 @@
-﻿namespace MdLabel.Span
+﻿namespace MdLabel.Spans
 {
     public class MarkdownInlineSpan : MarkdownSpanBase
     {

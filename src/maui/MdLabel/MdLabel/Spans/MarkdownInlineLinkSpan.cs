@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MdLabel.Span
+namespace MdLabel.Spans
 {
-    public class MarkdownLinkSpan : MarkdownSpanBase
+    public class MarkdownInlineLinkSpan : MarkdownSpanBase
     {
     }
 }

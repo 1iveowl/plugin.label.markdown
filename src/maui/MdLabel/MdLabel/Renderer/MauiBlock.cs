@@ -1,5 +1,5 @@
 ﻿using MdLabel.Helper;
-using MdLabel.Span;
+using MdLabel.Spans;
 
 namespace MdLabel.Renderer
 {

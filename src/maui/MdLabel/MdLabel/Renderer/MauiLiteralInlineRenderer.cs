@@ -11,7 +11,7 @@ namespace MdLabel.Renderer
     {
         protected override void Write(MauiRenderer renderer, LiteralInline obj)
         {
-            renderer.WriteInline(ref obj.Content);
+            renderer.WriteSpan(ref obj.Content);
         }
     }
 }

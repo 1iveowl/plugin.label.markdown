@@ -2,7 +2,7 @@
 using Markdig.Renderers;
 using Markdig.Syntax;
 using MdLabel.Helper;
-using MdLabel.Span;
+using MdLabel.Spans;
 
 namespace MdLabel.Renderer
 {
@@ -62,11 +62,11 @@ namespace MdLabel.Renderer
             EnableHtmlEscape = false;
         }
 
-        internal void SetHeaderStyle(int i)
+        internal void SetHeaderStyle(int level)
         {
-            if (i >= 1 && i <= 6)
+            if (level >= 1 && level <= 6)
             {
-                _markdownHeaderKind = (MarkdownHeaderKind)i;
+                _markdownHeaderKind = (MarkdownHeaderKind)level;
             }
         }
 
@@ -75,91 +75,48 @@ namespace MdLabel.Renderer
             _markdownHeaderKind = MarkdownHeaderKind.None;
         }
 
-        internal MauiRenderer WriteInline(ref StringSlice slice)
+        internal void WriteSpan(ref StringSlice slice)
         {
             if (_currentSpanBlock is null)
             {
                 throw new NullReferenceException($"{nameof(MauiSpanBlock)} cannot be null");
             }
 
-            var (attributes, decorations) = GetInlineFormating();
-
+            var text = slice.ToString();
+            
             MarkdownSpanBase? markdownSpan = default;
 
-            if(_markdownHeaderKind is not MarkdownHeaderKind.None)
-            {
-                markdownSpan = _markdownHeaderKind.GetHeaderSpan();
-            }
-            else if (_markdownInlineFormatStack.Any(inlineFormat => inlineFormat == MarkdownInlineFormatKind.Link)
+            if(_markdownInlineFormatStack.Any(inlineFormat => inlineFormat == MarkdownInlineFormatKind.Link) 
                 && _uri is not null)
             {
-                var urlText = slice.ToString();
+                markdownSpan = _markdownHeaderKind is MarkdownHeaderKind.None
+                    ? new MarkdownInlineLinkSpan()
+                    : _markdownHeaderKind.GetHeaderLinkSpan();
 
-                markdownSpan = new MarkdownLinkSpan
-                {
-                    Text = urlText,
-                };
-
-                var tap = new TapGestureRecognizer()
+                markdownSpan.GestureRecognizers.Add(new TapGestureRecognizer()
                 {
                     Command = new Command<string>(async _ =>
                     {
                         await Launcher.OpenAsync(_uri);
                     }),
-                    CommandParameter = urlText
-                };
-
-                markdownSpan.GestureRecognizers.Add(tap);
+                    CommandParameter = text
+                });
             }
             else
             {
-                markdownSpan = new MarkdownInlineSpan();
-            }
+                markdownSpan = _markdownHeaderKind is MarkdownHeaderKind.None
+                    ? new MarkdownInlineSpan()
+                    : _markdownHeaderKind.GetHeaderSpan();
 
-            var (attributes, decorations) = GetInlineFormating();
-
-            if (_markdownInlineFormatStack.Any(inlineFormat => inlineFormat == MarkdownInlineFormatKind.Link)
-                && _uri is not null)
-            {
-                var urlText = slice.ToString();
-
-                markdownSpan.Text = urlText;
-
-                //markdownSpan = new Microsoft.Maui.Controls.Span()
-                //{
-                //    Text = urlText,
-                //    TextDecorations = decorations,
-                //    TextColor = UrlLinkColor,
-                //    FontAttributes = attributes
-                //};
-
-                var tap = new TapGestureRecognizer()
-                {
-                    Command = new Command<string>(async _ =>
-                    {
-                        await Launcher.OpenAsync(_uri);
-                    }),
-                    CommandParameter = urlText
-                };
-
-                markdownSpan.GestureRecognizers.Add(tap);
-            }
-            else
-            {
-                markdownSpan = new Span()
-                {
-                    Text = slice.ToString(),
-                    FontAttributes = attributes,
-                    TextDecorations = decorations,
-                    Style = _currentStyle
-                };
-
+                var (fontAttributes, textDecorations) = GetInlineFormating();
+                markdownSpan.TextDecorations = textDecorations;
+                markdownSpan.FontAttributes = fontAttributes;
 
             }
+
+            markdownSpan.Text = text;
 
             _currentSpanBlock?.AddSpan(markdownSpan);
-
-            return this;
         }
 
         internal void OpenLink(Uri uri)
@@ -235,7 +192,7 @@ namespace MdLabel.Renderer
                     case MarkdownInlineFormatKind.None:
                         break;
                     case MarkdownInlineFormatKind.Link:
-                        decorations += (int)TextDecorations.Underline;
+                        //decorations += (int)TextDecorations.Underline;
                         break;
                     case MarkdownInlineFormatKind.Comment:
                     case MarkdownInlineFormatKind.TextRun:
