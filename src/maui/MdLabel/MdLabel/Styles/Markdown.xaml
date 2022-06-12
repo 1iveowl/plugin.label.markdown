@@ -46,33 +46,33 @@
     <Style TargetType="md:MarkdownHeader6Span" BasedOn="{StaticResource MarkdownHeader6StyleBase}"/>
 
     <Style TargetType="md:MarkdownHeader1LinkSpan" BasedOn="{StaticResource MarkdownHeader1StyleBase}">
-        <Setter Property="TextDecorations"  Value="Underline"></Setter>
-        <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource TertiaryBrush}, Dark={StaticResource PrimaryBrush}}"></Setter>
+        <Setter Property="TextDecorations" Value="Underline"></Setter>
+        <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource Tertiary}, Dark={StaticResource Primary}}"></Setter>
     </Style>
     <Style TargetType="md:MarkdownHeader2LinkSpan" BasedOn="{StaticResource MarkdownHeader2StyleBase}">
-        <Setter Property="TextDecorations"  Value="Underline"></Setter>
-        <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource TertiaryBrush}, Dark={StaticResource PrimaryBrush}}"></Setter>
+        <Setter Property="TextDecorations" Value="Underline"></Setter>
+        <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource Tertiary}, Dark={StaticResource Primary}}"></Setter>
     </Style>
     <Style TargetType="md:MarkdownHeader3LinkSpan" BasedOn="{StaticResource MarkdownHeader3StyleBase}">
-        <Setter Property="TextDecorations"  Value="Underline"></Setter>
-        <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource TertiaryBrush}, Dark={StaticResource PrimaryBrush}}"></Setter>
+        <Setter Property="TextDecorations" Value="Underline"></Setter>
+        <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource Tertiary}, Dark={StaticResource Primary}}"></Setter>
     </Style>
     <Style TargetType="md:MarkdownHeader4LinkSpan" BasedOn="{StaticResource MarkdownHeader4StyleBase}">
-        <Setter Property="TextDecorations"  Value="Underline"></Setter>
-        <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource TertiaryBrush}, Dark={StaticResource PrimaryBrush}}"></Setter>
+        <Setter Property="TextDecorations" Value="Underline"></Setter>
+        <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource Tertiary}, Dark={StaticResource Primary}}"></Setter>
     </Style>
     <Style TargetType="md:MarkdownHeader5LinkSpan" BasedOn="{StaticResource MarkdownHeader5StyleBase}">
-        <Setter Property="TextDecorations"  Value="Underline"></Setter>
-        <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource TertiaryBrush}, Dark={StaticResource PrimaryBrush}}"></Setter>
+        <Setter Property="TextDecorations" Value="Underline"></Setter>
+        <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource Tertiary}, Dark={StaticResource Primary}}"></Setter>
     </Style>
     <Style TargetType="md:MarkdownHeader6LinkSpan" BasedOn="{StaticResource MarkdownHeader6StyleBase}">
-        <Setter Property="TextDecorations"  Value="Underline"></Setter>
-        <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource TertiaryBrush}, Dark={StaticResource PrimaryBrush}}"></Setter>
+        <Setter Property="TextDecorations" Value="Underline"></Setter>
+        <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource Tertiary}, Dark={StaticResource Primary}}"></Setter>
     </Style>
 
     <Style TargetType="md:MarkdownInlineLinkSpan" BasedOn="{StaticResource MarkdownInlineBase}">
-        <Setter Property="TextDecorations"  Value="Underline"></Setter>
-        <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource TertiaryBrush}, Dark={StaticResource PrimaryBrush}}"></Setter>
+        <Setter Property="TextDecorations" Value="Underline"></Setter>
+        <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource Tertiary}, Dark={StaticResource Primary}}"></Setter>
     </Style>
 
 </ResourceDictionary>

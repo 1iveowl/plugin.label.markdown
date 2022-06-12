@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace MdLabel.Spans
 {
-    public class MarkdownInlineLinkSpan : MarkdownSpanBase
+    public class MarkdownInlineLinkSpan : MarkdownInlineSpan
     {
     }
 }

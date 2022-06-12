@@ -308,17 +308,7 @@ namespace MdLabel
         {
             var renderer = new MauiRenderer(new StringWriter(), Style)
             {
-                UrlLinkColor = UrlLinkColor,
                 IsExtraHeaderSpacing = IsExtraHeaderSpacing,
-                //HeaderStyles = new Dictionary<int, Style>
-                //{
-                //    {1, Header1Style},
-                //    {2, Header2Style},
-                //    {3, Header3Style},
-                //    {4, Header4Style},
-                //    {5, Header5Style},
-                //    {6, Header6Style},
-                //}
             };
 
             markdownString = markdownString

@@ -15,8 +15,6 @@ namespace MdLabel.Renderer
         private MauiSpanBlock? _currentSpanBlock = default;
         private Uri? _uri = default;
         private MarkdownHeaderKind _markdownHeaderKind = MarkdownHeaderKind.None;
-
-
         internal FormattedString GetFormattedString()
         {
             var formattedString = new FormattedString();
@@ -28,9 +26,9 @@ namespace MdLabel.Renderer
 
             return formattedString;
         }
-        internal Style? Style { get; init; }
+        //internal Style? Style { get; init; }
 
-        internal Color? UrlLinkColor { get; init; }        
+        //internal Color? UrlLinkColor { get; init; }        
         // internal Dictionary<int, Style>? HeaderStyles { get; init; }
         internal bool IsExtraHeaderSpacing { get; init; }
 
@@ -43,8 +41,7 @@ namespace MdLabel.Renderer
 
         public MauiRenderer(TextWriter writer, Style style) : base(writer)
         {
-            Style = style;
-            //_currentStyle = style;
+            //Style = style;
 
             ObjectRenderers.Add(new MauiParagraphRenderer());
             ObjectRenderers.Add(new MauiLiteralInlineRenderer());
@@ -107,12 +104,19 @@ namespace MdLabel.Renderer
                 markdownSpan = _markdownHeaderKind is MarkdownHeaderKind.None
                     ? new MarkdownInlineSpan()
                     : _markdownHeaderKind.GetHeaderSpan();
-
-                var (fontAttributes, textDecorations) = GetInlineFormating();
-                markdownSpan.TextDecorations = textDecorations;
-                markdownSpan.FontAttributes = fontAttributes;
-
             }
+
+            var (fontAttributes, textDecorations) = GetInlineFormating();
+
+            if (textDecorations is not TextDecorations.None)
+            {
+                markdownSpan.TextDecorations = textDecorations;
+            }
+
+            if (fontAttributes is not FontAttributes.None)
+            {
+                markdownSpan.FontAttributes = fontAttributes;
+            }            
 
             markdownSpan.Text = text;
 
@@ -189,14 +193,6 @@ namespace MdLabel.Renderer
             {
                 switch (inlineFormat)
                 {
-                    case MarkdownInlineFormatKind.None:
-                        break;
-                    case MarkdownInlineFormatKind.Link:
-                        //decorations += (int)TextDecorations.Underline;
-                        break;
-                    case MarkdownInlineFormatKind.Comment:
-                    case MarkdownInlineFormatKind.TextRun:
-                        break;
                     case MarkdownInlineFormatKind.Bold:
                         fontAttributes += (int)FontAttributes.Bold;
                         break;
@@ -209,16 +205,15 @@ namespace MdLabel.Renderer
                     case MarkdownInlineFormatKind.StrikeThrough:
                         decorations += (int)TextDecorations.Strikethrough;
                         break;
+                    case MarkdownInlineFormatKind.None:
+                    case MarkdownInlineFormatKind.Link:
+                    case MarkdownInlineFormatKind.Comment:
+                    case MarkdownInlineFormatKind.TextRun:
                     case MarkdownInlineFormatKind.SuperScript:
-                        break;
                     case MarkdownInlineFormatKind.Subscript:
-                        break;
                     case MarkdownInlineFormatKind.Code:
-                        break;
                     case MarkdownInlineFormatKind.Image:
-                        break;
                     case MarkdownInlineFormatKind.Inserted:
-                        break;
                     case MarkdownInlineFormatKind.Marked:
                         break;
                     default:
