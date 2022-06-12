@@ -10,16 +10,7 @@ namespace MdLabelDemo
     {
         public TestHeader1Span()
         {
-            try
-            {
-                SetDynamicResource(StyleProperty, "Header1StyleA");                
-            }
-            catch (Exception ex)
-            {
-
-                throw;
-            }
-            
+            //SetDynamicResource(StyleProperty, "Header1Style");            
         }
     }
 }

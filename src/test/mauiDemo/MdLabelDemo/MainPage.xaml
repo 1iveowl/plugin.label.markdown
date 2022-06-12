@@ -5,15 +5,15 @@
              xmlns:local="clr-namespace:MdLabelDemo"
              x:Class="MdLabelDemo.MainPage">
 
-    <!--<ContentPage.Resources>
+    <ContentPage.Resources>
         <ResourceDictionary>
 
-            <Style TargetType="Span" x:Key="Header1SpanStyleA">
-                <Setter Property="FontSize" Value="32"></Setter>
-                <Setter Property="TextColor" Value="Blue"></Setter>
+            <Style x:Key="StyleC" TargetType="local:TestHeader1Span" BasedOn="{StaticResource Header1StyleBase}">
+                <Setter Property="FontSize" Value="24"></Setter>
+                <Setter Property="TextColor" Value="Green"></Setter>
             </Style>
 
-            <Style TargetType="Span" x:Key="Header1SpanStyleB">
+            <!--<Style TargetType="Span" x:Key="Header1SpanStyleB">
                 <Setter Property="FontSize" Value="32"></Setter>
 
                 <Setter Property="TextColor" Value="Red"></Setter>
@@ -26,10 +26,10 @@
 
             <Style TargetType="Span" x:Key="Header3SpanStyle">
                 <Setter Property="FontSize" Value="12"></Setter>
-            </Style>
+            </Style>-->
 
         </ResourceDictionary>
-    </ContentPage.Resources>-->
+    </ContentPage.Resources>
 
     <ScrollView>
         <VerticalStackLayout 
@@ -57,38 +57,42 @@
                 HorizontalOptions="Center">
             </Label>
 
-            <Label x:Name="TestLabel1" 
-                FontSize="18"
-                HorizontalOptions="Center">
-                <Label.Resources>
+            <!--<local:MdTestLabel x:Name="TestLabel1" 
+                               Text="Test this!"
+                                FontSize="18"
+                                HorizontalOptions="Center">
+                <local:MdTestLabel.Resources>
                     <ResourceDictionary>
-                        <!--<Style x:Key="baseStyle" TargetType="Element">
-                        </Style>-->
-                        <Style x:Key="StyleB" TargetType="Span" BasedOn="{StaticResource Header1StyleBase}">
+                        <Style x:Key="Header1StyleA" TargetType="local:TestHeader1Span" BasedOn="{StaticResource Header1StyleBase}">
                             <Setter Property="FontSize" Value="24"></Setter>
-                            <Setter Property="TextColor" Value="Red"></Setter>
+                            <Setter Property="TextColor" Value="Yellow"></Setter>
                         </Style>
-                        <Style x:Key="StyleC" TargetType="Span" BasedOn="{StaticResource Header1StyleBase}">
+                        --><!--<Style x:Key="baseStyle" TargetType="Element">
+                        </Style>--><!--
+                        <Style x:Key="StyleB" TargetType="local:TestHeader1Span" BasedOn="{StaticResource Header1StyleBase}">
+                            <Setter Property="FontSize" Value="24"></Setter>
+                            <Setter Property="TextColor" Value="Brown"></Setter>
+                        </Style>
+                        --><!--<Style x:Key="StyleC" TargetType="local:TestHeader1Span" BasedOn="{StaticResource Header1StyleBase}">
                             <Setter Property="FontSize" Value="32"></Setter>
                             <Setter Property="TextColor" Value="Blue"></Setter>
-                        </Style>
+                        </Style>--><!--
                     </ResourceDictionary>
-                </Label.Resources>
-                <Label.FormattedText>
+                </local:MdTestLabel.Resources>
+                --><!--<local:MdTestLabel.FormattedText>
                     <FormattedString>
                         <local:TestHeader1Span Text="Test">
-                            
+
                         </local:TestHeader1Span>
                     </FormattedString>
-                </Label.FormattedText>
-            </Label>
+                </local:MdTestLabel.FormattedText>--><!--
+            </local:MdTestLabel>-->
 
-            <Button x:Name="ChangeStyleButton"
+            <!--<Button x:Name="ChangeStyleButton"
                     Text="Change Style"
                     Clicked="OnChangeStyleButtonClicked"
-                    HorizontalOptions="Center">
-                
-            </Button>
+                    HorizontalOptions="Center">                
+            </Button>-->
 
             <Button 
                 x:Name="CounterBtn"
@@ -111,15 +115,20 @@
 
             <md:MarkdownLabel
                 x:Name="Markdown"
-                Text ="# {{2}}Header A  ## Header B  ### Header C _with italic_  _First Line is italic text._  New Line with Variable 1 in bold: **{{1}}**  New line with variable 3: {{3}}  *Italic Link: [Microsoft Azure B2C login](https://blogs.msdn.microsoft.com/azureadb2c/2018/10/05/b2clogin-com-is-now-generally-available/)*"
-                Header1Style="{DynamicResource Header1SpanStyleA}"
-                Header2Style="{DynamicResource Header2SpanStyle}"
-                Header3Style="{DynamicResource Header3SpanStyle}"
                 FontSize="12"
                 Margin="60,0,60,0"
                 VerticalOptions="Start"
                 HorizontalOptions="Center"
                 HorizontalTextAlignment="Center">
+                <md:MarkdownLabel.Text>
+                    # {{2}}Header A  
+                    ## Header B  
+                    ### Header C _with italic_  
+                    _First Line is italic text._  
+                    New Line with Variable 1 in bold: **{{1}}**  
+                    New line with variable 3: {{3}}
+                    *Italic Link: [Microsoft Azure B2C login](https://blogs.msdn.microsoft.com/azureadb2c/2018/10/05/b2clogin-com-is-now-generally-available/)*
+                </md:MarkdownLabel.Text>
                 <md:MarkdownLabel.Resources>
                     <ResourceDictionary>
                         <Style TargetType="Span" x:Key="Header1SpanStyleA">

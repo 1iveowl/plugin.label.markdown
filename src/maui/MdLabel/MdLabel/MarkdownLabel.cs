@@ -58,89 +58,94 @@ namespace MdLabel
             set => SetValue(IsExtraHeaderSpacingProperty, value);
         }
 
-        #region headers
+        //#region headers
 
-        public static readonly BindableProperty Header1StyleProperty = BindableProperty.Create(
-            propertyName: nameof(Header1Style),
-            returnType: typeof(Style),
-            declaringType: typeof(MarkdownLabel),
-            defaultValue: default(Style),
-            propertyChanged: OnUpdatePropertyChanged);
+        //public static readonly BindableProperty Header1StyleProperty = BindableProperty.Create(
+        //    propertyName: nameof(Header1Style),
+        //    returnType: typeof(Style),
+        //    declaringType: typeof(MarkdownLabel),
+        //    defaultValue: default(Style),
+        //    propertyChanged: OnUpdatePropertyChanged);
 
-        public Style Header1Style
-        {
-            get => (Style)GetValue(Header1StyleProperty);
-            set => SetValue(Header1StyleProperty, value);
-        }
+        //public Style Header1Style
+        //{
+        //    get => (Style)GetValue(Header1StyleProperty);
+        //    set => SetValue(Header1StyleProperty, value);
+        //}
 
-        public static readonly BindableProperty Header2StyleProperty = BindableProperty.Create(
-            propertyName: nameof(Header2Style),
-            returnType: typeof(Style),
-            declaringType: typeof(MarkdownLabel),
-            defaultValue: default(Style),
-            propertyChanged: OnUpdatePropertyChanged);
+        //public static readonly BindableProperty Header2StyleProperty = BindableProperty.Create(
+        //    propertyName: nameof(Header2Style),
+        //    returnType: typeof(Style),
+        //    declaringType: typeof(MarkdownLabel),
+        //    defaultValue: default(Style),
+        //    propertyChanged: OnUpdatePropertyChanged);
 
-        public Style Header2Style
-        {
-            get => (Style)GetValue(Header2StyleProperty);
-            set => SetValue(Header2StyleProperty, value);
-        }
+        //public Style Header2Style
+        //{
+        //    get => (Style)GetValue(Header2StyleProperty);
+        //    set => SetValue(Header2StyleProperty, value);
+        //}
 
-        public static readonly BindableProperty Header3StyleProperty = BindableProperty.Create(
-            propertyName: nameof(Header3Style),
-            returnType: typeof(Style),
-            declaringType: typeof(MarkdownLabel),
-            defaultValue: default(Style),
-            propertyChanged: OnUpdatePropertyChanged);
-
-
-        public Style Header3Style
-        {
-            get => (Style)GetValue(Header3StyleProperty);
-            set => SetValue(Header3StyleProperty, value);
-        }
-
-        public static readonly BindableProperty Header4StyleProperty = BindableProperty.Create(
-            propertyName: nameof(Header4Style),
-            returnType: typeof(Style),
-            declaringType: typeof(MarkdownLabel),
-            defaultValue: default(Style),
-            propertyChanged: OnUpdatePropertyChanged);
+        //public static readonly BindableProperty Header3StyleProperty = BindableProperty.Create(
+        //    propertyName: nameof(Header3Style),
+        //    returnType: typeof(Style),
+        //    declaringType: typeof(MarkdownLabel),
+        //    defaultValue: default(Style),
+        //    propertyChanged: OnUpdatePropertyChanged);
 
 
-        public Style Header4Style
-        {
-            get => (Style)GetValue(Header4StyleProperty);
-            set => SetValue(Header4StyleProperty, value);
-        }
+        //public Style Header3Style
+        //{
+        //    get => (Style)GetValue(Header3StyleProperty);
+        //    set => SetValue(Header3StyleProperty, value);
+        //}
 
-        public static readonly BindableProperty Header5StyleProperty = BindableProperty.Create(
-            propertyName: nameof(Header5Style),
-            returnType: typeof(Style),
-            declaringType: typeof(MarkdownLabel),
-            defaultValue: default(Style),
-            propertyChanged: OnUpdatePropertyChanged);
-
-
-        public Style Header5Style
-        {
-            get => (Style)GetValue(Header5StyleProperty);
-            set => SetValue(Header5StyleProperty, value);
-        }
-
-        public static readonly BindableProperty Header6StyleProperty = BindableProperty.Create(
-            propertyName: nameof(Header6Style),
-            returnType: typeof(Style),
-            declaringType: typeof(MarkdownLabel),
-            defaultValue: default(Style),
-            propertyChanged: OnUpdatePropertyChanged);
+        //public static readonly BindableProperty Header4StyleProperty = BindableProperty.Create(
+        //    propertyName: nameof(Header4Style),
+        //    returnType: typeof(Style),
+        //    declaringType: typeof(MarkdownLabel),
+        //    defaultValue: default(Style),
+        //    propertyChanged: OnUpdatePropertyChanged);
 
 
-        public Style Header6Style
-        {
-            get => (Style)GetValue(Header6StyleProperty);
-            set => SetValue(Header6StyleProperty, value);
-        }
+        //public Style Header4Style
+        //{
+        //    get => (Style)GetValue(Header4StyleProperty);
+        //    set => SetValue(Header4StyleProperty, value);
+        //}
+
+        //public static readonly BindableProperty Header5StyleProperty = BindableProperty.Create(
+        //    propertyName: nameof(Header5Style),
+        //    returnType: typeof(Style),
+        //    declaringType: typeof(MarkdownLabel),
+        //    defaultValue: default(Style),
+        //    propertyChanged: OnUpdatePropertyChanged);
+
+
+        //public Style Header5Style
+        //{
+        //    get => (Style)GetValue(Header5StyleProperty);
+        //    set => SetValue(Header5StyleProperty, value);
+        //}
+
+        //public static readonly BindableProperty Header6StyleProperty = BindableProperty.Create(
+        //    propertyName: nameof(Header6Style),
+        //    returnType: typeof(Style),
+        //    declaringType: typeof(MarkdownLabel),
+        //    defaultValue: default(Style),
+        //    propertyChanged: OnUpdatePropertyChanged);
+
+
+        //public Style Header6Style
+        //{
+        //    get => (Style)GetValue(Header6StyleProperty);
+        //    set => SetValue(Header6StyleProperty, value);
+        //}
+
+
+        //#endregion
+
+        #region variables
 
         public static readonly BindableProperty Variable1Property = BindableProperty.Create(
             propertyName: nameof(Variable1),
@@ -149,9 +154,6 @@ namespace MdLabel
             defaultValue: default(string),
             propertyChanged: OnUpdatePropertyChanged);
 
-        #endregion
-
-        #region variables
         public string Variable1
         {
             get => (string)GetValue(Variable1Property);
@@ -308,15 +310,15 @@ namespace MdLabel
             {
                 UrlLinkColor = UrlLinkColor,
                 IsExtraHeaderSpacing = IsExtraHeaderSpacing,
-                HeaderStyles = new Dictionary<int, Style>
-                {
-                    {1, Header1Style},
-                    {2, Header2Style},
-                    {3, Header3Style},
-                    {4, Header4Style},
-                    {5, Header5Style},
-                    {6, Header6Style},
-                }
+                //HeaderStyles = new Dictionary<int, Style>
+                //{
+                //    {1, Header1Style},
+                //    {2, Header2Style},
+                //    {3, Header3Style},
+                //    {4, Header4Style},
+                //    {5, Header5Style},
+                //    {6, Header6Style},
+                //}
             };
 
             markdownString = markdownString

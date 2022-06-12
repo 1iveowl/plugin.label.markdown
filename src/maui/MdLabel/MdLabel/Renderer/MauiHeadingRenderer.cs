@@ -15,6 +15,7 @@ namespace MdLabel.Renderer
                 renderer.WriteLeafInline(obj);
                 renderer.AddNewLine();
             }
+
             renderer.CloseBlock();
             renderer.RemoveHeaderStyle();
         }

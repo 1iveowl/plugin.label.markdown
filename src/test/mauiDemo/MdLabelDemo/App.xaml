@@ -2,6 +2,7 @@
 <Application xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:local="clr-namespace:MdLabelDemo"
+             xmlns:markdownSpan="clr-namespace:MdLabel.Span;assembly=MdLabel"
              x:Class="MdLabelDemo.App">
     <Application.Resources>
         <ResourceDictionary>
@@ -9,10 +10,16 @@
                 <ResourceDictionary Source="Resources/Styles/Colors.xaml" />
                 <ResourceDictionary Source="Resources/Styles/Styles.xaml" />
                 <ResourceDictionary>
-                    <Style x:Key="Header1StyleBase" TargetType="Element"></Style>
-                    <Style x:Key="Header1StyleA" TargetType="Span" BasedOn="{StaticResource Header1StyleBase}">
+                    <Style x:Key="Header1StyleBase" TargetType="Span"></Style>
+                    <Style TargetType="local:TestHeader1Span" BasedOn="{StaticResource Header1StyleBase}">
                         <Setter Property="FontSize" Value="24"></Setter>
-                        <Setter Property="TextColor" Value="Yellow"></Setter>
+                        <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource Blue100Accent}, Dark={StaticResource Cyan100Accent}}"></Setter>
+                    </Style>
+
+                    <Style x:Key="MarkdownHeaderStyleBase" TargetType="markdownSpan:MarkdownHeaderSpanBase"></Style>
+                    <Style TargetType="markdownSpan:MarkdownHeader1Span" BasedOn="{StaticResource MarkdownHeaderStyleBase}">
+                        <Setter Property="FontSize" Value="24"></Setter>
+                        <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource Blue100Accent}, Dark={StaticResource Cyan100Accent}}"></Setter>
                     </Style>
                 </ResourceDictionary>
             </ResourceDictionary.MergedDictionaries>

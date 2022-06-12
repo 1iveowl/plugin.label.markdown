@@ -6,12 +6,12 @@ namespace MdLabel
     {
         new string Text { get; set; }
 
-        Style Header1Style { get; set; }
-        Style Header2Style { get; set; }
-        Style Header3Style { get; set; }
-        Style Header4Style { get; set; }
-        Style Header5Style { get; set; }
-        Style Header6Style { get; set; }
+        //Style Header1Style { get; set; }
+        //Style Header2Style { get; set; }
+        //Style Header3Style { get; set; }
+        //Style Header4Style { get; set; }
+        //Style Header5Style { get; set; }
+        //Style Header6Style { get; set; }
 
         bool IsExtraHeaderSpacing { get; set; }
         bool IsParagraphSpacing { get; set; }

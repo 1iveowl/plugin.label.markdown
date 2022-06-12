@@ -1,6 +1,8 @@
 ﻿using Markdig.Helpers;
 using Markdig.Renderers;
 using Markdig.Syntax;
+using MdLabel.Helper;
+using MdLabel.Span;
 
 namespace MdLabel.Renderer
 {
@@ -9,9 +11,10 @@ namespace MdLabel.Renderer
         private readonly Stack<MarkdownInlineFormatKind> _markdownInlineFormatStack = new();
         private readonly List<MauiSpanBlock> _mauiSpanBlocks = new();
 
-        private Style? _currentStyle = default;
+        //private Style? _currentStyle = default;
         private MauiSpanBlock? _currentSpanBlock = default;
         private Uri? _uri = default;
+        private MarkdownHeaderKind _markdownHeaderKind = MarkdownHeaderKind.None;
 
 
         internal FormattedString GetFormattedString()
@@ -28,7 +31,7 @@ namespace MdLabel.Renderer
         internal Style? Style { get; init; }
 
         internal Color? UrlLinkColor { get; init; }        
-        internal Dictionary<int, Style>? HeaderStyles { get; init; }
+        // internal Dictionary<int, Style>? HeaderStyles { get; init; }
         internal bool IsExtraHeaderSpacing { get; init; }
 
         public bool EnableHtmlForBlock { get; set; }
@@ -41,7 +44,7 @@ namespace MdLabel.Renderer
         public MauiRenderer(TextWriter writer, Style style) : base(writer)
         {
             Style = style;
-            _currentStyle = style;
+            //_currentStyle = style;
 
             ObjectRenderers.Add(new MauiParagraphRenderer());
             ObjectRenderers.Add(new MauiLiteralInlineRenderer());
@@ -61,21 +64,15 @@ namespace MdLabel.Renderer
 
         internal void SetHeaderStyle(int i)
         {
-            if (HeaderStyles is not null
-                && i >= 1 
-                && i <= HeaderStyles?.Count)
+            if (i >= 1 && i <= 6)
             {
-
-                if (HeaderStyles.TryGetValue(i, out var style))
-                {
-                    _currentStyle = style;
-                }                
-            }            
+                _markdownHeaderKind = (MarkdownHeaderKind)i;
+            }
         }
 
         internal void RemoveHeaderStyle()
         {
-            _currentStyle = Style;
+            _markdownHeaderKind = MarkdownHeaderKind.None;
         }
 
         internal MauiRenderer WriteInline(ref StringSlice slice)
@@ -85,23 +82,22 @@ namespace MdLabel.Renderer
                 throw new NullReferenceException($"{nameof(MauiSpanBlock)} cannot be null");
             }
 
-            Span? span = default;
-
             var (attributes, decorations) = GetInlineFormating();
 
-            if (_markdownInlineFormatStack.Any(inlineFormat => inlineFormat == MarkdownInlineFormatKind.Link)
+            MarkdownSpanBase? markdownSpan = default;
+
+            if(_markdownHeaderKind is not MarkdownHeaderKind.None)
+            {
+                markdownSpan = _markdownHeaderKind.GetHeaderSpan();
+            }
+            else if (_markdownInlineFormatStack.Any(inlineFormat => inlineFormat == MarkdownInlineFormatKind.Link)
                 && _uri is not null)
             {
                 var urlText = slice.ToString();
 
-                span = new Span()
+                markdownSpan = new MarkdownLinkSpan
                 {
                     Text = urlText,
-                    TextDecorations = decorations,
-                    TextColor = UrlLinkColor,
-                    FontAttributes = attributes,
-                    
-                    Style = _currentStyle
                 };
 
                 var tap = new TapGestureRecognizer()
@@ -113,11 +109,44 @@ namespace MdLabel.Renderer
                     CommandParameter = urlText
                 };
 
-                span.GestureRecognizers.Add(tap);
+                markdownSpan.GestureRecognizers.Add(tap);
             }
             else
             {
-                span = new Span()
+                markdownSpan = new MarkdownInlineSpan();
+            }
+
+            var (attributes, decorations) = GetInlineFormating();
+
+            if (_markdownInlineFormatStack.Any(inlineFormat => inlineFormat == MarkdownInlineFormatKind.Link)
+                && _uri is not null)
+            {
+                var urlText = slice.ToString();
+
+                markdownSpan.Text = urlText;
+
+                //markdownSpan = new Microsoft.Maui.Controls.Span()
+                //{
+                //    Text = urlText,
+                //    TextDecorations = decorations,
+                //    TextColor = UrlLinkColor,
+                //    FontAttributes = attributes
+                //};
+
+                var tap = new TapGestureRecognizer()
+                {
+                    Command = new Command<string>(async _ =>
+                    {
+                        await Launcher.OpenAsync(_uri);
+                    }),
+                    CommandParameter = urlText
+                };
+
+                markdownSpan.GestureRecognizers.Add(tap);
+            }
+            else
+            {
+                markdownSpan = new Span()
                 {
                     Text = slice.ToString(),
                     FontAttributes = attributes,
@@ -128,7 +157,7 @@ namespace MdLabel.Renderer
 
             }
 
-            _currentSpanBlock?.AddSpan(span);
+            _currentSpanBlock?.AddSpan(markdownSpan);
 
             return this;
         }

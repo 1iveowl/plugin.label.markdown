@@ -26,15 +26,19 @@
 
             InitializeComponent();
 
-            if (App.Current is not null &&
-                App.Current.Resources.MergedDictionaries.Any(d => d.TryGetValue("StyleB", out var x)))
-            {
+            //if (App.Current is not null &&
+            //    App.Current.Resources.MergedDictionaries.Any(d => d.TryGetValue("StyleB", out var x)))
+            //{
 
-            }
-            else
-            {
+            //}
+            //else if (Resources.TryGetValue("StyleB", out var y))
+            //{
                 
-            }
+            //}
+            //else
+            //{
+
+            //}
 
 
 
@@ -76,16 +80,16 @@
 
         private void OnChangeStyleButtonClicked(object sender, EventArgs e)
         {
-            if (originalStyle)
-            {
-                TestLabel1.Resources["Header1StyleA"] = TestLabel1.Resources["StyleB"];
-                originalStyle = false;
-            }
-            else
-            {
-                TestLabel1.Resources["Header1StyleA"] = TestLabel1.Resources["StyleC"];
-                originalStyle = true;
-            }
+            //if (originalStyle)
+            //{
+            //    Resources["Header1Style"] = TestLabel1.Resources["StyleB"];
+            //    originalStyle = false;
+            //}
+            //else
+            //{
+            //    Resources["Header1Style"] = Resources["StyleC"];
+            //    originalStyle = true;
+            //}
         }
     }
 }
