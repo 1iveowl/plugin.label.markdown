@@ -9,7 +9,9 @@ var testString = "# {{2}}Header A  ## Header B  ### Header C _with italic_  _Fir
 
 //var firstParser = parsers.FirstOrDefault();
 
-var pipelineBuilder = new MarkdownPipelineBuilder().UseEmojiAndSmiley().UseEmphasisExtras();
+var pipelineBuilder = new MarkdownPipelineBuilder()
+    .UseEmojiAndSmiley()
+    .UseEmphasisExtras();
 
 var extensions = pipelineBuilder.Extensions;
 

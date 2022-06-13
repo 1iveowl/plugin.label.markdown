@@ -15,8 +15,7 @@
         <Setter Property="FontSize" Value="Default"></Setter>
     </Style>
 
-    <Style x:Key="MarkdownHeaderStyleBase" TargetType="md:MarkdownHeaderSpanBase">
-        <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource Blue100Accent}, Dark={StaticResource Cyan100Accent}}"></Setter>
+    <Style x:Key="MarkdownHeaderStyleBase" TargetType="md:MarkdownHeaderSpanBase">        
     </Style>
     
     <Style x:Key="MarkdownHeader1StyleBase" TargetType="md:MarkdownHeader1SpanBase" BasedOn="{StaticResource MarkdownHeaderStyleBase}">

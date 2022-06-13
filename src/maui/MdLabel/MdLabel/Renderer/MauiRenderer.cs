@@ -1,4 +1,5 @@
-﻿using Markdig.Helpers;
+﻿using Markdig;
+using Markdig.Helpers;
 using Markdig.Renderers;
 using Markdig.Syntax;
 using MdLabel.Helper;
@@ -11,12 +12,22 @@ namespace MdLabel.Renderer
         private readonly Stack<MarkdownInlineFormatKind> _markdownInlineFormatStack = new();
         private readonly List<MauiSpanBlock> _mauiSpanBlocks = new();
 
-        //private Style? _currentStyle = default;
         private MauiSpanBlock? _currentSpanBlock = default;
         private Uri? _uri = default;
         private MarkdownHeaderKind _markdownHeaderKind = MarkdownHeaderKind.None;
-        internal FormattedString GetFormattedString()
+
+        internal FormattedString GetFormattedString(string markdownString)
         {
+            markdownString = markdownString
+                    .Replace("  ", Environment.NewLine);
+
+            var pipeline = new MarkdownPipelineBuilder()
+                .UseEmojiAndSmiley()
+                .UseEmphasisExtras()
+                .Build();
+
+            Markdown.Convert(markdownString, this, pipeline);
+
             var formattedString = new FormattedString();
 
             foreach (var span in _mauiSpanBlocks.SelectMany(block => block.GetSpans()))
@@ -26,23 +37,16 @@ namespace MdLabel.Renderer
 
             return formattedString;
         }
-        //internal Style? Style { get; init; }
 
-        //internal Color? UrlLinkColor { get; init; }        
-        // internal Dictionary<int, Style>? HeaderStyles { get; init; }
-        internal bool IsExtraHeaderSpacing { get; init; }
-
-        public bool EnableHtmlForBlock { get; set; }
-        public bool EnableHtmlForInline { get; set; }
-        public bool EnableHtmlEscape { get; set; }
-        public bool ImplicitParagraph { get; set; }
+        //public bool EnableHtmlForBlock { get; set; }
+        //public bool EnableHtmlForInline { get; set; }
+        //public bool EnableHtmlEscape { get; set; }
+        //public bool ImplicitParagraph { get; set; }
 
         public Uri? BaseUrl { get; set; }
 
-        public MauiRenderer(TextWriter writer, Style style) : base(writer)
+        public MauiRenderer() : base(new StringWriter())
         {
-            //Style = style;
-
             ObjectRenderers.Add(new MauiParagraphRenderer());
             ObjectRenderers.Add(new MauiLiteralInlineRenderer());
             ObjectRenderers.Add(new MauiEmphasisInlineRenderer());
@@ -53,10 +57,9 @@ namespace MdLabel.Renderer
             ObjectWriteBefore += MdRenderer_ObjectWriteBefore;
             ObjectWriteAfter += MdRenderer_ObjectWriteAfter;
 
-            //ImplicitParagraph = true;
-            EnableHtmlForBlock = true;
-            EnableHtmlForInline = true;
-            EnableHtmlEscape = false;
+            //EnableHtmlForBlock = true;
+            //EnableHtmlForInline = true;
+            //EnableHtmlEscape = false;
         }
 
         internal void SetHeaderStyle(int level)

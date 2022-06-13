@@ -9,61 +9,7 @@
 
         public MainPage()
         {
-
-
-
-            //var rd = new ResourceDictionary();
-
-            //var baseStyle = new Style(typeof(Element))
-            //{
-            //    BaseResourceKey = "baseStyle",
-            //};
-
-            //rd.Add(baseStyle);
-
-            //TestLabel1.Resources.MergedDictionaries.Add(rd);
-
-
             InitializeComponent();
-
-            //if (App.Current is not null &&
-            //    App.Current.Resources.MergedDictionaries.Any(d => d.TryGetValue("StyleB", out var x)))
-            //{
-
-            //}
-            //else if (Resources.TryGetValue("StyleB", out var y))
-            //{
-                
-            //}
-            //else
-            //{
-
-            //}
-
-
-
-            //var styleA = new Style(typeof(Span))
-            //{
-            //    BasedOn = baseStyle,
-            //};
-
-            //styleA.Setters.Add(new Setter { Property = Span.FontSizeProperty, Value = "24" });
-            //styleA.Setters.Add(new Setter { Property = Span.TextColorProperty, Value = Colors.Red });
-
-            //var styleB = new Style(typeof(Span))
-            //{
-            //    BasedOn = baseStyle,
-            //};
-
-            //styleB.Setters.Add(new Setter { Property = Span.FontSizeProperty, Value = "32" });
-            //styleB.Setters.Add(new Setter { Property = Span.TextColorProperty, Value = Colors.Blue });
-
-            //rd.Add("StyleA", styleA);
-            //rd.Add("StyleB", styleB);
-
-            //TestLabel1.Resources.MergedDictionaries.Add(rd);
-
-            //TestLabel1.Resources["TestStyle"] = TestLabel1.Resources["StyleA"];
         }
 
         private void OnCounterClicked(object sender, EventArgs e)
@@ -78,8 +24,9 @@
             SemanticScreenReader.Announce(CounterBtn.Text);
         }
 
-        private void OnChangeStyleButtonClicked(object sender, EventArgs e)
+        private void OnMarkdownUpdate(object sender, EventArgs e)
         {
+            Markdown.Text = "# Header 0  " + Markdown.Text;
             //if (originalStyle)
             //{
             //    Resources["Header1Style"] = TestLabel1.Resources["StyleB"];
