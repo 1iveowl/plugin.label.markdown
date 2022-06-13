@@ -38,11 +38,6 @@ namespace MdLabel.Renderer
             return formattedString;
         }
 
-        //public bool EnableHtmlForBlock { get; set; }
-        //public bool EnableHtmlForInline { get; set; }
-        //public bool EnableHtmlEscape { get; set; }
-        //public bool ImplicitParagraph { get; set; }
-
         public Uri? BaseUrl { get; set; }
 
         public MauiRenderer() : base(new StringWriter())
@@ -56,10 +51,6 @@ namespace MdLabel.Renderer
 
             ObjectWriteBefore += MdRenderer_ObjectWriteBefore;
             ObjectWriteAfter += MdRenderer_ObjectWriteAfter;
-
-            //EnableHtmlForBlock = true;
-            //EnableHtmlForInline = true;
-            //EnableHtmlEscape = false;
         }
 
         internal void SetHeaderStyle(int level)

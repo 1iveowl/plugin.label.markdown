@@ -121,7 +121,6 @@
 
             <md:MarkdownLabel
                 x:Name="Markdown"
-                FontSize="12"
                 Margin="60,0,60,0"
                 VerticalOptions="Start"
                 HorizontalOptions="Center"
