@@ -65,8 +65,6 @@
                     *Italic Link: [Microsoft Azure B2C login](https://blogs.msdn.microsoft.com/azureadb2c/2018/10/05/b2clogin-com-is-now-generally-available/)*
                     # Header 1 Link: [Microsoft Azure B2C login](https://blogs.msdn.microsoft.com/azureadb2c/2018/10/05/b2clogin-com-is-now-generally-available/)
                 </md:MarkdownLabel.Text>
-                <md:MarkdownLabel.Resources>
-                </md:MarkdownLabel.Resources>
             </md:MarkdownLabel>
 
         </VerticalStackLayout>
