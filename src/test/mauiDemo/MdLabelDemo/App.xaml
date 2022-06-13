@@ -10,18 +10,6 @@
                 <ResourceDictionary Source="Resources/Styles/Colors.xaml" />
                 <ResourceDictionary Source="Resources/Styles/Styles.xaml" />
                 <ResourceDictionary Source="Styles/Markdown.xaml;assembly=MdLabel" />
-                <ResourceDictionary>
-                    <Style x:Key="Header1StyleBase" TargetType="Span"></Style>
-                    <Style TargetType="local:TestHeader1Span" BasedOn="{StaticResource Header1StyleBase}">
-                        <Setter Property="FontSize" Value="24"></Setter>
-                        <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource Blue100Accent}, Dark={StaticResource Cyan100Accent}}"></Setter>
-                    </Style>
-
-                    <!--<Style x:Key="MarkdownHeaderStyleBase" TargetType="md:MarkdownHeaderSpanBase">
-                        <Setter Property="TextColor" Value="Red"></Setter>
-                    </Style>-->
-                    
-                </ResourceDictionary>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>

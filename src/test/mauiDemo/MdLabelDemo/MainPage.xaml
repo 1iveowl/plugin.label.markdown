@@ -6,29 +6,7 @@
              x:Class="MdLabelDemo.MainPage">
 
     <ContentPage.Resources>
-        <ResourceDictionary>
 
-            <Style x:Key="StyleC" TargetType="local:TestHeader1Span" BasedOn="{StaticResource Header1StyleBase}">
-                <Setter Property="FontSize" Value="24"></Setter>
-                <Setter Property="TextColor" Value="Green"></Setter>
-            </Style>
-
-            <!--<Style TargetType="Span" x:Key="Header1SpanStyleB">
-                <Setter Property="FontSize" Value="32"></Setter>
-
-                <Setter Property="TextColor" Value="Red"></Setter>
-            </Style>
-
-            <Style TargetType="Span" x:Key="Header2SpanStyle">
-                <Setter Property="FontSize" Value="16"></Setter>
-                <Setter Property="FontAttributes" Value="Italic"></Setter>
-            </Style>
-
-            <Style TargetType="Span" x:Key="Header3SpanStyle">
-                <Setter Property="FontSize" Value="12"></Setter>
-            </Style>-->
-
-        </ResourceDictionary>
     </ContentPage.Resources>
 
     <ScrollView>
@@ -57,62 +35,13 @@
                 HorizontalOptions="Center">
             </Label>
 
-            <!--<local:MdTestLabel x:Name="TestLabel1" 
-                               Text="Test this!"
-                                FontSize="18"
-                                HorizontalOptions="Center">
-                <local:MdTestLabel.Resources>
-                    <ResourceDictionary>
-                        <Style x:Key="Header1StyleA" TargetType="local:TestHeader1Span" BasedOn="{StaticResource Header1StyleBase}">
-                            <Setter Property="FontSize" Value="24"></Setter>
-                            <Setter Property="TextColor" Value="Yellow"></Setter>
-                        </Style>
-                        --><!--<Style x:Key="baseStyle" TargetType="Element">
-                        </Style>--><!--
-                        <Style x:Key="StyleB" TargetType="local:TestHeader1Span" BasedOn="{StaticResource Header1StyleBase}">
-                            <Setter Property="FontSize" Value="24"></Setter>
-                            <Setter Property="TextColor" Value="Brown"></Setter>
-                        </Style>
-                        --><!--<Style x:Key="StyleC" TargetType="local:TestHeader1Span" BasedOn="{StaticResource Header1StyleBase}">
-                            <Setter Property="FontSize" Value="32"></Setter>
-                            <Setter Property="TextColor" Value="Blue"></Setter>
-                        </Style>--><!--
-                    </ResourceDictionary>
-                </local:MdTestLabel.Resources>
-                --><!--<local:MdTestLabel.FormattedText>
-                    <FormattedString>
-                        <local:TestHeader1Span Text="Test">
-
-                        </local:TestHeader1Span>
-                    </FormattedString>
-                </local:MdTestLabel.FormattedText>--><!--
-            </local:MdTestLabel>-->
-
-            <!--<Button x:Name="ChangeStyleButton"
-                    Text="Change Style"
-                    Clicked="OnChangeStyleButtonClicked"
-                    HorizontalOptions="Center">                
-            </Button>-->
-
             <Button 
                 x:Name="CounterBtn"
                 Text="Click me"
                 SemanticProperties.Hint="Counts the number of times you click"
                 Clicked="OnCounterClicked"
                 HorizontalOptions="Center" />
-
-            <!--<md:MarkdownView 
-                Text="# {{2}}Header A  ## Header B  ### Header C _with italic_  _First Line is italic text._    New Line with Variable 1 in bold: **{{1}}**    ~~New line with variable 3: {{3}}~~  *Italic Link: [Microsoft Azure B2C login](https://blogs.msdn.microsoft.com/azureadb2c/2018/10/05/b2clogin-com-is-now-generally-available/)*  Final Line... :thumbsup:"
-                Header1Style="{DynamicResource Header1SpanStyleA}"
-                Header2Style="{DynamicResource Header2SpanStyle}"
-                Header3Style="{DynamicResource Header3SpanStyle}"
-                Variable1="{Binding Source=Var1}"
-                Variable3="Var3"
-                Margin="60,0,60,0"
-                VerticalOptions="Start"
-                HorizontalOptions="Center">
-            </md:MarkdownView>-->
-
+            
             <Button 
                 x:Name="MarkdownUpdateBtn"
                 Text="Update markdown"
@@ -137,44 +66,8 @@
                     # Header 1 Link: [Microsoft Azure B2C login](https://blogs.msdn.microsoft.com/azureadb2c/2018/10/05/b2clogin-com-is-now-generally-available/)
                 </md:MarkdownLabel.Text>
                 <md:MarkdownLabel.Resources>
-                    <ResourceDictionary>
-                        <Style TargetType="Span" x:Key="Header1SpanStyleA">
-                            <Setter Property="FontSize" Value="32"></Setter>
-                            <Setter Property="TextColor" Value="Blue"></Setter>
-                        </Style>
-
-                        <Style TargetType="Span" x:Key="Header1SpanStyleB">
-                            <Setter Property="FontSize" Value="32"></Setter>
-
-                            <Setter Property="TextColor" Value="Red"></Setter>
-                        </Style>
-
-                        <Style TargetType="Span" x:Key="Header2SpanStyle">
-                            <Setter Property="FontSize" Value="16"></Setter>
-                            <Setter Property="FontAttributes" Value="Italic"></Setter>
-                        </Style>
-
-                        <Style TargetType="Span" x:Key="Header3SpanStyle">
-                            <Setter Property="FontSize" Value="12"></Setter>
-                        </Style>
-                    </ResourceDictionary>
-
                 </md:MarkdownLabel.Resources>
-
-
             </md:MarkdownLabel>
-
-            <!--<md:MarkdownLabel 
-                TextMarkdown="# {{2}}Header A  &#x0a;## Header B  &#x0a;### Header C _with italic_  &#x0a;_First Line is italic text._  &#x0a;New Line with Variable 1 in bold: **{{1}}**  &#x0a;New line with variable 3: {{3}}  &#x0a;*Italic Link: [Microsoft Azure B2C login](https://blogs.msdn.microsoft.com/azureadb2c/2018/10/05/b2clogin-com-is-now-generally-available/)*"
-                Header1Style="{DynamicResource Header1SpanStyleA}"
-                Header2Style="{DynamicResource Header2SpanStyle}"
-                Header3Style="{DynamicResource Header3SpanStyle}"
-                FontSize="12"
-                Margin="60,0,60,0"
-                VerticalOptions="Start"
-                HorizontalOptions="Center"
-                HorizontalTextAlignment="Center">            
-            </md:MarkdownLabel>-->
 
         </VerticalStackLayout>
     </ScrollView>
