@@ -13,9 +13,9 @@ namespace MdLabel.Renderer
                     UriKind.RelativeOrAbsolute,
                     out var uri))
                 {
-                    renderer.OpenLink(uri);
+                    renderer.SetLink(uri);
                     renderer.WriteChildren(link);
-                    renderer.CloseLink();
+                    renderer.ClearLink();
                 }
             }
         }

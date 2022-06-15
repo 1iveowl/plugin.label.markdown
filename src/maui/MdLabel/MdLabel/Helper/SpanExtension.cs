@@ -4,27 +4,27 @@ namespace MdLabel.Helper
 {
     internal static class SpanExtension
     {
-        internal static MarkdownHeaderSpanBase GetHeaderSpan(this MarkdownHeaderKind headerKind) => headerKind switch
+        internal static MarkdownHeaderSpanBase GetHeaderSpan(this MarkdownHeaderLevelKind headerKind) => headerKind switch
         {
-            MarkdownHeaderKind.Header1 => new MarkdownHeader1Span(),
-            MarkdownHeaderKind.Header2 => new MarkdownHeader2Span(),
-            MarkdownHeaderKind.Header3 => new MarkdownHeader3Span(),
-            MarkdownHeaderKind.Header4 => new MarkdownHeader4Span(),
-            MarkdownHeaderKind.Header5 => new MarkdownHeader5Span(),
-            MarkdownHeaderKind.Header6 => new MarkdownHeader6Span(),
-            MarkdownHeaderKind.None => throw new ArgumentException($"Cannot create header span for {MarkdownHeaderKind.None}"),
+            MarkdownHeaderLevelKind.Header1 => new MarkdownHeader1Span(),
+            MarkdownHeaderLevelKind.Header2 => new MarkdownHeader2Span(),
+            MarkdownHeaderLevelKind.Header3 => new MarkdownHeader3Span(),
+            MarkdownHeaderLevelKind.Header4 => new MarkdownHeader4Span(),
+            MarkdownHeaderLevelKind.Header5 => new MarkdownHeader5Span(),
+            MarkdownHeaderLevelKind.Header6 => new MarkdownHeader6Span(),
+            MarkdownHeaderLevelKind.None => throw new ArgumentException($"Cannot create header span for {MarkdownHeaderLevelKind.None}"),
             _ => throw new NotImplementedException(),
         };
 
-        internal static MarkdownHeaderSpanBase GetHeaderLinkSpan(this MarkdownHeaderKind headerKind) => headerKind switch
+        internal static MarkdownHeaderSpanBase GetHeaderLinkSpan(this MarkdownHeaderLevelKind headerKind) => headerKind switch
         {
-            MarkdownHeaderKind.Header1 => new MarkdownHeader1LinkSpan(),
-            MarkdownHeaderKind.Header2 => new MarkdownHeader2LinkSpan(),
-            MarkdownHeaderKind.Header3 => new MarkdownHeader3LinkSpan(),
-            MarkdownHeaderKind.Header4 => new MarkdownHeader4LinkSpan(),
-            MarkdownHeaderKind.Header5 => new MarkdownHeader5LinkSpan(),
-            MarkdownHeaderKind.Header6 => new MarkdownHeader6LinkSpan(),
-            MarkdownHeaderKind.None => throw new ArgumentException($"Cannot create header span for {MarkdownHeaderKind.None}"),
+            MarkdownHeaderLevelKind.Header1 => new MarkdownHeader1LinkSpan(),
+            MarkdownHeaderLevelKind.Header2 => new MarkdownHeader2LinkSpan(),
+            MarkdownHeaderLevelKind.Header3 => new MarkdownHeader3LinkSpan(),
+            MarkdownHeaderLevelKind.Header4 => new MarkdownHeader4LinkSpan(),
+            MarkdownHeaderLevelKind.Header5 => new MarkdownHeader5LinkSpan(),
+            MarkdownHeaderLevelKind.Header6 => new MarkdownHeader6LinkSpan(),
+            MarkdownHeaderLevelKind.None => throw new ArgumentException($"Cannot create header span for {MarkdownHeaderLevelKind.None}"),
             _ => throw new NotImplementedException(),
         };
     }

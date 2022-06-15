@@ -1,5 +1,4 @@
-﻿using Markdig;
-using Markdig.Helpers;
+﻿using Markdig.Helpers;
 using Markdig.Renderers;
 using Markdig.Syntax;
 using MdLabel.Helper;
@@ -7,38 +6,9 @@ using MdLabel.Spans;
 
 namespace MdLabel.Renderer
 {
-    public class MauiRenderer : TextRendererBase<MauiRenderer>
+    public class MauiRenderer : TextRendererBase<MauiRenderer>, IDisposable
     {
-        private readonly Stack<MarkdownInlineFormatKind> _markdownInlineFormatStack = new();
-        private readonly List<MauiSpanBlock> _mauiSpanBlocks = new();
-
-        private MauiSpanBlock? _currentSpanBlock = default;
-        private Uri? _uri = default;
-        private MarkdownHeaderKind _markdownHeaderKind = MarkdownHeaderKind.None;
-
-        internal FormattedString GetFormattedString(string markdownString)
-        {
-            markdownString = markdownString
-                    .Replace("  ", Environment.NewLine);
-
-            var pipeline = new MarkdownPipelineBuilder()
-                .UseEmojiAndSmiley()
-                .UseEmphasisExtras()
-                .Build();
-
-            Markdown.Convert(markdownString, this, pipeline);
-
-            var formattedString = new FormattedString();
-
-            foreach (var span in _mauiSpanBlocks.SelectMany(block => block.GetSpans()))
-            {
-                formattedString.Spans.Add(span);
-            }
-
-            return formattedString;
-        }
-
-        public Uri? BaseUrl { get; set; }
+        private readonly MauiRenderState _state = new();
 
         public MauiRenderer() : base(new StringWriter())
         {
@@ -53,22 +23,21 @@ namespace MdLabel.Renderer
             ObjectWriteAfter += MdRenderer_ObjectWriteAfter;
         }
 
-        internal void SetHeaderStyle(int level)
+        internal FormattedString GetFormattedString()
         {
-            if (level >= 1 && level <= 6)
-            {
-                _markdownHeaderKind = (MarkdownHeaderKind)level;
-            }
-        }
+            var formattedString = new FormattedString();
 
-        internal void RemoveHeaderStyle()
-        {
-            _markdownHeaderKind = MarkdownHeaderKind.None;
+            foreach (var span in _state.SpanBlocks.SelectMany(block => block.GetSpans()))
+            {
+                formattedString.Spans.Add(span);
+            }
+
+            return formattedString;
         }
 
         internal void WriteSpan(ref StringSlice slice)
         {
-            if (_currentSpanBlock is null)
+            if (_state.CurrentSpanBlock is null)
             {
                 throw new NullReferenceException($"{nameof(MauiSpanBlock)} cannot be null");
             }
@@ -77,27 +46,27 @@ namespace MdLabel.Renderer
             
             MarkdownSpanBase? markdownSpan = default;
 
-            if(_markdownInlineFormatStack.Any(inlineFormat => inlineFormat == MarkdownInlineFormatKind.Link) 
-                && _uri is not null)
+            if(_state.InlineFormatStack.Any(inlineFormat => inlineFormat == MarkdownInlineFormatKind.Link) 
+                && _state.Uri is not null)
             {
-                markdownSpan = _markdownHeaderKind is MarkdownHeaderKind.None
+                markdownSpan = _state.CurrentHeaderLevel is MarkdownHeaderLevelKind.None
                     ? new MarkdownInlineLinkSpan()
-                    : _markdownHeaderKind.GetHeaderLinkSpan();
+                    : _state.CurrentHeaderLevel.GetHeaderLinkSpan();
 
                 markdownSpan.GestureRecognizers.Add(new TapGestureRecognizer()
                 {
                     Command = new Command<string>(async _ =>
                     {
-                        await Launcher.OpenAsync(_uri);
+                        await Launcher.OpenAsync(_state.Uri);
                     }),
                     CommandParameter = text
                 });
             }
             else
             {
-                markdownSpan = _markdownHeaderKind is MarkdownHeaderKind.None
+                markdownSpan = _state.CurrentHeaderLevel is MarkdownHeaderLevelKind.None
                     ? new MarkdownInlineSpan()
-                    : _markdownHeaderKind.GetHeaderSpan();
+                    : _state.CurrentHeaderLevel.GetHeaderSpan();
             }
 
             var (fontAttributes, textDecorations) = GetInlineFormating();
@@ -114,68 +83,7 @@ namespace MdLabel.Renderer
 
             markdownSpan.Text = text;
 
-            _currentSpanBlock?.AddSpan(markdownSpan);
-        }
-
-        internal void OpenLink(Uri uri)
-        {
-            if (_currentSpanBlock is null)
-            {
-                throw new NullReferenceException($"{nameof(MauiSpanBlock)} cannot be null");
-            }
-
-            PushInlineType(MarkdownInlineFormatKind.Link);
-            _uri = uri;     
-        }
-        internal void CloseLink()
-        {
-            PopInlineType();
-            _uri = default;
-        }
-
-        internal void PushInlineType(MarkdownInlineFormatKind markdownLineType)
-        {
-            _markdownInlineFormatStack.Push(markdownLineType);
-        }
-
-        internal void PopInlineType()
-        {
-            if (_markdownInlineFormatStack.Count > 0)
-            {
-                _markdownInlineFormatStack.Pop();
-            }
-        }
-
-        internal void AddNewLine()
-        {
-            if (_currentSpanBlock is not null)
-            {
-                _currentSpanBlock.TrailingNewLine++;
-            }
-            else
-            {
-                throw new NullReferenceException($"{nameof(MauiSpanBlock)} cannot be null");
-            }
-        }
-
-        internal void OpenBlock()
-        {
-            if (_currentSpanBlock is not null)
-            {
-                CloseBlock();
-            }
-
-            _currentSpanBlock = new MauiSpanBlock();
-        }
-
-        internal void CloseBlock()
-        {
-            if (_currentSpanBlock is not null)
-            {
-                _mauiSpanBlocks.Add(_currentSpanBlock);
-            }
-
-            _currentSpanBlock = default;
+            _state.CurrentSpanBlock?.AddSpan(markdownSpan);
         }
 
         private (FontAttributes attributes, TextDecorations decorations) GetInlineFormating()
@@ -183,7 +91,7 @@ namespace MdLabel.Renderer
             FontAttributes fontAttributes = FontAttributes.None;
             TextDecorations decorations = TextDecorations.None;
 
-            foreach (var inlineFormat in _markdownInlineFormatStack)
+            foreach (var inlineFormat in _state.InlineFormatStack)
             {
                 switch (inlineFormat)
                 {
@@ -218,6 +126,24 @@ namespace MdLabel.Renderer
             return (fontAttributes, decorations);
         }
 
+        internal void SetHeaderStyle(int level) => _state.SetHeaderStyle(level);
+
+        internal void ClearHeaderStyle() => _state.ClearHeaderStyle();
+
+        internal void SetLink(Uri uri) => _state.SetLink(uri);
+
+        internal void ClearLink() => _state.ClearLink();
+
+        internal void PushInlineFormatType(MarkdownInlineFormatKind markdownLineType) => _state.PushInlineFromatType(markdownLineType);
+
+        internal void PopInlineFormatType() => _state.PopInlineFormatType();
+
+        internal void AddNewLine() => _state.AddNewLine();
+
+        internal void OpenBlock() => _state.OpenBlock();
+
+        internal void CloseBlock() => _state.CloseBlock();
+
         private void MdRenderer_ObjectWriteAfter(IMarkdownRenderer arg1, MarkdownObject arg2)
         {
 
@@ -227,6 +153,8 @@ namespace MdLabel.Renderer
         {
 
         }
+
+        public void Dispose() => _state.Dispose();
     }
 }
 

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace MdLabel
 {
-    public enum MarkdownHeaderKind
+    public enum MarkdownHeaderLevelKind
     {
         None = 0,
         Header1 = 1,

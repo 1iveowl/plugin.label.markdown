@@ -17,7 +17,7 @@ namespace MdLabel.Renderer
             }
 
             renderer.CloseBlock();
-            renderer.RemoveHeaderStyle();
+            renderer.ClearHeaderStyle();
         }
 
         public override void Write(RendererBase renderer, MarkdownObject obj)

@@ -5,7 +5,10 @@ namespace MdLabel
 {
     public class MarkdownLabel : Label, IMarkdownLabel
     {
-        private static event EventHandler? OnUpdateTextEventHandler;
+        private static readonly MarkdownPipeline? _markdownPipeline = new MarkdownPipelineBuilder()
+                        .UseEmojiAndSmiley()
+                        .UseEmphasisExtras()
+                        .Build();
 
         public static new readonly BindableProperty TextProperty = BindableProperty.Create(
             propertyName: nameof(Text),
@@ -13,7 +16,22 @@ namespace MdLabel
             declaringType: typeof(MarkdownLabel),
             defaultValue: default(string),
             defaultBindingMode: BindingMode.OneWay,
-            propertyChanged: OnTextMarkdownPropertyChanged);
+            propertyChanged: (BindableProperty.BindingPropertyChangedDelegate)((bindable, oldValue, newValue) =>
+            {
+                if (bindable is MarkdownLabel labelMarkdown
+                    && newValue is string markdownString
+                    && (!oldValue?.Equals(newValue) ?? true))
+                {
+                    using var renderer = new MauiRenderer();
+
+                    Markdown.Convert(
+                        markdownString.Replace("  ", Environment.NewLine),
+                        renderer, 
+                        _markdownPipeline);
+
+                    labelMarkdown.FormattedText = renderer.GetFormattedString();
+                }
+            }));
 
         public new string Text
         {
@@ -23,56 +41,7 @@ namespace MdLabel
 
         public MarkdownLabel()
         {
-            var rd = new ResourceDictionary();
-            Resources.MergedDictionaries.Add(rd);
-        }
 
-        protected override void OnHandlerChanging(HandlerChangingEventArgs args)
-        {
-            base.OnHandlerChanging(args);
-            OnUpdateTextEventHandler -= MarkdownLabel_OnUpdateTextEventHandler;
-        }
-
-        protected override void OnHandlerChanged()
-        {
-            OnUpdateTextEventHandler += MarkdownLabel_OnUpdateTextEventHandler;
-
-            UpdateFormattedText(Text);
-        }
-
-        private void MarkdownLabel_OnUpdateTextEventHandler(object? sender, EventArgs? e)
-        {
-            if (sender is MarkdownLabel)
-            {
-                UpdateFormattedText(Text);
-            }
-        }
-
-        private static void OnUpdatePropertyChanged(BindableObject bindable, object oldvalue, object newvalue)
-        {
-            if (bindable is MarkdownLabel labelMarkdown
-                && oldvalue != newvalue)
-            {
-                OnUpdateTextEventHandler?.Invoke(labelMarkdown, EventArgs.Empty);
-            }
-        }
-
-        private static void OnTextMarkdownPropertyChanged(BindableObject bindable, object oldvalue, object newvalue)
-        {
-            if (bindable is MarkdownLabel labelMarkdown
-                && newvalue is string
-                && (!oldvalue?.Equals(newvalue) ?? true))
-            {                
-                OnUpdateTextEventHandler?.Invoke(labelMarkdown, EventArgs.Empty);
-            }
-        }
-
-        private void UpdateFormattedText(string markdownString)
-        {
-            if (!string.IsNullOrEmpty(markdownString))
-            {
-                FormattedText = new MauiRenderer().GetFormattedString(markdownString);
-            }
         }
     }
 }

@@ -48,6 +48,15 @@
                 Clicked="OnMarkdownUpdate"
                 HorizontalOptions="Center" />
 
+            <!--<Label>
+                <Label.FormattedText>
+                    <FormattedString>
+                        <Span>Test
+                        New live</Span>
+                    </FormattedString>
+                </Label.FormattedText>
+            </Label>-->
+
             <md:MarkdownLabel
                 x:Name="Markdown"
                 Margin="60,0,60,0"

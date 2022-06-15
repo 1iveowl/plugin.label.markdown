@@ -13,29 +13,29 @@ namespace MdLabel.Renderer
             switch(emphasisInline.DelimiterChar)
             {
                 case '*' or '_':
-                    renderer.PushInlineType(emphasisInline.DelimiterCount == 2
+                    renderer.PushInlineFormatType(emphasisInline.DelimiterCount == 2
                         ? MarkdownInlineFormatKind.Bold
                         : MarkdownInlineFormatKind.Italic);
                     break;
                 case '~':
-                    renderer.PushInlineType(emphasisInline.DelimiterCount == 2
+                    renderer.PushInlineFormatType(emphasisInline.DelimiterCount == 2
                         ? MarkdownInlineFormatKind.StrikeThrough
                         : MarkdownInlineFormatKind.SuperScript);
                     break;
                 case '^':
-                    renderer.PushInlineType(MarkdownInlineFormatKind.SuperScript);
+                    renderer.PushInlineFormatType(MarkdownInlineFormatKind.SuperScript);
                     break;
                 case '+':
-                    renderer.PushInlineType(MarkdownInlineFormatKind.Inserted);
+                    renderer.PushInlineFormatType(MarkdownInlineFormatKind.Inserted);
                     break;
                 case '=':
-                    renderer.PushInlineType(MarkdownInlineFormatKind.Marked);
+                    renderer.PushInlineFormatType(MarkdownInlineFormatKind.Marked);
                     break;
             }
 
             renderer.WriteChildren(emphasisInline);
 
-            renderer.PopInlineType();
+            renderer.PopInlineFormatType();
         }
     }
 }
