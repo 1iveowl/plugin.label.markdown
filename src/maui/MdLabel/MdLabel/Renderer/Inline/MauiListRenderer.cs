@@ -1,6 +1,6 @@
 ﻿using Markdig.Syntax;
 
-namespace MdLabel.Renderer
+namespace MdLabel.Renderer.Inline
 {
     public class MauiListRenderer : MauiObjectRenderer<ListBlock>
     {

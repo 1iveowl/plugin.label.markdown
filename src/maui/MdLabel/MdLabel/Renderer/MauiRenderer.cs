@@ -2,6 +2,7 @@
 using Markdig.Renderers;
 using Markdig.Syntax;
 using MdLabel.Helper;
+using MdLabel.Renderer.Inline;
 using MdLabel.Spans;
 
 namespace MdLabel.Renderer
@@ -18,6 +19,7 @@ namespace MdLabel.Renderer
             ObjectRenderers.Add(new MauiHeadingRenderer());
             ObjectRenderers.Add(new MauiLineBreakInlineRenderer());
             ObjectRenderers.Add(new MauiLinkInlineRenderer());
+            ObjectRenderers.Add(new MauiListRenderer());
 
             ObjectWriteBefore += MdRenderer_ObjectWriteBefore;
             ObjectWriteAfter += MdRenderer_ObjectWriteAfter;
@@ -51,7 +53,7 @@ namespace MdLabel.Renderer
             {
                 markdownSpan = _state.CurrentHeaderLevel is MarkdownHeaderLevelKind.None
                     ? new MarkdownInlineLinkSpan()
-                    : _state.CurrentHeaderLevel.GetHeaderLinkSpan();
+                    : _state.CurrentHeaderLevel.GetHeaderSpan();
 
                 markdownSpan.GestureRecognizers.Add(new TapGestureRecognizer()
                 {

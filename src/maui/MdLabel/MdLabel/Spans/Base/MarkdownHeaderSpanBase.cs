@@ -1,6 +1,6 @@
 ﻿namespace MdLabel.Spans
 {
-    public abstract class MarkdownHeaderSpanBase : MarkdownSpanBase
+    public abstract class MarkdownHeaderSpanBase : MarkdownInlineSpanBase
     {
 
     }

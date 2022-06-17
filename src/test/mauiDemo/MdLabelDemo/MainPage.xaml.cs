@@ -27,16 +27,20 @@
         private void OnMarkdownUpdate(object sender, EventArgs e)
         {
             Markdown.Text = "# Header 0  " + Markdown.Text;
-            //if (originalStyle)
-            //{
-            //    Resources["Header1Style"] = TestLabel1.Resources["StyleB"];
-            //    originalStyle = false;
-            //}
-            //else
-            //{
-            //    Resources["Header1Style"] = Resources["StyleC"];
-            //    originalStyle = true;
-            //}
+        }
+
+        private void OnDarkModeUpdate(object sender, EventArgs e)
+        {
+            if (originalStyle)
+            {
+                Application.Current.UserAppTheme = AppTheme.Light;                
+                originalStyle = false;
+            }
+            else
+            {
+                Application.Current.UserAppTheme = AppTheme.Dark;
+                originalStyle = true;
+            }           
         }
     }
 }

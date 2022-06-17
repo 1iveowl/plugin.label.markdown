@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MdLabel.Renderer
+namespace MdLabel.Renderer.Inline
 {
     public class MauiLineBreakInlineRenderer : MauiObjectRenderer<LineBreakInline>
     {

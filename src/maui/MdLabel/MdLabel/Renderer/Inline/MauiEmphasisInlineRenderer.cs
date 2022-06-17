@@ -1,6 +1,6 @@
 ﻿using Markdig.Syntax.Inlines;
 
-namespace MdLabel.Renderer
+namespace MdLabel.Renderer.Inline
 {
     /// <summary>
     /// A HTML renderer for an <see cref="EmphasisInline"/>.
@@ -10,7 +10,7 @@ namespace MdLabel.Renderer
     {
         protected override void Write(MauiRenderer renderer, EmphasisInline emphasisInline)
         {
-            switch(emphasisInline.DelimiterChar)
+            switch (emphasisInline.DelimiterChar)
             {
                 case '*' or '_':
                     renderer.PushInlineFormatType(emphasisInline.DelimiterCount == 2

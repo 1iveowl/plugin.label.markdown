@@ -1,6 +1,6 @@
 ﻿using Markdig.Syntax.Inlines;
 
-namespace MdLabel.Renderer
+namespace MdLabel.Renderer.Inline
 {
     public class MauiLinkInlineRenderer : MauiObjectRenderer<LinkInline>
     {

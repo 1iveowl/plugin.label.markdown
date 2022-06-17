@@ -11,31 +11,35 @@
     <x:Double x:Key="MarkdownHeader5Size">18</x:Double>
     <x:Double x:Key="MarkdownHeader6Size">16</x:Double>
 
-    <Style x:Key="MarkdownInlineBase" TargetType="md:MarkdownSpanBase">
-        <Setter Property="FontSize" Value="Default"></Setter>
+    <Style x:Key="SpanBase" TargetType="Span">
+        <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource Gray900}, Dark={StaticResource White}}" />
+        <Setter Property="FontFamily" Value="OpenSansRegular" />
+        <Setter Property="FontSize" Value="Default" />
     </Style>
 
-    <Style TargetType="md:MarkdownInlineSpan" BasedOn="{StaticResource MarkdownInlineBase}"/>
-
-    <Style x:Key="MarkdownHeaderStyleBase" TargetType="md:MarkdownHeaderSpanBase">        
+    <Style x:Key="MarkdownInlineBase" TargetType="md:MarkdownSpanBase" BasedOn="{StaticResource SpanBase}">
+        <Setter Property="UrlTextDecorations" Value="Underline"></Setter>
+        <Setter Property="UrlColor" Value="{AppThemeBinding Light={StaticResource Tertiary}, Dark={StaticResource Yellow100Accent}}"></Setter>
     </Style>
+
+    <Style x:Key="MarkdownHeaderInlineStyleBase" TargetType="md:MarkdownHeaderSpanBase" BasedOn="{StaticResource MarkdownInlineBase}" />
     
-    <Style x:Key="MarkdownHeader1StyleBase" TargetType="md:MarkdownHeader1SpanBase" BasedOn="{StaticResource MarkdownHeaderStyleBase}">
+    <Style x:Key="MarkdownHeader1StyleBase" TargetType="md:MarkdownHeader1SpanBase" BasedOn="{StaticResource MarkdownHeaderInlineStyleBase}">
         <Setter Property="FontSize" Value="{StaticResource MarkdownHeader1Size}"></Setter>
     </Style>
-    <Style x:Key="MarkdownHeader2StyleBase" TargetType="md:MarkdownHeader2SpanBase" BasedOn="{StaticResource MarkdownHeaderStyleBase}">
+    <Style x:Key="MarkdownHeader2StyleBase" TargetType="md:MarkdownHeader2SpanBase" BasedOn="{StaticResource MarkdownHeaderInlineStyleBase}">
         <Setter Property="FontSize" Value="{StaticResource MarkdownHeader2Size}"></Setter>
     </Style>
-    <Style x:Key="MarkdownHeader3StyleBase" TargetType="md:MarkdownHeader3SpanBase" BasedOn="{StaticResource MarkdownHeaderStyleBase}">
+    <Style x:Key="MarkdownHeader3StyleBase" TargetType="md:MarkdownHeader3SpanBase" BasedOn="{StaticResource MarkdownHeaderInlineStyleBase}">
         <Setter Property="FontSize" Value="{StaticResource MarkdownHeader3Size}"></Setter>
     </Style>
-    <Style x:Key="MarkdownHeader4StyleBase" TargetType="md:MarkdownHeader4SpanBase" BasedOn="{StaticResource MarkdownHeaderStyleBase}">
+    <Style x:Key="MarkdownHeader4StyleBase" TargetType="md:MarkdownHeader4SpanBase" BasedOn="{StaticResource MarkdownHeaderInlineStyleBase}">
         <Setter Property="FontSize" Value="{StaticResource MarkdownHeader4Size}"></Setter>
     </Style>
-    <Style x:Key="MarkdownHeader5StyleBase" TargetType="md:MarkdownHeader5SpanBase" BasedOn="{StaticResource MarkdownHeaderStyleBase}">
+    <Style x:Key="MarkdownHeader5StyleBase" TargetType="md:MarkdownHeader5SpanBase" BasedOn="{StaticResource MarkdownHeaderInlineStyleBase}">
         <Setter Property="FontSize" Value="{StaticResource MarkdownHeader5Size}"></Setter>
     </Style>
-    <Style x:Key="MarkdownHeader6StyleBase" TargetType="md:MarkdownHeader6SpanBase" BasedOn="{StaticResource MarkdownHeaderStyleBase}">
+    <Style x:Key="MarkdownHeader6StyleBase" TargetType="md:MarkdownHeader6SpanBase" BasedOn="{StaticResource MarkdownHeaderInlineStyleBase}">
         <Setter Property="FontSize" Value="{StaticResource MarkdownHeader6Size}"></Setter>
     </Style>
 
@@ -46,34 +50,11 @@
     <Style TargetType="md:MarkdownHeader5Span" BasedOn="{StaticResource MarkdownHeader5StyleBase}"/>
     <Style TargetType="md:MarkdownHeader6Span" BasedOn="{StaticResource MarkdownHeader6StyleBase}"/>
 
-    <Style TargetType="md:MarkdownHeader1LinkSpan" BasedOn="{StaticResource MarkdownHeader1StyleBase}">
-        <Setter Property="TextDecorations" Value="Underline"></Setter>
-        <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource Tertiary}, Dark={StaticResource Primary}}"></Setter>
-    </Style>
-    <Style TargetType="md:MarkdownHeader2LinkSpan" BasedOn="{StaticResource MarkdownHeader2StyleBase}">
-        <Setter Property="TextDecorations" Value="Underline"></Setter>
-        <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource Tertiary}, Dark={StaticResource Primary}}"></Setter>
-    </Style>
-    <Style TargetType="md:MarkdownHeader3LinkSpan" BasedOn="{StaticResource MarkdownHeader3StyleBase}">
-        <Setter Property="TextDecorations" Value="Underline"></Setter>
-        <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource Tertiary}, Dark={StaticResource Primary}}"></Setter>
-    </Style>
-    <Style TargetType="md:MarkdownHeader4LinkSpan" BasedOn="{StaticResource MarkdownHeader4StyleBase}">
-        <Setter Property="TextDecorations" Value="Underline"></Setter>
-        <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource Tertiary}, Dark={StaticResource Primary}}"></Setter>
-    </Style>
-    <Style TargetType="md:MarkdownHeader5LinkSpan" BasedOn="{StaticResource MarkdownHeader5StyleBase}">
-        <Setter Property="TextDecorations" Value="Underline"></Setter>
-        <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource Tertiary}, Dark={StaticResource Primary}}"></Setter>
-    </Style>
-    <Style TargetType="md:MarkdownHeader6LinkSpan" BasedOn="{StaticResource MarkdownHeader6StyleBase}">
-        <Setter Property="TextDecorations" Value="Underline"></Setter>
-        <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource Tertiary}, Dark={StaticResource Primary}}"></Setter>
-    </Style>
+    <Style TargetType="md:MarkdownInlineLinkSpan" BasedOn="{StaticResource MarkdownInlineBase}" />
+    <Style TargetType="md:MarkdownInlineSpan" BasedOn="{StaticResource MarkdownInlineBase}" />
 
-    <Style TargetType="md:MarkdownInlineLinkSpan" BasedOn="{StaticResource MarkdownInlineBase}">
-        <Setter Property="TextDecorations" Value="Underline"></Setter>
-        <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource Tertiary}, Dark={StaticResource Primary}}"></Setter>
+    <Style x:Key="MarkdownListBase" TargetType="md:MarkdownInlineSpanBase">
+        
     </Style>
 
 </ResourceDictionary>

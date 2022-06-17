@@ -48,6 +48,12 @@
                 Clicked="OnMarkdownUpdate"
                 HorizontalOptions="Center" />
 
+            <Button 
+                x:Name="DarkmodeBtn"
+                Text="Toggle darkmode"
+                Clicked="OnDarkModeUpdate"
+                HorizontalOptions="Center" />
+
             <!--<Label>
                 <Label.FormattedText>
                     <FormattedString>

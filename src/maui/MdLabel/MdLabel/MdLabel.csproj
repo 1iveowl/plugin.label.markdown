@@ -24,14 +24,6 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <EditorConfigFiles Remove="V:\GitHub\plugin.label.markdown\src\maui\MdLabel\MdLabel\Renderer\.editorconfig" />
-	</ItemGroup>
-
-	<ItemGroup>
-	  <None Include="V:\GitHub\plugin.label.markdown\src\maui\MdLabel\MdLabel\Renderer\.editorconfig" />
-	</ItemGroup>
-
-	<ItemGroup>
 	  <Folder Include="Platforms\Android\" />
 	  <Folder Include="Platforms\iOS\" />
 	  <Folder Include="Platforms\MacCatalyst\" />

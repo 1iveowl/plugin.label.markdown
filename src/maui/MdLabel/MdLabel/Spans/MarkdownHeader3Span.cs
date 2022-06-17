@@ -10,8 +10,8 @@
 
     }
 
-    public class MarkdownHeader3LinkSpan : MarkdownHeader3SpanBase
-    {
+    //public class MarkdownHeader3LinkSpan : MarkdownHeader3SpanBase
+    //{
 
-    }
+    //}
 }

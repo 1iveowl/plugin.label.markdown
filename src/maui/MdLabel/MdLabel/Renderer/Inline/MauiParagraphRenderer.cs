@@ -6,20 +6,20 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MdLabel.Renderer
+namespace MdLabel.Renderer.Inline
 {
     public class MauiParagraphRenderer : MauiObjectRenderer<ParagraphBlock>
     {
         protected override void Write(MauiRenderer renderer, ParagraphBlock obj)
         {
-            renderer.OpenBlock(); 
+            renderer.OpenBlock();
             renderer.WriteLeafInline(obj);
 
             if (obj.NewLine != NewLine.None)
             {
                 renderer.AddNewLine();
             }
-            
+
             renderer.CloseBlock();
         }
     }

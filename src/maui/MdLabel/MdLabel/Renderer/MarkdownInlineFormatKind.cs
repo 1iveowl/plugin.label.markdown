@@ -1,4 +1,4 @@
-﻿namespace MdLabel
+﻿namespace MdLabel.Renderer
 {
     internal enum MarkdownInlineFormatKind
     {
@@ -12,6 +12,7 @@
         SuperScript,
         Subscript,
         Inserted,
+        List,
         Marked,
         Code,
         Image,

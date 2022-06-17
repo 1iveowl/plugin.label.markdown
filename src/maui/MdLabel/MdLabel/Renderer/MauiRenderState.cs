@@ -1,7 +1,9 @@
 ﻿namespace MdLabel.Renderer
 {
     internal class MauiRenderState : IDisposable
-    {      
+    {
+        private List<MauiSpanBlock> CurrentListBlock { get; set; } = new();
+
         internal List<MauiSpanBlock> SpanBlocks { get; private set; } = new();
         internal Stack<MarkdownInlineFormatKind> InlineFormatStack { get; private set; } = new();
 
@@ -71,6 +73,30 @@
 
         internal void OpenBlock()
         {
+            // TODO Implement
+
+            if (CurrentListBlock is not null)
+            {
+                CurrentListBlock.Clear();
+            }
+
+            CurrentSpanBlock = new MauiSpanBlock();
+        }
+
+        internal void CloseBlock()
+        {
+            // TODO Implement
+
+            if (CurrentSpanBlock is not null)
+            {
+                SpanBlocks.Add(CurrentSpanBlock);
+            }
+
+            CurrentSpanBlock = default;
+        }
+
+        internal void OpenListBlock()
+        {
             if (CurrentSpanBlock is not null)
             {
                 CloseBlock();
@@ -79,7 +105,7 @@
             CurrentSpanBlock = new MauiSpanBlock();
         }
 
-        internal void CloseBlock()
+        internal void CloseListBlock()
         {
             if (CurrentSpanBlock is not null)
             {

@@ -5,7 +5,8 @@ namespace MdLabel
 {
     public class MarkdownLabel : Label, IMarkdownLabel
     {
-        private static readonly MarkdownPipeline? _markdownPipeline = new MarkdownPipelineBuilder()
+        private static readonly MarkdownPipeline? _markdownPipeline = 
+            new MarkdownPipelineBuilder()
                         .UseEmojiAndSmiley()
                         .UseEmphasisExtras()
                         .Build();
@@ -16,32 +17,27 @@ namespace MdLabel
             declaringType: typeof(MarkdownLabel),
             defaultValue: default(string),
             defaultBindingMode: BindingMode.OneWay,
-            propertyChanged: (BindableProperty.BindingPropertyChangedDelegate)((bindable, oldValue, newValue) =>
+            propertyChanged: (bindable, oldValue, newValue) =>
             {
                 if (bindable is MarkdownLabel labelMarkdown
                     && newValue is string markdownString
                     && (!oldValue?.Equals(newValue) ?? true))
                 {
-                    using var renderer = new MauiRenderer();
+                    using var mauiRenderer = new MauiRenderer();
 
                     Markdown.Convert(
                         markdownString.Replace("  ", Environment.NewLine),
-                        renderer, 
+                        mauiRenderer, 
                         _markdownPipeline);
 
-                    labelMarkdown.FormattedText = renderer.GetFormattedString();
+                    labelMarkdown.FormattedText = mauiRenderer.GetFormattedString();
                 }
-            }));
+            });
 
         public new string Text
         {
             get => (string)GetValue(TextProperty);
             set => SetValue(TextProperty, value);
-        }
-
-        public MarkdownLabel()
-        {
-
         }
     }
 }

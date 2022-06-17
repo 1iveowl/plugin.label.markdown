@@ -1,7 +1,7 @@
 ﻿using Markdig.Renderers;
 using Markdig.Syntax;
 
-namespace MdLabel.Renderer
+namespace MdLabel.Renderer.Inline
 {
     public class MauiHeadingRenderer : MauiObjectRenderer<HeadingBlock>
     {
