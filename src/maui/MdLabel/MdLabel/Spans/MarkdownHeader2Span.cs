@@ -1,17 +1,14 @@
 ﻿namespace MdLabel.Spans
 {
-    public class MarkdownHeader2SpanBase : MarkdownHeaderSpanBase
+
+    public class MarkdownHeader2Span : MarkdownHeaderSpanBase
     {
+        public MarkdownHeader2Span()
+        {
+        }
 
+        public MarkdownHeader2Span(bool isLink) : base(isLink)
+        {
+        }
     }
-
-    public class MarkdownHeader2Span : MarkdownHeader2SpanBase
-    {
-
-    }
-
-    //public class MarkdownHeader2LinkSpan : MarkdownHeader2SpanBase
-    //{
-
-    //}
 }

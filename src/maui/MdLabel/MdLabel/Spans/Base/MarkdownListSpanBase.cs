@@ -8,5 +8,8 @@ namespace MdLabel.Spans
 {
     public class MarkdownListSpanBase : MarkdownInlineSpanBase
     {
+        public MarkdownListSpanBase()
+        {
+        }
     }
 }

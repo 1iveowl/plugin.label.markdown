@@ -23,32 +23,32 @@
     </Style>
 
     <Style x:Key="MarkdownHeaderInlineStyleBase" TargetType="md:MarkdownHeaderSpanBase" BasedOn="{StaticResource MarkdownInlineBase}" />
-    
-    <Style x:Key="MarkdownHeader1StyleBase" TargetType="md:MarkdownHeader1SpanBase" BasedOn="{StaticResource MarkdownHeaderInlineStyleBase}">
+
+    <Style TargetType="md:MarkdownHeader1Span"  BasedOn="{StaticResource MarkdownHeaderInlineStyleBase}">
         <Setter Property="FontSize" Value="{StaticResource MarkdownHeader1Size}"></Setter>
     </Style>
-    <Style x:Key="MarkdownHeader2StyleBase" TargetType="md:MarkdownHeader2SpanBase" BasedOn="{StaticResource MarkdownHeaderInlineStyleBase}">
+    <Style TargetType="md:MarkdownHeader2Span" BasedOn="{StaticResource MarkdownHeaderInlineStyleBase}">
         <Setter Property="FontSize" Value="{StaticResource MarkdownHeader2Size}"></Setter>
     </Style>
-    <Style x:Key="MarkdownHeader3StyleBase" TargetType="md:MarkdownHeader3SpanBase" BasedOn="{StaticResource MarkdownHeaderInlineStyleBase}">
+    <Style TargetType="md:MarkdownHeader3Span" BasedOn="{StaticResource MarkdownHeaderInlineStyleBase}">
         <Setter Property="FontSize" Value="{StaticResource MarkdownHeader3Size}"></Setter>
     </Style>
-    <Style x:Key="MarkdownHeader4StyleBase" TargetType="md:MarkdownHeader4SpanBase" BasedOn="{StaticResource MarkdownHeaderInlineStyleBase}">
+    <Style TargetType="md:MarkdownHeader4Span" BasedOn="{StaticResource MarkdownHeaderInlineStyleBase}">
         <Setter Property="FontSize" Value="{StaticResource MarkdownHeader4Size}"></Setter>
     </Style>
-    <Style x:Key="MarkdownHeader5StyleBase" TargetType="md:MarkdownHeader5SpanBase" BasedOn="{StaticResource MarkdownHeaderInlineStyleBase}">
+    <Style TargetType="md:MarkdownHeader5Span" BasedOn="{StaticResource MarkdownHeaderInlineStyleBase}">
         <Setter Property="FontSize" Value="{StaticResource MarkdownHeader5Size}"></Setter>
     </Style>
-    <Style x:Key="MarkdownHeader6StyleBase" TargetType="md:MarkdownHeader6SpanBase" BasedOn="{StaticResource MarkdownHeaderInlineStyleBase}">
+    <Style TargetType="md:MarkdownHeader6Span" BasedOn="{StaticResource MarkdownHeaderInlineStyleBase}">
         <Setter Property="FontSize" Value="{StaticResource MarkdownHeader6Size}"></Setter>
     </Style>
 
-    <Style TargetType="md:MarkdownHeader1Span" BasedOn="{StaticResource MarkdownHeader1StyleBase}"/>
+    <!--<Style TargetType="md:MarkdownHeader1Span" BasedOn="{StaticResource MarkdownHeader1StyleBase}"/>
     <Style TargetType="md:MarkdownHeader2Span" BasedOn="{StaticResource MarkdownHeader2StyleBase}"/>
     <Style TargetType="md:MarkdownHeader3Span" BasedOn="{StaticResource MarkdownHeader3StyleBase}"/>
     <Style TargetType="md:MarkdownHeader4Span" BasedOn="{StaticResource MarkdownHeader4StyleBase}"/>
     <Style TargetType="md:MarkdownHeader5Span" BasedOn="{StaticResource MarkdownHeader5StyleBase}"/>
-    <Style TargetType="md:MarkdownHeader6Span" BasedOn="{StaticResource MarkdownHeader6StyleBase}"/>
+    <Style TargetType="md:MarkdownHeader6Span" BasedOn="{StaticResource MarkdownHeader6StyleBase}"/>-->
 
     <Style TargetType="md:MarkdownInlineLinkSpan" BasedOn="{StaticResource MarkdownInlineBase}" />
     <Style TargetType="md:MarkdownInlineSpan" BasedOn="{StaticResource MarkdownInlineBase}" />

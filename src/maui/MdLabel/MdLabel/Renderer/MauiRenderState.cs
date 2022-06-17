@@ -1,4 +1,6 @@
-﻿namespace MdLabel.Renderer
+﻿using MdLabel.Renderer.Inline;
+
+namespace MdLabel.Renderer
 {
     internal class MauiRenderState : IDisposable
     {
@@ -6,6 +8,7 @@
 
         internal List<MauiSpanBlock> SpanBlocks { get; private set; } = new();
         internal Stack<MarkdownInlineFormatKind> InlineFormatStack { get; private set; } = new();
+        internal MarkdownSpanKind CurrentSpanKind { get; private set; } = MarkdownSpanKind.Default;
 
         internal MauiSpanBlock? CurrentSpanBlock { get; private set; } = default;
         internal MarkdownHeaderLevelKind CurrentHeaderLevel { get; private set; } = MarkdownHeaderLevelKind.None;
@@ -36,7 +39,7 @@
                 throw new NullReferenceException($"{nameof(MauiSpanBlock)} cannot be null");
             }
 
-            PushInlineFromatType(MarkdownInlineFormatKind.Link);
+            PushInlineFormatType(MarkdownInlineFormatKind.Link);
             Uri = uri;
         }
 
@@ -46,7 +49,7 @@
             Uri = default;
         }
 
-        internal void PushInlineFromatType(MarkdownInlineFormatKind markdownLineType)
+        internal void PushInlineFormatType(MarkdownInlineFormatKind markdownLineType)
         {
             InlineFormatStack.Push(markdownLineType);
         }

@@ -1,10 +1,13 @@
 ﻿using Markdig;
+using MdLabel.Factory;
 using MdLabel.Renderer;
 
 namespace MdLabel
 {
     public class MarkdownLabel : Label, IMarkdownLabel
     {
+        private readonly ISpanFactory SpanFactory = new SpanFactory();
+
         private static readonly MarkdownPipeline? _markdownPipeline = 
             new MarkdownPipelineBuilder()
                         .UseEmojiAndSmiley()
@@ -21,9 +24,10 @@ namespace MdLabel
             {
                 if (bindable is MarkdownLabel labelMarkdown
                     && newValue is string markdownString
-                    && (!oldValue?.Equals(newValue) ?? true))
+                    && (!oldValue?.Equals(newValue) ?? true)
+                    && labelMarkdown.SpanFactory is not null)
                 {
-                    using var mauiRenderer = new MauiRenderer();
+                    using var mauiRenderer = new MauiRenderer(labelMarkdown.SpanFactory);
 
                     Markdown.Convert(
                         markdownString.Replace("  ", Environment.NewLine),
@@ -34,10 +38,25 @@ namespace MdLabel
                 }
             });
 
+        public MarkdownLabel()
+        {
+            SpanFactory = new SpanFactory();
+        }
+
+        public MarkdownLabel(ISpanFactory spanFactory)
+        {
+            SpanFactory = spanFactory;
+        }
+
         public new string Text
         {
             get => (string)GetValue(TextProperty);
             set => SetValue(TextProperty, value);
+        }
+
+        public virtual ISpanFactory GetSpanFactory()
+        {
+            return SpanFactory;
         }
     }
 }

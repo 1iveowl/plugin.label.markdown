@@ -1,6 +1,7 @@
 ﻿using Markdig.Helpers;
 using Markdig.Renderers;
 using Markdig.Syntax;
+using MdLabel.Factory;
 using MdLabel.Helper;
 using MdLabel.Renderer.Inline;
 using MdLabel.Spans;
@@ -9,10 +10,13 @@ namespace MdLabel.Renderer
 {
     public class MauiRenderer : TextRendererBase<MauiRenderer>, IDisposable
     {
+        private readonly ISpanFactory _spanFactory;
         private readonly MauiRenderState _state = new();
 
-        public MauiRenderer() : base(new StringWriter())
+        public MauiRenderer(ISpanFactory spanFactory) : base(new StringWriter())
         {
+            _spanFactory = spanFactory;
+
             ObjectRenderers.Add(new MauiParagraphRenderer());
             ObjectRenderers.Add(new MauiLiteralInlineRenderer());
             ObjectRenderers.Add(new MauiEmphasisInlineRenderer());
@@ -53,7 +57,7 @@ namespace MdLabel.Renderer
             {
                 markdownSpan = _state.CurrentHeaderLevel is MarkdownHeaderLevelKind.None
                     ? new MarkdownInlineLinkSpan()
-                    : _state.CurrentHeaderLevel.GetHeaderSpan();
+                    : _state.CurrentHeaderLevel.GetHeaderSpan(true);
 
                 markdownSpan.GestureRecognizers.Add(new TapGestureRecognizer()
                 {
@@ -109,16 +113,16 @@ namespace MdLabel.Renderer
                     case MarkdownInlineFormatKind.StrikeThrough:
                         decorations += (int)TextDecorations.Strikethrough;
                         break;
-                    case MarkdownInlineFormatKind.None:
-                    case MarkdownInlineFormatKind.Link:
-                    case MarkdownInlineFormatKind.Comment:
-                    case MarkdownInlineFormatKind.TextRun:
+                    case MarkdownInlineFormatKind.Default:
+                    //case MarkdownInlineFormatKind.Link:
+                    //case MarkdownInlineFormatKind.Comment:
+                    //case MarkdownInlineFormatKind.TextRun:
                     case MarkdownInlineFormatKind.SuperScript:
                     case MarkdownInlineFormatKind.Subscript:
-                    case MarkdownInlineFormatKind.Code:
-                    case MarkdownInlineFormatKind.Image:
-                    case MarkdownInlineFormatKind.Inserted:
-                    case MarkdownInlineFormatKind.Marked:
+                    //case MarkdownInlineFormatKind.Code:
+                    //case MarkdownInlineFormatKind.Image:
+                    //case MarkdownInlineFormatKind.Inserted:
+                    //case MarkdownInlineFormatKind.Marked:
                         break;
                     default:
                         throw new ArgumentOutOfRangeException();
@@ -136,7 +140,7 @@ namespace MdLabel.Renderer
 
         internal void ClearLink() => _state.ClearLink();
 
-        internal void PushInlineFormatType(MarkdownInlineFormatKind markdownLineType) => _state.PushInlineFromatType(markdownLineType);
+        internal void PushInlineFormatType(MarkdownInlineFormatKind markdownLineType) => _state.PushInlineFormatType(markdownLineType);
 
         internal void PopInlineFormatType() => _state.PopInlineFormatType();
 

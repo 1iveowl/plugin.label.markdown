@@ -25,12 +25,12 @@ namespace MdLabel.Renderer.Inline
                 case '^':
                     renderer.PushInlineFormatType(MarkdownInlineFormatKind.SuperScript);
                     break;
-                case '+':
-                    renderer.PushInlineFormatType(MarkdownInlineFormatKind.Inserted);
-                    break;
-                case '=':
-                    renderer.PushInlineFormatType(MarkdownInlineFormatKind.Marked);
-                    break;
+                //case '+':
+                //    renderer.PushInlineFormatType(MarkdownInlineFormatKind.Inserted);
+                //    break;
+                //case '=':
+                //    renderer.PushInlineFormatType(MarkdownInlineFormatKind.Marked);
+                //    break;
             }
 
             renderer.WriteChildren(emphasisInline);
