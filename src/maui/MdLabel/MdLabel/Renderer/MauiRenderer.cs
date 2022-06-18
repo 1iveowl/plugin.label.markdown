@@ -28,7 +28,7 @@ namespace MdLabel.Renderer
             ObjectWriteAfter += MdRenderer_ObjectWriteAfter;
         }
 
-        public FormattedString GetFormattedString()
+        public virtual FormattedString GetFormattedString()
         {
             var formattedString = new FormattedString();
 
@@ -88,7 +88,7 @@ namespace MdLabel.Renderer
 
         }
 
-        public void Dispose() => State.Dispose();
+        public virtual void Dispose() => State.Dispose();
     }
 }
 
