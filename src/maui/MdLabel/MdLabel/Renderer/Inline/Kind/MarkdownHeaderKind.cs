@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace MdLabel
+﻿namespace MdLabel.Renderer.Inline
 {
     public enum MarkdownHeaderLevelKind
     {
@@ -14,6 +8,6 @@ namespace MdLabel
         Header3 = 3,
         Header4 = 4,
         Header5 = 5,
-        Header6 = 6,    
+        Header6 = 6,
     }
 }

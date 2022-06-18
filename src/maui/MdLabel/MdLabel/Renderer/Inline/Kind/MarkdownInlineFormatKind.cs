@@ -1,14 +1,15 @@
 ﻿namespace MdLabel.Renderer.Inline
 {
-    internal enum MarkdownInlineFormatKind
+    public enum MarkdownInlineFormatKind
     {
-        Default,        
-        //TextRun,
+        Default,
         Bold,
         Italic,
         Underline,
         StrikeThrough,
         SuperScript,
-        Subscript,        
+        Subscript,
+        Link,
+        Mark,
     }
 }

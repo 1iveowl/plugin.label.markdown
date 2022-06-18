@@ -2,7 +2,6 @@
 using Markdig.Renderers;
 using Markdig.Syntax;
 using MdLabel.Factory;
-using MdLabel.Helper;
 using MdLabel.Renderer.Inline;
 using MdLabel.Spans;
 
@@ -49,92 +48,39 @@ namespace MdLabel.Renderer
             }
 
             var text = slice.ToString();
-            
-            MarkdownSpanBase? markdownSpan = default;
 
-            if(_state.InlineFormatStack.Any(inlineFormat => inlineFormat == MarkdownInlineFormatKind.Link) 
-                && _state.Uri is not null)
-            {
-                markdownSpan = _state.CurrentHeaderLevel is MarkdownHeaderLevelKind.None
-                    ? new MarkdownInlineLinkSpan()
-                    : _state.CurrentHeaderLevel.GetHeaderSpan(true);
-
-                markdownSpan.GestureRecognizers.Add(new TapGestureRecognizer()
-                {
-                    Command = new Command<string>(async _ =>
-                    {
-                        await Launcher.OpenAsync(_state.Uri);
-                    }),
-                    CommandParameter = text
-                });
-            }
-            else
-            {
-                markdownSpan = _state.CurrentHeaderLevel is MarkdownHeaderLevelKind.None
-                    ? new MarkdownInlineSpan()
-                    : _state.CurrentHeaderLevel.GetHeaderSpan();
-            }
-
-            var (fontAttributes, textDecorations) = GetInlineFormating();
-
-            if (textDecorations is not TextDecorations.None)
-            {
-                markdownSpan.TextDecorations = textDecorations;
-            }
-
-            if (fontAttributes is not FontAttributes.None)
-            {
-                markdownSpan.FontAttributes = fontAttributes;
-            }            
+            var markdownSpan = _spanFactory.GetSpan(
+                spanBlock: _state.CurrentBlockKind,
+                inlineFormats: _state.InlineFormatStack,
+                linkAction: span => AddGestureAction(span));
 
             markdownSpan.Text = text;
 
             _state.CurrentSpanBlock?.AddSpan(markdownSpan);
-        }
 
-        private (FontAttributes attributes, TextDecorations decorations) GetInlineFormating()
-        {
-            FontAttributes fontAttributes = FontAttributes.None;
-            TextDecorations decorations = TextDecorations.None;
-
-            foreach (var inlineFormat in _state.InlineFormatStack)
+            void AddGestureAction(MarkdownSpanBase span)
             {
-                switch (inlineFormat)
+                if (_state.Uri is not null)
                 {
-                    case MarkdownInlineFormatKind.Bold:
-                        fontAttributes += (int)FontAttributes.Bold;
-                        break;
-                    case MarkdownInlineFormatKind.Italic:
-                        fontAttributes += (int)FontAttributes.Italic;
-                        break;
-                    case MarkdownInlineFormatKind.Underline:
-                        decorations += (int)TextDecorations.Underline;
-                        break;
-                    case MarkdownInlineFormatKind.StrikeThrough:
-                        decorations += (int)TextDecorations.Strikethrough;
-                        break;
-                    case MarkdownInlineFormatKind.Default:
-                    //case MarkdownInlineFormatKind.Link:
-                    //case MarkdownInlineFormatKind.Comment:
-                    //case MarkdownInlineFormatKind.TextRun:
-                    case MarkdownInlineFormatKind.SuperScript:
-                    case MarkdownInlineFormatKind.Subscript:
-                    //case MarkdownInlineFormatKind.Code:
-                    //case MarkdownInlineFormatKind.Image:
-                    //case MarkdownInlineFormatKind.Inserted:
-                    //case MarkdownInlineFormatKind.Marked:
-                        break;
-                    default:
-                        throw new ArgumentOutOfRangeException();
+                    span.GestureRecognizers.Add(new TapGestureRecognizer()
+                    {
+                        Command = new Command<string>(async _ =>
+                        {
+                            await Launcher.OpenAsync(_state.Uri);
+                        }),
+                        CommandParameter = text
+                    });
+                }
+                else
+                {
+                    throw new ArgumentNullException("Uri missing for link.");
                 }
             }
-
-            return (fontAttributes, decorations);
         }
 
-        internal void SetHeaderStyle(int level) => _state.SetHeaderStyle(level);
+        internal void SetHeaderStyle(int level) => _state.SetHeaderLevel(level);
 
-        internal void ClearHeaderStyle() => _state.ClearHeaderStyle();
+        internal void ClearHeaderStyle() => _state.ClearHeader();
 
         internal void SetLink(Uri uri) => _state.SetLink(uri);
 

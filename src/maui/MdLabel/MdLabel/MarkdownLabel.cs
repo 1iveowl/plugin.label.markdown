@@ -6,7 +6,7 @@ namespace MdLabel
 {
     public class MarkdownLabel : Label, IMarkdownLabel
     {
-        private readonly ISpanFactory SpanFactory = new SpanFactory();
+        public virtual ISpanFactory SpanFactory { get; private set; }
 
         private static readonly MarkdownPipeline? _markdownPipeline = 
             new MarkdownPipelineBuilder()
@@ -38,6 +38,12 @@ namespace MdLabel
                 }
             });
 
+        public new string Text
+        {
+            get => (string)GetValue(TextProperty);
+            set => SetValue(TextProperty, value);
+        }
+
         public MarkdownLabel()
         {
             SpanFactory = new SpanFactory();
@@ -46,17 +52,6 @@ namespace MdLabel
         public MarkdownLabel(ISpanFactory spanFactory)
         {
             SpanFactory = spanFactory;
-        }
-
-        public new string Text
-        {
-            get => (string)GetValue(TextProperty);
-            set => SetValue(TextProperty, value);
-        }
-
-        public virtual ISpanFactory GetSpanFactory()
-        {
-            return SpanFactory;
         }
     }
 }

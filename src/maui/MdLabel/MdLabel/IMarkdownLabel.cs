@@ -5,7 +5,5 @@ namespace MdLabel
     public interface IMarkdownLabel : ILabel
     {
         new string Text { get; set; }
-
-        ISpanFactory GetSpanFactory();
     }
 }

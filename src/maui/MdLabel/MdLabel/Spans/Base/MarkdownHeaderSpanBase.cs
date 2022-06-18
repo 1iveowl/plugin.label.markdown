@@ -1,12 +1,15 @@
-﻿namespace MdLabel.Spans
+﻿using MdLabel.Renderer.Inline;
+
+namespace MdLabel.Spans
 {
     public abstract class MarkdownHeaderSpanBase : MarkdownInlineSpanBase
     {
         public MarkdownHeaderSpanBase()
         {
+            
         }
 
-        public MarkdownHeaderSpanBase(bool isLink) : base(isLink)
+        public MarkdownHeaderSpanBase(IEnumerable<MarkdownInlineFormatKind>? inlineFormats) : base(inlineFormats)
         {
         }
     }

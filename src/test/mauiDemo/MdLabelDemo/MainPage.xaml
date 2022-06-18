@@ -54,14 +54,14 @@
                 Clicked="OnDarkModeUpdate"
                 HorizontalOptions="Center" />
 
-            <!--<Label>
+            <Label>                
                 <Label.FormattedText>
                     <FormattedString>
                         <Span>Test
                         New live</Span>
                     </FormattedString>
                 </Label.FormattedText>
-            </Label>-->
+            </Label>
 
             <md:MarkdownLabel
                 x:Name="Markdown"

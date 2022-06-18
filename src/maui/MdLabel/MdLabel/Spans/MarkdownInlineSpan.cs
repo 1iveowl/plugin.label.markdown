@@ -1,4 +1,6 @@
-﻿namespace MdLabel.Spans
+﻿using MdLabel.Renderer.Inline;
+
+namespace MdLabel.Spans
 {
     public class MarkdownInlineSpan : MarkdownSpanBase
     {
@@ -6,7 +8,7 @@
         {
         }
 
-        public MarkdownInlineSpan(bool isLink) : base(isLink)
+        public MarkdownInlineSpan(IEnumerable<MarkdownInlineFormatKind>? inlineFormats) : base(inlineFormats)
         {
         }
     }

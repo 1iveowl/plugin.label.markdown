@@ -5,21 +5,18 @@ namespace MdLabel.Renderer
     internal class MauiRenderState : IDisposable
     {
         private List<MauiSpanBlock> CurrentListBlock { get; set; } = new();
-
         internal List<MauiSpanBlock> SpanBlocks { get; private set; } = new();
         internal Stack<MarkdownInlineFormatKind> InlineFormatStack { get; private set; } = new();
-        internal MarkdownSpanKind CurrentSpanKind { get; private set; } = MarkdownSpanKind.Default;
-
         internal MauiSpanBlock? CurrentSpanBlock { get; private set; } = default;
-        internal MarkdownHeaderLevelKind CurrentHeaderLevel { get; private set; } = MarkdownHeaderLevelKind.None;
+        internal MarkdownBlockKind CurrentBlockKind { get; private set; } = MarkdownBlockKind.Default;
 
         internal Uri? Uri { get; private set; } = default;
 
-        internal void SetHeaderStyle(int level)
+        internal void SetHeaderLevel(int level)
         {
             if (level >= 1 && level <= 6)
             {
-                CurrentHeaderLevel = (MarkdownHeaderLevelKind)level;
+                CurrentBlockKind = (MarkdownBlockKind)level;
             }
             else
             {
@@ -27,9 +24,9 @@ namespace MdLabel.Renderer
             }
         }
 
-        internal void ClearHeaderStyle()
+        internal void ClearHeader()
         {
-            CurrentHeaderLevel = MarkdownHeaderLevelKind.None;
+            CurrentBlockKind = MarkdownBlockKind.Default;
         }
 
         internal void SetLink(Uri uri)

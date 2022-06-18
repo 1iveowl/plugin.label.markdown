@@ -4,40 +4,47 @@
 
 *Please star this project if you find it useful. Thank you!*
 
-## Why this plugin
-Wouldn't it be cool if the Xamarin Label control supported [Markdown](https://en.wikipedia.org/wiki/Markdown)?
+## Why This Project?
+MAUI have can represent formatted text using `Label` with `Span`. Unfortunately, representing formatted text requires writing a lot of XAML and makes changes and updates difficult to implement. 
 
-And how cool would it be if it was possible to include bindable properties inside a Markdown text like this:
+It gets even more difficult when considering the creation of multi-language applications where the same text need to be represented in different languages, requiring different formatting and with text stored as strings in resource files. By using Markdown, this task of managing text in multi-language apps become much easier to develop and maintain.
+
+As a bonus the `MarkdownLabel`control also introduce bindable properties inside Markdown text, can can be written like this:
+
 > `There are {{1}} apples in the basket.`
 
 Where `{{1}}` represent a variable place-holder for the value of a bindable property.
 
-Well, these are all scenarios introduced by this very light weigth plugin which extends the existing Xamarin Forms Label control. 
+### Limitations
 
-I hope others will find it useful too.
+The `MarkdownLabel` control inherits the `Label` MAUI control and uses `FormattedString`and the `Span` controls to represent Markdown as blocks. This approach makes the the `MarkdownLabel`control light-weight and fast and able to support [Basic Syntax](https://www.markdownguide.org/basic-syntax), and also most [Extended Syntax](https://www.markdownguide.org/extended-syntax/), but not all. For instance, Tables are not support by the control, as there is no support for grids or borders etc. in `FormattedString`. Nor are images supported.  
 
 ## Platforms supported
 
-The plugin works on all platforms supported by Xamarin Forms and .NET Standard 2.0.
+The plugin works on all platforms supported by .NET MAUI.
 
 ## Features: 
 
-Markdown supported:
-- Headers - H1, H2 and H3
+#### Markdown supported:
+
+- Headers
 - Bold
 - Italic
 - Bold-Italic
 - Hyperlinks
-- Basic emoji's
+- Lists (ordered and unordered)
+- Emoji's
+- Blockquotes (but not nested)
+- High-lights (mark)
 
-_Note_: The emoji's supported depend on the font used as far as I can tell. [Emoji Cheat Sheet](https://gist.github.com/roachhd/1f029bd4b50b8a524f3c)
+_Note_: The emoji's supported depend on the font used. [Emoji Cheat Sheet](https://gist.github.com/roachhd/1f029bd4b50b8a524f3c)
 
+#### Other features:
 
-Other features:
+- Styling
 - Bindable Property place-holders (variables in the Markdown text).
-- Header styling.
-- An extra line is added by default being between paragraphs. To disable `IsParagraphSpacing="false"`. Default: true.
-- Option for adding an extra line after headers. To enable: `IsParagraphSpacing="true"`. Default: false.
+- ~~An extra line is added by default being between paragraphs. To disable `IsParagraphSpacing="false"`. Default: true.~~
+- ~~Option for adding an extra line after headers. To enable: `IsParagraphSpacing="true"`. Default: false.~~
 
 ## XAML Sample
 The easied way to introduce the features introduced by this plugin is by looking at a simple example:
@@ -108,5 +115,4 @@ This screenshot above is generated using the XAML below. As you read through the
 
 </ContentPage>
 ```
-
 

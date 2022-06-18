@@ -17,6 +17,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ResearchMarkDigParser", "..
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Markdig", "..\..\..\..\markdig\src\Markdig\Markdig.csproj", "{517FEDAA-C584-4272-B2D1-456BE58D22BA}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "GitHub", "GitHub", "{1E2A04BC-9663-4ABC-A8C5-075D9EC75238}"
+	ProjectSection(SolutionItems) = preProject
+		..\..\..\README.md = ..\..\..\README.md
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

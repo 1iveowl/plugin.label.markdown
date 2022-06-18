@@ -1,10 +1,10 @@
-﻿using Markdig;
+﻿using MdLabel.Renderer.Inline;
 
 namespace MdLabel.Spans
 {
     public abstract class MarkdownSpanBase : Span
     {
-        internal bool IsLink { get; private set; }
+        private readonly IEnumerable<MarkdownInlineFormatKind>? InlineFormats;
 
         public static readonly BindableProperty UrlColorProperty = BindableProperty.Create(
             propertyName: nameof(UrlColor),
@@ -14,8 +14,9 @@ namespace MdLabel.Spans
             defaultBindingMode: BindingMode.OneWay,
             propertyChanged: (bindable, oldValue, newValue) =>
             {
-                if (bindable is MarkdownSpanBase markdownSpan 
-                    && markdownSpan.IsLink)
+                if (bindable is MarkdownSpanBase markdownSpan
+                    && markdownSpan.InlineFormats is not null
+                    && markdownSpan.InlineFormats.Any(il => il is MarkdownInlineFormatKind.Link))
                 {
                     markdownSpan.TextColor = markdownSpan.UrlColor;
                 }
@@ -36,7 +37,8 @@ namespace MdLabel.Spans
             propertyChanged: (bindable, oldValue, newValue) =>
             {
                 if (bindable is MarkdownSpanBase markdownSpan
-                    && markdownSpan.IsLink)
+                    && markdownSpan.InlineFormats is not null
+                    && markdownSpan.InlineFormats.Any(il => il is MarkdownInlineFormatKind.Link))
                 {
                     markdownSpan.TextDecorations = markdownSpan.UrlTextDecorations;
                 }                
@@ -52,11 +54,13 @@ namespace MdLabel.Spans
         {
         }
 
-        protected MarkdownSpanBase(bool isLink)
+        protected MarkdownSpanBase(IEnumerable<MarkdownInlineFormatKind>? inlineFormats)
         {
-            IsLink = isLink;
+            // Make copy of inlineFormats in this instance of the span.
+            InlineFormats = inlineFormats?.ToList();
 
-            if (isLink)
+            if (inlineFormats is not null 
+                && inlineFormats.Any(il => il is MarkdownInlineFormatKind.Link))
             {                
                 SetValue(TextColorProperty, UrlColor);
                 SetValue(TextDecorationsProperty, UrlTextDecorations);
