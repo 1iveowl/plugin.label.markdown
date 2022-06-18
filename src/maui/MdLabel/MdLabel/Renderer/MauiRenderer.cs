@@ -2,15 +2,15 @@
 using Markdig.Renderers;
 using Markdig.Syntax;
 using MdLabel.Factory;
-using MdLabel.Renderer.Inline;
 using MdLabel.Spans;
+using MdLabel.Renderer.Inline;
 
 namespace MdLabel.Renderer
 {
     public class MauiRenderer : TextRendererBase<MauiRenderer>, IMauiRenderer
     {
         private readonly ISpanFactory _spanFactory;
-        internal MauiRenderState State { get; private set; } = new();
+        internal virtual IRendererState State { get; private set; } = new MauiRenderState();
 
         public MauiRenderer(ISpanFactory spanFactory) : base(new StringWriter())
         {

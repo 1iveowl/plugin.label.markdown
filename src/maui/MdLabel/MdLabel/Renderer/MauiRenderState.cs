@@ -2,17 +2,22 @@
 
 namespace MdLabel.Renderer
 {
-    internal class MauiRenderState : IDisposable
+    public class MauiRenderState : IRendererState
     {
-        private List<MauiSpanBlock> CurrentListBlock { get; set; } = new();
-        internal List<MauiSpanBlock> SpanBlocks { get; private set; } = new();
-        internal Stack<MarkdownInlineFormatKind> InlineFormatStack { get; private set; } = new();
-        internal MauiSpanBlock? CurrentSpanBlock { get; private set; } = default;
-        internal MarkdownBlockKind CurrentBlockKind { get; private set; } = MarkdownBlockKind.Default;
+        private readonly List<IMauiSpanBlock> _currentListBlock  = new();
+        private readonly List<IMauiSpanBlock> _spanBlocks  = new();
+        private readonly Stack<MarkdownInlineFormatKind> _inlineFormatStack = new();
 
-        internal Uri? Uri { get; private set; } = default;
+        public IEnumerable<IMauiSpanBlock> CurrentListBlock => _currentListBlock;
+        public IEnumerable<IMauiSpanBlock> SpanBlocks => _spanBlocks;
+        public IEnumerable<MarkdownInlineFormatKind> InlineFormatStack => _inlineFormatStack;
 
-        internal void SetHeaderLevel(int level)
+        public IMauiSpanBlock? CurrentSpanBlock { get; private set; } = default;
+        public MarkdownBlockKind CurrentBlockKind { get; private set; } = MarkdownBlockKind.Default;
+
+        public Uri? Uri { get; private set; } = default;
+
+        public virtual void SetHeaderLevel(int level)
         {
             if (level >= 1 && level <= 6)
             {
@@ -24,12 +29,12 @@ namespace MdLabel.Renderer
             }
         }
 
-        internal void ClearHeader()
+        public virtual void ClearHeader()
         {
             CurrentBlockKind = MarkdownBlockKind.Default;
         }
 
-        internal void SetLink(Uri uri)
+        public virtual void SetLink(Uri uri)
         {
             if (CurrentSpanBlock is null)
             {
@@ -40,26 +45,26 @@ namespace MdLabel.Renderer
             Uri = uri;
         }
 
-        internal void ClearLink()
+        public virtual void ClearLink()
         {
             PopInlineFormatType();
             Uri = default;
         }
 
-        internal void PushInlineFormatType(MarkdownInlineFormatKind markdownLineType)
+        public virtual void PushInlineFormatType(MarkdownInlineFormatKind markdownLineType)
         {
-            InlineFormatStack.Push(markdownLineType);
+            _inlineFormatStack.Push(markdownLineType);
         }
 
-        internal void PopInlineFormatType()
+        public virtual void PopInlineFormatType()
         {
-            if (InlineFormatStack.Count > 0)
+            if (_inlineFormatStack.Count > 0)
             {
-                InlineFormatStack.Pop();
+                _inlineFormatStack.Pop();
             }
         }
 
-        internal void AddNewLine()
+        public virtual void AddNewLine()
         {
             if (CurrentSpanBlock is not null)
             {
@@ -71,31 +76,31 @@ namespace MdLabel.Renderer
             }
         }
 
-        internal void OpenBlock()
+        public virtual void OpenBlock()
         {
             // TODO Implement
 
             if (CurrentListBlock is not null)
             {
-                CurrentListBlock.Clear();
+                _currentListBlock.Clear();
             }
 
             CurrentSpanBlock = new MauiSpanBlock();
         }
 
-        internal void CloseBlock()
+        public virtual void CloseBlock()
         {
             // TODO Implement
 
             if (CurrentSpanBlock is not null)
             {
-                SpanBlocks.Add(CurrentSpanBlock);
+                _spanBlocks.Add(CurrentSpanBlock);
             }
 
             CurrentSpanBlock = default;
         }
 
-        internal void OpenListBlock()
+        public virtual void OpenListBlock()
         {
             if (CurrentSpanBlock is not null)
             {
@@ -105,20 +110,20 @@ namespace MdLabel.Renderer
             CurrentSpanBlock = new MauiSpanBlock();
         }
 
-        internal void CloseListBlock()
+        public virtual void CloseListBlock()
         {
             if (CurrentSpanBlock is not null)
             {
-                SpanBlocks.Add(CurrentSpanBlock);
+                _spanBlocks.Add(CurrentSpanBlock);
             }
 
             CurrentSpanBlock = default;
         }
 
-        public void Dispose()
+        public virtual void Dispose()
         {
-            InlineFormatStack.Clear();
-            SpanBlocks.Clear();
+            _inlineFormatStack.Clear();
+            _spanBlocks.Clear();
         }
     }
 }

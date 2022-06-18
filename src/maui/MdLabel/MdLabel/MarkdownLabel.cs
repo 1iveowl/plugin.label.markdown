@@ -5,8 +5,8 @@ namespace MdLabel
 {
     public class MarkdownLabel : MarkdownLabelBase
     {
-        protected override MauiRenderer GetRenderer() => SpanFactory is not null 
-            ? new(SpanFactory) 
+        protected override IMauiRenderer GetRenderer() => SpanFactory is not null 
+            ? new MauiRenderer(SpanFactory) 
             : throw new NullReferenceException("SpanFactory cannot be null.");
 
         public MarkdownLabel()

@@ -3,13 +3,13 @@ using MdLabel.Spans;
 
 namespace MdLabel.Renderer
 {
-    internal record MauiSpanBlock
+    public record MauiSpanBlock : IMauiSpanBlock
     {
         private readonly List<MarkdownSpanBase>? _spans = new();
-                
-        internal int TrailingNewLine { get; set; }
 
-        internal IEnumerable<MarkdownSpanBase> GetSpans()
+        public int TrailingNewLine { get; set; }
+
+        public IEnumerable<MarkdownSpanBase> GetSpans()
         {
             if (_spans?.Any() ?? false)
             {
@@ -25,7 +25,7 @@ namespace MdLabel.Renderer
             }
         }
 
-        internal void AddSpan(MarkdownSpanBase span)
+        public void AddSpan(MarkdownSpanBase span)
         {
             if (span is not null)
             {
