@@ -11,7 +11,7 @@ namespace MdLabel.Renderer.Inline
     {
         protected override void Write(MauiRenderer renderer, LineBreakInline obj)
         {
-            renderer.AddNewLine();
+            renderer.State.AddNewLine();
         }
     }
 }

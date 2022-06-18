@@ -1,4 +1,5 @@
-﻿using MdLabel.Factory;
+﻿using Markdig.Renderers;
+using MdLabel.Renderer;
 
 namespace MdLabel
 {

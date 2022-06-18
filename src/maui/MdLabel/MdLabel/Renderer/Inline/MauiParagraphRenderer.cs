@@ -1,10 +1,5 @@
 ﻿using Markdig.Helpers;
 using Markdig.Syntax;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MdLabel.Renderer.Inline
 {
@@ -12,15 +7,15 @@ namespace MdLabel.Renderer.Inline
     {
         protected override void Write(MauiRenderer renderer, ParagraphBlock obj)
         {
-            renderer.OpenBlock();
+            renderer.State.OpenBlock();
             renderer.WriteLeafInline(obj);
 
             if (obj.NewLine != NewLine.None)
             {
-                renderer.AddNewLine();
+                renderer.State.AddNewLine();
             }
 
-            renderer.CloseBlock();
+            renderer.State.CloseBlock();
         }
     }
 }

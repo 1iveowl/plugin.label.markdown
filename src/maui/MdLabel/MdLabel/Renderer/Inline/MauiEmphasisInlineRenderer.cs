@@ -13,17 +13,17 @@ namespace MdLabel.Renderer.Inline
             switch (emphasisInline.DelimiterChar)
             {
                 case '*' or '_':
-                    renderer.PushInlineFormatType(emphasisInline.DelimiterCount == 2
+                    renderer.State.PushInlineFormatType(emphasisInline.DelimiterCount == 2
                         ? MarkdownInlineFormatKind.Bold
                         : MarkdownInlineFormatKind.Italic);
                     break;
                 case '~':
-                    renderer.PushInlineFormatType(emphasisInline.DelimiterCount == 2
+                    renderer.State.PushInlineFormatType(emphasisInline.DelimiterCount == 2
                         ? MarkdownInlineFormatKind.StrikeThrough
                         : MarkdownInlineFormatKind.SuperScript);
                     break;
                 case '^':
-                    renderer.PushInlineFormatType(MarkdownInlineFormatKind.SuperScript);
+                    renderer.State.PushInlineFormatType(MarkdownInlineFormatKind.SuperScript);
                     break;
                 //case '+':
                 //    renderer.PushInlineFormatType(MarkdownInlineFormatKind.Inserted);
@@ -35,7 +35,7 @@ namespace MdLabel.Renderer.Inline
 
             renderer.WriteChildren(emphasisInline);
 
-            renderer.PopInlineFormatType();
+            renderer.State.PopInlineFormatType();
         }
     }
 }

@@ -7,17 +7,17 @@ namespace MdLabel.Renderer.Inline
     {
         protected override void Write(MauiRenderer renderer, HeadingBlock obj)
         {
-            renderer.OpenBlock();
-            renderer.SetHeaderStyle(obj.Level);
+            renderer.State.OpenBlock();
+            renderer.State.SetHeaderLevel(obj.Level);
 
             if (obj.Inline is not null)
             {
                 renderer.WriteLeafInline(obj);
-                renderer.AddNewLine();
+                renderer.State.AddNewLine();
             }
 
-            renderer.CloseBlock();
-            renderer.ClearHeaderStyle();
+            renderer.State.CloseBlock();
+            renderer.State.ClearHeader();
         }
 
         public override void Write(RendererBase renderer, MarkdownObject obj)
