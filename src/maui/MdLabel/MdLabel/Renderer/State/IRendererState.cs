@@ -5,9 +5,9 @@ namespace MdLabel.Renderer
     public interface IRendererState : IDisposable
     {
         MarkdownBlockKind CurrentBlockKind { get; }
-        IMauiSpanBlock? CurrentSpanBlock { get; }
+        IMauiBlock? CurrentSpanBlock { get; }
         IEnumerable<MarkdownInlineFormatKind> InlineFormatStack { get; }
-        IEnumerable<IMauiSpanBlock> SpanBlocks { get; }
+        IEnumerable<IMauiBlock> SpanBlocks { get; }
         Uri? Uri { get; }
 
         void AddNewLine();

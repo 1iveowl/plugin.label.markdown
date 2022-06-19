@@ -14,10 +14,5 @@ namespace MdLabel.Renderer
         {
             Write(renderer, obj);
         }
-
-        public override void Write(RendererBase renderer, MarkdownObject obj)
-        {
-            base.Write(renderer, obj);
-        }
     }
 }

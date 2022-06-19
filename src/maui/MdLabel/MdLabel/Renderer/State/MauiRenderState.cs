@@ -4,15 +4,16 @@ namespace MdLabel.Renderer
 {
     public class MauiRenderState : IRendererState
     {
-        private readonly List<IMauiSpanBlock> _currentListBlock  = new();
-        private readonly List<IMauiSpanBlock> _spanBlocks  = new();
+        private readonly List<IMauiBlock> _currentListBlock  = new();
+        private readonly List<IMauiBlock> _spanBlocks  = new();
         private readonly Stack<MarkdownInlineFormatKind> _inlineFormatStack = new();
-
-        public IEnumerable<IMauiSpanBlock> CurrentListBlock => _currentListBlock;
-        public IEnumerable<IMauiSpanBlock> SpanBlocks => _spanBlocks;
+                
+        private IEnumerable<IMauiBlock> CurrentListBlock => _currentListBlock;
+        
+        public IEnumerable<IMauiBlock> SpanBlocks => _spanBlocks;
         public IEnumerable<MarkdownInlineFormatKind> InlineFormatStack => _inlineFormatStack;
 
-        public IMauiSpanBlock? CurrentSpanBlock { get; private set; } = default;
+        public IMauiBlock? CurrentSpanBlock { get; private set; } = default;
         public MarkdownBlockKind CurrentBlockKind { get; private set; } = MarkdownBlockKind.Default;
 
         public Uri? Uri { get; private set; } = default;
@@ -38,7 +39,7 @@ namespace MdLabel.Renderer
         {
             if (CurrentSpanBlock is null)
             {
-                throw new NullReferenceException($"{nameof(MauiSpanBlock)} cannot be null");
+                throw new NullReferenceException($"{nameof(MauiBlock)} cannot be null");
             }
 
             PushInlineFormatType(MarkdownInlineFormatKind.Link);
@@ -72,7 +73,7 @@ namespace MdLabel.Renderer
             }
             else
             {
-                throw new NullReferenceException($"{nameof(MauiSpanBlock)} cannot be null");
+                throw new NullReferenceException($"{nameof(MauiBlock)} cannot be null");
             }
         }
 
@@ -85,7 +86,7 @@ namespace MdLabel.Renderer
                 _currentListBlock.Clear();
             }
 
-            CurrentSpanBlock = new MauiSpanBlock();
+            CurrentSpanBlock = new MauiBlock();
         }
 
         public virtual void CloseBlock()
@@ -107,7 +108,7 @@ namespace MdLabel.Renderer
                 CloseBlock();
             }
 
-            CurrentSpanBlock = new MauiSpanBlock();
+            CurrentSpanBlock = new MauiBlock();
         }
 
         public virtual void CloseListBlock()

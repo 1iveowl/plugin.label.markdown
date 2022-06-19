@@ -2,7 +2,7 @@
 
 namespace MdLabel.Renderer
 {
-    public interface IMauiSpanBlock
+    public interface IMauiBlock
     {
         int TrailingNewLine { get; set; }
         void AddSpan(MarkdownSpanBase span);

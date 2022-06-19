@@ -19,10 +19,5 @@ namespace MdLabel.Renderer.Inline
             renderer.State.CloseBlock();
             renderer.State.ClearHeader();
         }
-
-        public override void Write(RendererBase renderer, MarkdownObject obj)
-        {
-            base.Write(renderer, obj);
-        }
     }
 }

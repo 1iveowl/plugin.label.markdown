@@ -3,7 +3,7 @@ using MdLabel.Spans;
 
 namespace MdLabel.Renderer
 {
-    public record MauiSpanBlock : IMauiSpanBlock
+    public record MauiBlock : IMauiBlock
     {
         private readonly List<MarkdownSpanBase>? _spans = new();
 

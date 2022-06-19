@@ -1,6 +1,5 @@
 ﻿using Markdig.Helpers;
 using Markdig.Renderers;
-using Markdig.Syntax;
 using MdLabel.Factory;
 using MdLabel.Spans;
 using MdLabel.Renderer.Inline;
@@ -10,12 +9,34 @@ namespace MdLabel.Renderer
     public class MauiRenderer : TextRendererBase<MauiRenderer>, IMauiRenderer
     {
         private readonly ISpanFactory _spanFactory;
-        internal virtual IRendererState State { get; private set; } = new MauiRenderState();
+        public virtual IRendererState State { get; private set; }
 
         public MauiRenderer(ISpanFactory spanFactory) : base(new StringWriter())
         {
             _spanFactory = spanFactory;
 
+            State = new MauiRenderState();
+
+            Initialize();
+
+            //ObjectWriteBefore += MdRenderer_ObjectWriteBefore;
+            //ObjectWriteAfter += MdRenderer_ObjectWriteAfter;
+        }
+
+        public MauiRenderer(ISpanFactory spanFactory, IRendererState state) : base(new StringWriter())
+        {
+            _spanFactory = spanFactory;
+
+            State = state;
+
+            Initialize();
+
+            //ObjectWriteBefore += MdRenderer_ObjectWriteBefore;
+            //ObjectWriteAfter += MdRenderer_ObjectWriteAfter;
+        }
+
+        protected virtual void Initialize()
+        {
             ObjectRenderers.Add(new MauiParagraphRenderer());
             ObjectRenderers.Add(new MauiLiteralInlineRenderer());
             ObjectRenderers.Add(new MauiEmphasisInlineRenderer());
@@ -23,9 +44,6 @@ namespace MdLabel.Renderer
             ObjectRenderers.Add(new MauiLineBreakInlineRenderer());
             ObjectRenderers.Add(new MauiLinkInlineRenderer());
             ObjectRenderers.Add(new MauiListRenderer());
-
-            ObjectWriteBefore += MdRenderer_ObjectWriteBefore;
-            ObjectWriteAfter += MdRenderer_ObjectWriteAfter;
         }
 
         public virtual FormattedString GetFormattedString()
@@ -44,7 +62,7 @@ namespace MdLabel.Renderer
         {
             if (State.CurrentSpanBlock is null)
             {
-                throw new NullReferenceException($"{nameof(MauiSpanBlock)} cannot be null");
+                throw new NullReferenceException($"{nameof(MauiBlock)} cannot be null");
             }
 
             var text = slice.ToString();
@@ -78,15 +96,13 @@ namespace MdLabel.Renderer
             }
         }
 
-        private void MdRenderer_ObjectWriteAfter(IMarkdownRenderer arg1, MarkdownObject arg2)
-        {
+        //private void MdRenderer_ObjectWriteAfter(IMarkdownRenderer arg1, MarkdownObject arg2)
+        //{
+        //}
 
-        }
-
-        private void MdRenderer_ObjectWriteBefore(IMarkdownRenderer arg1, MarkdownObject arg2)
-        {
-
-        }
+        //private void MdRenderer_ObjectWriteBefore(IMarkdownRenderer arg1, MarkdownObject arg2)
+        //{
+        //}
 
         public virtual void Dispose() => State.Dispose();
     }
