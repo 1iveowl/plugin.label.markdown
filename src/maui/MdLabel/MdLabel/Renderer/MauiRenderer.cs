@@ -50,7 +50,7 @@ namespace MdLabel.Renderer
         {
             var formattedString = new FormattedString();
 
-            foreach (var span in State.SpanBlocks.SelectMany(block => block.GetSpans()))
+            foreach (var span in State.MarkdownSpans)
             {
                 formattedString.Spans.Add(span);
             }
@@ -60,21 +60,16 @@ namespace MdLabel.Renderer
 
         public virtual void WriteSpan(ref StringSlice slice)
         {
-            if (State.CurrentSpanBlock is null)
-            {
-                throw new NullReferenceException($"{nameof(MauiBlock)} cannot be null");
-            }
-
             var text = slice.ToString();
 
             var markdownSpan = _spanFactory.GetSpan(
-                spanBlock: State.CurrentBlockKind,
-                inlineFormats: State.InlineFormatStack,
+                spanBlock: State.CurrentTextBlockKind,
+                inlineFormats: State.InlineFormats,
                 linkAction: span => AddGestureAction(span));
 
             markdownSpan.Text = text;
 
-            State.CurrentSpanBlock?.AddSpan(markdownSpan);
+            State.AddSpan(markdownSpan);
 
             void AddGestureAction(MarkdownSpanBase span)
             {

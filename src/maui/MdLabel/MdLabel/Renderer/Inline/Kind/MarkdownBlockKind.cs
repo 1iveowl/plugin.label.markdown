@@ -1,7 +1,7 @@
 ﻿namespace MdLabel.Renderer.Inline
 {
     public enum MarkdownBlockKind
-    {   Default = 0,
+    {   Paragraph = 0,
         Header1 = 1,
         Header2 = 2,
         Header3 = 3,

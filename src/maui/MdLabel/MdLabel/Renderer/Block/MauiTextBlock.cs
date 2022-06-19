@@ -1,15 +1,23 @@
 ﻿using MdLabel.Helper;
+using MdLabel.Renderer.Inline;
 using MdLabel.Spans;
 
 namespace MdLabel.Renderer
 {
-    public record MauiBlock : IMauiBlock
+    public record MauiTextBlock : IMauiTextBlock
     {
         private readonly List<MarkdownSpanBase>? _spans = new();
 
         public int TrailingNewLine { get; set; }
 
-        public IEnumerable<MarkdownSpanBase> GetSpans()
+        public MarkdownBlockKind BlockKind { get; private set; }
+
+        public MauiTextBlock(MarkdownBlockKind blockKind)
+        {
+            BlockKind = blockKind;
+        }
+
+        public virtual IEnumerable<MarkdownSpanBase> GetSpans()
         {
             if (_spans?.Any() ?? false)
             {
@@ -25,7 +33,7 @@ namespace MdLabel.Renderer
             }
         }
 
-        public void AddSpan(MarkdownSpanBase span)
+        public virtual void AddSpan(MarkdownSpanBase span)
         {
             if (span is not null)
             {

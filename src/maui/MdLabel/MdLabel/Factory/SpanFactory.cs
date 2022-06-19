@@ -40,7 +40,7 @@ namespace MdLabel.Factory
             IEnumerable<MarkdownInlineFormatKind> inlineFormats) => 
                 spanBlock switch
                 {
-                    MarkdownBlockKind.Default => new MarkdownInlineSpan(inlineFormats),
+                    MarkdownBlockKind.Paragraph => new MarkdownInlineSpan(inlineFormats),
                     MarkdownBlockKind.Header1 => new MarkdownHeader1Span(inlineFormats),
                     MarkdownBlockKind.Header2 => new MarkdownHeader2Span(inlineFormats),
                     MarkdownBlockKind.Header3 => new MarkdownHeader3Span(inlineFormats),

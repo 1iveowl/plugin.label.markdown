@@ -2,129 +2,28 @@
 
 namespace MdLabel.Renderer
 {
-    public class MauiRenderState : IRendererState
+    public partial class MauiRenderState : MauiRendererStateBase, IRendererState
     {
-        private readonly List<IMauiBlock> _currentListBlock  = new();
-        private readonly List<IMauiBlock> _spanBlocks  = new();
-        private readonly Stack<MarkdownInlineFormatKind> _inlineFormatStack = new();
+        private readonly List<IMauiTextBlock> _currentListBlock  = new();
                 
-        private IEnumerable<IMauiBlock> CurrentListBlock => _currentListBlock;
-        
-        public IEnumerable<IMauiBlock> SpanBlocks => _spanBlocks;
-        public IEnumerable<MarkdownInlineFormatKind> InlineFormatStack => _inlineFormatStack;
-
-        public IMauiBlock? CurrentSpanBlock { get; private set; } = default;
-        public MarkdownBlockKind CurrentBlockKind { get; private set; } = MarkdownBlockKind.Default;
-
-        public Uri? Uri { get; private set; } = default;
-
-        public virtual void SetHeaderLevel(int level)
-        {
-            if (level >= 1 && level <= 6)
-            {
-                CurrentBlockKind = (MarkdownBlockKind)level;
-            }
-            else
-            {
-                throw new ArgumentOutOfRangeException("Header level must be between 1 and 6.");
-            }
-        }
-
-        public virtual void ClearHeader()
-        {
-            CurrentBlockKind = MarkdownBlockKind.Default;
-        }
-
-        public virtual void SetLink(Uri uri)
-        {
-            if (CurrentSpanBlock is null)
-            {
-                throw new NullReferenceException($"{nameof(MauiBlock)} cannot be null");
-            }
-
-            PushInlineFormatType(MarkdownInlineFormatKind.Link);
-            Uri = uri;
-        }
-
-        public virtual void ClearLink()
-        {
-            PopInlineFormatType();
-            Uri = default;
-        }
-
-        public virtual void PushInlineFormatType(MarkdownInlineFormatKind markdownLineType)
-        {
-            _inlineFormatStack.Push(markdownLineType);
-        }
-
-        public virtual void PopInlineFormatType()
-        {
-            if (_inlineFormatStack.Count > 0)
-            {
-                _inlineFormatStack.Pop();
-            }
-        }
+        private IEnumerable<IMauiTextBlock> CurrentListBlock => _currentListBlock;
 
         public virtual void AddNewLine()
         {
-            if (CurrentSpanBlock is not null)
+            if (CurrentTextBlock is not null)
             {
-                CurrentSpanBlock.TrailingNewLine++;
+                CurrentTextBlock.TrailingNewLine++;
             }
             else
             {
-                throw new NullReferenceException($"{nameof(MauiBlock)} cannot be null");
+                throw new NullReferenceException($"{nameof(MauiTextBlock)} cannot be null");
             }
         }
 
-        public virtual void OpenBlock()
-        {
-            // TODO Implement
+        public virtual void OpenTextBlock(MarkdownBlockKind blockKind) => BeginTextBlock(new MauiTextBlock(blockKind));
 
-            if (CurrentListBlock is not null)
-            {
-                _currentListBlock.Clear();
-            }
+        public virtual void CloseTextBlock() => EndTextBlock();
 
-            CurrentSpanBlock = new MauiBlock();
-        }
 
-        public virtual void CloseBlock()
-        {
-            // TODO Implement
-
-            if (CurrentSpanBlock is not null)
-            {
-                _spanBlocks.Add(CurrentSpanBlock);
-            }
-
-            CurrentSpanBlock = default;
-        }
-
-        public virtual void OpenListBlock()
-        {
-            if (CurrentSpanBlock is not null)
-            {
-                CloseBlock();
-            }
-
-            CurrentSpanBlock = new MauiBlock();
-        }
-
-        public virtual void CloseListBlock()
-        {
-            if (CurrentSpanBlock is not null)
-            {
-                _spanBlocks.Add(CurrentSpanBlock);
-            }
-
-            CurrentSpanBlock = default;
-        }
-
-        public virtual void Dispose()
-        {
-            _inlineFormatStack.Clear();
-            _spanBlocks.Clear();
-        }
     }
 }

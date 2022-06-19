@@ -15,7 +15,7 @@ namespace MdLabel.Renderer.Inline
                 {
                     renderer.State.SetLink(uri);
                     renderer.WriteChildren(link);
-                    renderer.State.ClearLink();
+                    renderer.State.EndLink();
                 }
             }
         }
