@@ -1,15 +1,14 @@
-﻿namespace MdLabel.Renderer
+﻿using MdLabel.Renderer.Blocks;
+
+namespace MdLabel.Renderer
 {
     public partial class MauiRenderState
     {
+        private readonly Stack<IMauiListBlockGroup> _blockListStack = new();
+
         public virtual void BeginListBlock(bool IsOrdered)
         {
-            if (CurrentTextBlock is not null)
-            {
-                //CloseTextBlock();
-            }
 
-            //BeginTextBlock(new MauiTextBlock());
         }
 
         public virtual void EndListBlock()

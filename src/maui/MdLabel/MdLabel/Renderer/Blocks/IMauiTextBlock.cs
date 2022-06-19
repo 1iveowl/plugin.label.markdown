@@ -1,7 +1,7 @@
 ﻿using MdLabel.Renderer.Inline;
 using MdLabel.Spans;
 
-namespace MdLabel.Renderer
+namespace MdLabel.Renderer.Blocks
 {
     public interface IMauiTextBlock
     {

@@ -1,4 +1,5 @@
-﻿using MdLabel.Renderer.Inline;
+﻿using MdLabel.Renderer.Blocks;
+using MdLabel.Renderer.Inline;
 
 namespace MdLabel.Renderer
 {

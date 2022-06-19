@@ -1,4 +1,5 @@
-﻿using MdLabel.Renderer.Inline;
+﻿using MdLabel.Renderer.Blocks;
+using MdLabel.Renderer.Inline;
 using MdLabel.Spans;
 
 namespace MdLabel.Renderer
@@ -6,16 +7,16 @@ namespace MdLabel.Renderer
     public abstract class MauiRendererStateBase : IDisposable
     {
         private readonly Stack<MarkdownInlineFormatKind> _inlineFormatStack = new();
-        private readonly Stack<IMauiTextBlock> _blockStack = new();
+        private readonly Stack<IMauiTextBlockGroup> _blockGroupStack = new();
         
         private readonly List<IMauiTextBlock> _textBlocks = new();
 
-        public virtual IMauiTextBlock? CurrentTextBlock => _blockStack.Any()
-            ? _blockStack.Last()
+        public virtual IMauiTextBlock? CurrentTextBlock => _blockGroupStack.Last().Blocks.Any()
+            ? _blockGroupStack.Last().Blocks.Last()
             : default;
 
-        public virtual MarkdownBlockKind CurrentTextBlockKind => _blockStack.Any()
-            ? _blockStack.Last().BlockKind
+        public virtual MarkdownBlockKind CurrentTextBlockKind => _blockGroupStack.Last().Blocks.Any()
+            ? _blockGroupStack.Last().Blocks.Last().BlockKind
             : MarkdownBlockKind.Paragraph;
 
         public virtual IEnumerable<MarkdownInlineFormatKind> InlineFormats => _inlineFormatStack;
@@ -61,7 +62,7 @@ namespace MdLabel.Renderer
                 throw new Exception("Current Text block is not closed before a new is added.");
             }
 
-            _blockStack.Push(textBlock);
+            _blockGroupStack.Last().Add(textBlock);
         }
 
         protected virtual void EndTextBlock()
@@ -71,7 +72,7 @@ namespace MdLabel.Renderer
                 _textBlocks.Add(CurrentTextBlock);
             }
 
-            _blockStack.Pop();
+            //_blockStack.Pop();
         }
 
         public virtual void Dispose()
