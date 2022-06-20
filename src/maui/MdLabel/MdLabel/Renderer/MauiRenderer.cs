@@ -69,7 +69,7 @@ namespace MdLabel.Renderer
 
             markdownSpan.Text = text;
 
-            State.AddSpan(markdownSpan);
+            State.AddSpanToBlock(markdownSpan);
 
             void AddGestureAction(MarkdownSpanBase span)
             {

@@ -1,23 +1,24 @@
 ﻿using MdLabel.Renderer.Inline;
-using MdLabel.Spans;
 using MdLabel.Helper;
 
 namespace MdLabel.Renderer.Blocks
 {
-    public abstract record MauiTextBlockBase
+    public abstract record MauiTextBlockBase : IMauiTextBlock
     {
-        private readonly List<MarkdownSpanBase>? _spans = new();
+        private readonly List<Span>? _spans = new();
 
         public int TrailingNewLine { get; set; }
 
-        public MarkdownBlockKind BlockKind { get; private set; }
+        public MarkdownBlockKind BlockKind { get; init; }
+
+        public int IndentLevel {get; private set; }
 
         public MauiTextBlockBase(MarkdownBlockKind blockKind)
         {
             BlockKind = blockKind;
         }
 
-        public virtual void AddSpan(MarkdownSpanBase span)
+        public virtual void AddSpan(Span span)
         {
             if (span is not null)
             {
@@ -37,7 +38,7 @@ namespace MdLabel.Renderer.Blocks
             }
         }
 
-        public virtual IEnumerable<MarkdownSpanBase> GetSpans()
+        public virtual IEnumerable<Span> GetSpans()
         {
             if (_spans?.Any() ?? false)
             {
@@ -49,8 +50,13 @@ namespace MdLabel.Renderer.Blocks
             }
             else
             {
-                return new List<MarkdownSpanBase>();
+                return new List<Span>();
             }
+        }
+
+        public void SetIndentLevel(int level)
+        {
+            IndentLevel = level;
         }
     }
 }

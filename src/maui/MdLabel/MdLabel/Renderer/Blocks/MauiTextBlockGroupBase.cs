@@ -1,13 +1,13 @@
 ﻿
 namespace MdLabel.Renderer.Blocks
 {
-    public class MauiTextBlockGroupBase : IMauiTextBlockGroup
+    public abstract record MauiTextBlockGroupBase : IMauiTextBlockGroup
     {
-        public IEnumerable<IMauiTextBlock> Blocks => throw new NotImplementedException();
+        public int IndentLevel {get; init; }
 
-        public void Add(IMauiTextBlock block)
+        protected MauiTextBlockGroupBase(int indentLevel)
         {
-            throw new NotImplementedException();
+            IndentLevel = indentLevel;
         }
     }
 }

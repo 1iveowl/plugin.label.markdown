@@ -1,8 +1,10 @@
 ﻿
 namespace MdLabel.Renderer.Blocks
 {
-    public class MauiQuoteBlockGroup : MauiTextBlockGroupBase, IMauiTextBlockGroup
+    public record MauiQuoteBlockGroup : MauiTextBlockGroupBase, IMauiTextBlockGroup
     {
-
+        public MauiQuoteBlockGroup(int level) : base(level)
+        {
+        }
     }
 }

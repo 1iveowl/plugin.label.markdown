@@ -2,8 +2,6 @@
 {
     public interface IMauiTextBlockGroup
     {
-        IEnumerable<IMauiTextBlock> Blocks { get; }
-
-        void Add(IMauiTextBlock block);
+        int IndentLevel { get; }
     }
 }

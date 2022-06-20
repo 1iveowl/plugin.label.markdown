@@ -5,9 +5,9 @@ namespace MdLabel.Renderer
 {
     public partial class MauiRenderState : MauiRendererStateBase, IRendererState
     {
-        private readonly List<IMauiTextBlock> _currentListBlock  = new();
+        //private readonly List<IMauiTextBlock> _currentListBlock  = new();
                 
-        private IEnumerable<IMauiTextBlock> CurrentListBlock => _currentListBlock;
+        //private IEnumerable<IMauiTextBlock> CurrentListBlock => _currentListBlock;
 
         public virtual void AddNewLine()
         {

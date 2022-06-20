@@ -1,6 +1,5 @@
 ﻿using MdLabel.Renderer.Blocks;
 using MdLabel.Renderer.Inline;
-using MdLabel.Spans;
 
 namespace MdLabel.Renderer
 {
@@ -9,18 +8,18 @@ namespace MdLabel.Renderer
         private readonly Stack<MarkdownInlineFormatKind> _inlineFormatStack = new();
         private readonly Stack<IMauiTextBlockGroup> _blockGroupStack = new();
         
-        private readonly List<IMauiTextBlock> _textBlocks = new();
+        private readonly List<IMauiTextBlock> _blocks = new();
 
-        public virtual IMauiTextBlock? CurrentTextBlock => _blockGroupStack.Last().Blocks.Any()
-            ? _blockGroupStack.Last().Blocks.Last()
+        public virtual IMauiTextBlock? CurrentTextBlock => _blocks.Any()
+            ? _blocks.Last()
             : default;
 
-        public virtual MarkdownBlockKind CurrentTextBlockKind => _blockGroupStack.Last().Blocks.Any()
-            ? _blockGroupStack.Last().Blocks.Last().BlockKind
+        public virtual MarkdownBlockKind CurrentTextBlockKind => _blocks.Any()
+            ? _blocks.Last().BlockKind
             : MarkdownBlockKind.Paragraph;
 
         public virtual IEnumerable<MarkdownInlineFormatKind> InlineFormats => _inlineFormatStack;
-        public virtual IEnumerable<MarkdownSpanBase> MarkdownSpans => _textBlocks.SelectMany(block => block.GetSpans());
+        public virtual IEnumerable<Span> MarkdownSpans => _blocks.SelectMany(block => block.GetSpans());
 
         public Uri? Uri { get; private set; } = default;
 
@@ -38,7 +37,7 @@ namespace MdLabel.Renderer
             }
         }
 
-        public virtual void AddSpan(MarkdownSpanBase markdownSpan)
+        public virtual void AddSpanToBlock(Span markdownSpan)
         {
             if (CurrentTextBlock is not null)
             {
@@ -57,27 +56,33 @@ namespace MdLabel.Renderer
 
         protected virtual void BeginTextBlock(IMauiTextBlock textBlock)
         {
-            if (CurrentTextBlock is not null)
+            if (_blockGroupStack.Count == 0)
             {
-                throw new Exception("Current Text block is not closed before a new is added.");
+                _blockGroupStack.Push(new MauiTextBlockGroup(0));
+            }
+            else
+            {
+                _blockGroupStack.Push(new MauiTextBlockGroup(_blockGroupStack.Peek().IndentLevel + 1));
             }
 
-            _blockGroupStack.Last().Add(textBlock);
+            _blocks.Add(textBlock);
         }
 
         protected virtual void EndTextBlock()
         {
-            if (CurrentTextBlock is not null)
+            if (_blockGroupStack.Count == 0)
             {
-                _textBlocks.Add(CurrentTextBlock);
+                throw new InvalidOperationException("Did not expect the Text Block Group to be empty or null");
             }
 
-            //_blockStack.Pop();
+            var blockGroup = _blockGroupStack.Pop();
+
+            _blocks.Last().SetIndentLevel(blockGroup.IndentLevel);
         }
 
         public virtual void Dispose()
         {
-            _textBlocks.Clear();
+            _blocks.Clear();
             _inlineFormatStack.Clear();
         }
     }

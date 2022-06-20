@@ -2,9 +2,14 @@
 
 namespace MdLabel.Renderer.Blocks
 {
-    public class MauiListBlockGroup : MauiTextBlockGroupBase, IMauiListBlockGroup
+    public record MauiListBlockGroup : MauiTextBlockGroupBase, IMauiListBlockGroup
     {
-        public bool IsOrdered { get; private set; }
+        public bool IsOrdered { get; init; }
+
+        public MauiListBlockGroup(int intentLevel, bool isOrdered) : base(intentLevel)
+        {
+            IsOrdered = isOrdered;
+        }
 
     }
 }
