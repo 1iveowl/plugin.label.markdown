@@ -4,26 +4,30 @@ namespace MdLabel.Renderer
 {
     public partial class MauiRenderState
     {
-        private readonly Stack<IMauiListBlockGroup> _blockListStack = new();
-
-        public virtual void BeginListBlock(bool IsOrdered)
+        public virtual void BeginListBlockGroup(bool IsOrdered, char? orderDelimiter)
         {
-
+            BeginBlockGroup<MauiListBlockGroup>(
+                blockGroup => blockGroup = blockGroup with 
+                { 
+                    IsOrdered = IsOrdered,
+                    OrderDelimiter = orderDelimiter
+                });
         }
 
-        public virtual void EndListBlock()
+        public virtual void EndListBlockGroup()
         {
-            if (CurrentTextBlock is not null)
+            EndBlockGroup();
+        }
+
+
+        public void BeginListBlockItem(int order)
+        {
+            if (CurrentBlockGroup is MauiListBlockGroup blockListGroup)
             {
-                //BeginTextBlock(CurrentTextBlock);
+                var listBlock = blockListGroup.IsOrdered
+                    ? new MauiListItemBlock(order)
+                    : new MauiListItemBlock();
             }
-
-            //EndTextBlock();
-        }
-
-        public void BeginListBlockItem()
-        {
-            throw new NotImplementedException();
         }
 
         public void EndListBlockItem()

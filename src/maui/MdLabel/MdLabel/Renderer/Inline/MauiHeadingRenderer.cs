@@ -19,7 +19,7 @@ namespace MdLabel.Renderer.Inline
                 renderer.State.AddNewLine();
             }
 
-            renderer.State.CloseTextBlock();
+            renderer.State.CloseBlock();
         }
     }
 }

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace MdLabel.Renderer.Blocks
 {
-    public interface IMauiTextBlockList : IList<IMauiTextBlock>
+    public interface IMauiBlockList // : IList<IMauiBlock>
     {
     }
 }

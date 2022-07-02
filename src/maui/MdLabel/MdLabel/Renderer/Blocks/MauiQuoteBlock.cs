@@ -2,7 +2,7 @@
 
 namespace MdLabel.Renderer.Blocks
 {
-    public record MauiQuoteBlock : MauiTextBlockBase, IMauiTextBlock
+    public record MauiQuoteBlock : MauiBlockBase, IMauiBlock
     {
         public MauiQuoteBlock() : base(MarkdownBlockKind.Blockquote)
         {

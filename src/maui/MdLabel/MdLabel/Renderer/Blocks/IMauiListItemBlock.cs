@@ -1,7 +1,7 @@
 ﻿namespace MdLabel.Renderer.Blocks
 {
-    public interface IMauiListItemBlock : IMauiTextBlock
+    public interface IMauiListItemBlock : IMauiBlock
     {
-        
+        int Order { get; }
     }
 }

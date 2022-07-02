@@ -1,15 +1,18 @@
-﻿using MdLabel.Renderer.Inline;
-
-namespace MdLabel.Renderer.Blocks
+﻿namespace MdLabel.Renderer.Blocks
 {
-    public record MauiListBlockGroup : MauiTextBlockGroupBase, IMauiListBlockGroup
+    public record MauiListBlockGroup : MauiBlockGroupBase, IMauiListBlockGroup
     {
+        //private int _order = 0;
+        
         public bool IsOrdered { get; init; }
 
-        public MauiListBlockGroup(int intentLevel, bool isOrdered) : base(intentLevel)
-        {
-            IsOrdered = isOrdered;
-        }
+        public char? OrderDelimiter {get; init;}
 
+        //public int IncrementOrder() =>
+        //    IsOrdered
+        //        ? OrderStart is not null && OrderStart.Value > 0
+        //            ? OrderStart.Value + _order++ - 1
+        //            : _order++
+        //        : 0;
     }
 }

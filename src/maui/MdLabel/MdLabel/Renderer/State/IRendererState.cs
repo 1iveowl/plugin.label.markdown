@@ -18,11 +18,11 @@ namespace MdLabel.Renderer
         void EndLink();
 
         void OpenTextBlock(MarkdownBlockKind blockKind);
-        void CloseTextBlock();
+        void CloseBlock();
 
-        void BeginListBlock(bool isOrdered);
-        void EndListBlock();
-        void BeginListBlockItem();
+        void BeginListBlockGroup(bool IsOrdered, char? orderDelimiter);
+        void EndListBlockGroup();
+        void BeginListBlockItem(int order);
         void EndListBlockItem();
 
         void PopInlineFormatType();

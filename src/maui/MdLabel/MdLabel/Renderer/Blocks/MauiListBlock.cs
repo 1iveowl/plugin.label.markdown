@@ -1,11 +1,11 @@
 ﻿namespace MdLabel.Renderer.Blocks
 {
-    public class MauiTextBlockList : List<IMauiTextBlock>, IMauiTextBlockList
+    public class MauiListBlock : IMauiBlockList
     {
-        public new void Add(IMauiTextBlock block)
-        {
+        //public new void Add(IMauiBlock block)
+        //{
             
-        }
+        //}
         //public IMauiTextBlock this[int index] 
         //{ 
         //    get => throw new NotImplementedException(); 

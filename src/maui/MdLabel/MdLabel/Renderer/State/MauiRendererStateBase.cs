@@ -6,11 +6,12 @@ namespace MdLabel.Renderer
     public abstract class MauiRendererStateBase : IDisposable
     {
         private readonly Stack<MarkdownInlineFormatKind> _inlineFormatStack = new();
-        private readonly Stack<IMauiTextBlockGroup> _blockGroupStack = new();
-        
-        private readonly List<IMauiTextBlock> _blocks = new();
+        private readonly Stack<IMauiBlockGroup> _blockGroupStack = new();
+        private readonly List<IMauiBlock> _blocks = new();
 
-        public virtual IMauiTextBlock? CurrentTextBlock => _blocks.Any()
+        protected IMauiBlockGroup CurrentBlockGroup => _blockGroupStack.Peek();
+
+        public virtual IMauiBlock? CurrentTextBlock => _blocks.Any()
             ? _blocks.Last()
             : default;
 
@@ -54,21 +55,27 @@ namespace MdLabel.Renderer
             Uri = uri;
         }
 
-        protected virtual void BeginTextBlock(IMauiTextBlock textBlock)
+        protected virtual void BeginBlockGroup<TBlockGroup>(Action<TBlockGroup>? blockGroupInit = default) 
+            where TBlockGroup : IMauiBlockGroup, new()
         {
-            if (_blockGroupStack.Count == 0)
+            var blockGroup = _blockGroupStack.Count == 0
+                ? new TBlockGroup { IndentLevel = 0 }
+                : new TBlockGroup { IndentLevel = _blockGroupStack.Peek().IndentLevel + 1 };
+
+            if (blockGroupInit is not null)
             {
-                _blockGroupStack.Push(new MauiTextBlockGroup(0));
-            }
-            else
-            {
-                _blockGroupStack.Push(new MauiTextBlockGroup(_blockGroupStack.Peek().IndentLevel + 1));
+                blockGroupInit(blockGroup);
             }
 
+            _blockGroupStack.Push(blockGroup);
+        }
+
+        protected virtual void AddBlock(IMauiBlock textBlock)
+        {
             _blocks.Add(textBlock);
         }
 
-        protected virtual void EndTextBlock()
+        protected virtual void EndBlockGroup()
         {
             if (_blockGroupStack.Count == 0)
             {

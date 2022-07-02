@@ -52,6 +52,7 @@ namespace MdLabel.Spans
 
         protected MarkdownSpanBase()
         {
+
         }
 
         protected MarkdownSpanBase(IEnumerable<MarkdownInlineFormatKind>? inlineFormats)

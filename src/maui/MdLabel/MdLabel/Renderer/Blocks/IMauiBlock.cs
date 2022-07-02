@@ -3,7 +3,7 @@ using MdLabel.Spans;
 
 namespace MdLabel.Renderer.Blocks
 {
-    public interface IMauiTextBlock
+    public interface IMauiBlock
     {
         MarkdownBlockKind BlockKind { get; }
 

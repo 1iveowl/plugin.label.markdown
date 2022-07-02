@@ -43,7 +43,7 @@ namespace MdLabel
             using var mauiRenderer = GetRenderer();
 
             Markdown.Convert(
-                        markdownString.Replace("  ", Environment.NewLine),
+                        markdownString, //.Replace("  ", Environment.NewLine),
                         mauiRenderer,
                         GetMarkdownPipeline());
 

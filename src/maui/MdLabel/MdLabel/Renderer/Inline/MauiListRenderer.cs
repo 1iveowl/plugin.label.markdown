@@ -6,19 +6,22 @@ namespace MdLabel.Renderer.Inline
     {
         protected override void Write(MauiRenderer renderer, ListBlock listBlock)
         {
-            renderer.State.BeginListBlock(listBlock.IsOrdered);
+            renderer.State.BeginListBlockGroup(
+                        listBlock.IsOrdered,
+                        listBlock.IsOrdered
+                            ? listBlock.OrderedDelimiter
+                            : null);
 
-            foreach (ListItemBlock itemBlock in listBlock)
+            foreach (ListItemBlock item in listBlock)
             {
-                renderer.State.BeginListBlockItem();
+                renderer.State.BeginListBlockItem(item.Order);
 
-                renderer.WriteChildren(itemBlock);
+                renderer.WriteChildren(item);
 
                 renderer.State.EndListBlockItem();
             }
 
-            renderer.State.EndListBlock();
-
+            renderer.State.EndListBlockGroup();
         }
     }
 }

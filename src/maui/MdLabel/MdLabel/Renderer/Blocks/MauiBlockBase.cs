@@ -3,7 +3,7 @@ using MdLabel.Helper;
 
 namespace MdLabel.Renderer.Blocks
 {
-    public abstract record MauiTextBlockBase : IMauiTextBlock
+    public abstract record MauiBlockBase : IMauiBlock
     {
         private readonly List<Span>? _spans = new();
 
@@ -13,7 +13,7 @@ namespace MdLabel.Renderer.Blocks
 
         public int IndentLevel {get; private set; }
 
-        public MauiTextBlockBase(MarkdownBlockKind blockKind)
+        public MauiBlockBase(MarkdownBlockKind blockKind)
         {
             BlockKind = blockKind;
         }
