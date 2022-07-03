@@ -5,10 +5,10 @@ using System.Text;
 string? html = null;
 var testString = @"# Header A  
 ## Header B  
-### Header C _with italic_  
-_First Line is italic text._  
-**New Line in bold**  
-~~New line strike through~~  
+### Header C _with italic_
+_First Line is italic text._
+**New Line in bold**
+~~New line strike through~~
 New line normal
 *Italic Link: [Microsoft Azure B2C login](https://blogs.msdn.microsoft.com/azureadb2c/2018/10/05/b2clogin-com-is-now-generally-available/)*
 # Header 1 Link: [Microsoft Azure B2C login](https://blogs.msdn.microsoft.com/azureadb2c/2018/10/05/b2clogin-com-is-now-generally-available/)

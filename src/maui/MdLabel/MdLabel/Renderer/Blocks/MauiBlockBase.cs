@@ -29,9 +29,11 @@ namespace MdLabel.Renderer.Blocks
                     for (var i = 0; i < TrailingNewLine; i++)
                     {
                         stringBuilder.Append(Environment.NewLine);
-                    }
+                    }                    
 
                     span.Text = StringBuilderCache.GetStringAndRelease(stringBuilder);
+
+                    TrailingNewLine = 0;
                 }
 
                 _spans?.Add(span);

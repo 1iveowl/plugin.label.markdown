@@ -8,9 +8,10 @@ namespace MdLabel.Renderer.Inline
         protected override void Write(MauiRenderer renderer, ParagraphBlock obj)
         {
             renderer.State.OpenTextBlock(MarkdownBlockKind.Paragraph);
+
             renderer.WriteLeafInline(obj);
 
-            if (obj.NewLine != NewLine.None)
+            if (obj.NewLine is not NewLine.None)
             {
                 renderer.State.AddNewLine();
             }

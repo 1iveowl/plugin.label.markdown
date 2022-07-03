@@ -9,7 +9,10 @@ namespace MdLabel.Renderer
         private readonly Stack<IMauiBlockGroup> _blockGroupStack = new();
         private readonly List<IMauiBlock> _blocks = new();
 
-        protected IMauiBlockGroup CurrentBlockGroup => _blockGroupStack.Peek();
+        protected IMauiBlockGroup? CurrentBlockGroup => 
+            _blockGroupStack.TryPeek(out var blockGroup) 
+                ? blockGroup 
+                : default;
 
         public virtual IMauiBlock? CurrentTextBlock => _blocks.Any()
             ? _blocks.Last()
@@ -55,7 +58,7 @@ namespace MdLabel.Renderer
             Uri = uri;
         }
 
-        protected virtual void BeginBlockGroup<TBlockGroup>(Action<TBlockGroup>? blockGroupInit = default) 
+        protected virtual void BeginBlockGroup<TBlockGroup>(Func<TBlockGroup, TBlockGroup>? blockGroupInit = default) 
             where TBlockGroup : IMauiBlockGroup, new()
         {
             var blockGroup = _blockGroupStack.Count == 0
@@ -64,21 +67,22 @@ namespace MdLabel.Renderer
 
             if (blockGroupInit is not null)
             {
-                blockGroupInit(blockGroup);
+                blockGroup = blockGroupInit(blockGroup);
             }
 
             _blockGroupStack.Push(blockGroup);
         }
 
-        protected virtual void AddBlock(IMauiBlock textBlock)
+        protected virtual void AddBlock(IMauiBlock block)
         {
-            _blocks.Add(textBlock);
+            _blocks.Add(block);
         }
 
         protected virtual void EndBlockGroup()
         {
             if (_blockGroupStack.Count == 0)
             {
+                //return;
                 throw new InvalidOperationException("Did not expect the Text Block Group to be empty or null");
             }
 

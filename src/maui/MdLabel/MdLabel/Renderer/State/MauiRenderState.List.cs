@@ -1,4 +1,6 @@
-﻿using MdLabel.Renderer.Blocks;
+﻿using Markdig.Syntax;
+using MdLabel.Renderer.Blocks;
+using MdLabel.Spans;
 
 namespace MdLabel.Renderer
 {
@@ -19,20 +21,28 @@ namespace MdLabel.Renderer
             EndBlockGroup();
         }
 
-
         public void BeginListBlockItem(int order)
         {
             if (CurrentBlockGroup is MauiListBlockGroup blockListGroup)
-            {
-                var listBlock = blockListGroup.IsOrdered
-                    ? new MauiListItemBlock(order)
-                    : new MauiListItemBlock();
+{
+                var listBlock = new MauiListItemBlock() { Order = order };
+
+                if (blockListGroup.IsOrdered)
+                {
+                    listBlock.AddSpan(new MarkdownListSpan { Text = $"{order}{blockListGroup.OrderDelimiter} " });
+                }
+                else
+                {
+                    listBlock.AddSpan(new MarkdownListSpan { Text = "*" });
+                }
+
+                AddBlock(listBlock);
             }
         }
 
         public void EndListBlockItem()
         {
-            throw new NotImplementedException();
+            //throw new NotImplementedException();
         }
     }
 }
