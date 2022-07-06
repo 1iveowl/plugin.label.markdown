@@ -14,11 +14,9 @@ namespace MdLabel.Renderer.Inline
 
             foreach (ListItemBlock item in listBlock)
             {
-                renderer.State.BeginListBlockItem(item.Order);
+                renderer.State.AddListBlockItem(item.Order);
 
                 renderer.WriteChildren(item);
-
-                renderer.State.EndListBlockItem();
             }
 
             renderer.State.EndListBlockGroup();

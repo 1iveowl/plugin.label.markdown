@@ -21,28 +21,48 @@ namespace MdLabel.Renderer
             EndBlockGroup();
         }
 
-        public void BeginListBlockItem(int order)
+        public void AddListBlockItem(int order)
         {
             if (CurrentBlockGroup is MauiListBlockGroup blockListGroup)
 {
                 var listBlock = new MauiListItemBlock() { Order = order };
+                
+                
+                if (blockListGroup.IndentLevel > 0)
+                {
+                    AddIndenting(listBlock);
+                }
 
                 if (blockListGroup.IsOrdered)
                 {
-                    listBlock.AddSpan(new MarkdownListSpan { Text = $"{order}{blockListGroup.OrderDelimiter} " });
+                    AddOrderedNumber(listBlock);
                 }
                 else
                 {
-                    listBlock.AddSpan(new MarkdownListSpan { Text = "*" });
+                    AddBullet(listBlock);
                 }
 
                 AddBlock(listBlock);
             }
+
+            void AddIndenting(MauiListItemBlock listBlock)
+            {
+                for (int i = 0; i < blockListGroup.IndentLevel; i++)
+                {
+                    listBlock.AddSpan(new MarkdownListSpan { Text = "    " });
+                }
+            }
+
+            void AddOrderedNumber(MauiListItemBlock listBlock)
+            {
+                listBlock.AddSpan(new MarkdownListSpan { Text = $"{order}{blockListGroup.OrderDelimiter} " });
+            }
+
+            void AddBullet(MauiListItemBlock listBlock)
+            {
+                listBlock.AddSpan(new MarkdownListSpan { Text = "*" });
+            }
         }
 
-        public void EndListBlockItem()
-        {
-            //throw new NotImplementedException();
-        }
     }
 }

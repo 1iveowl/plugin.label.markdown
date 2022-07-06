@@ -9,7 +9,8 @@ namespace MdLabel.Renderer.Blocks
 
         int IndentLevel { get; }
 
-        int TrailingNewLine { get; set; }
+        //void AddSpanNewLine { get; }
+        //int TrailingNewLine { get; }
 
         void AddSpan(Span span);
 

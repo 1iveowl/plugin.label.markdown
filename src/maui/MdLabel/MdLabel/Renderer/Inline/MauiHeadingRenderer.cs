@@ -16,7 +16,7 @@ namespace MdLabel.Renderer.Inline
             if (obj.Inline is not null)
             {
                 renderer.WriteLeafInline(obj);
-                renderer.State.AddNewLine();
+                //renderer.State.AddNewLine();
             }
 
             renderer.State.CloseBlock();

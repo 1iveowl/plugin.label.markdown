@@ -28,22 +28,21 @@ namespace MdLabel
             set => SetValue(TextProperty, value);
         }
 
-        protected abstract IMauiRenderer GetRenderer();
-
         protected virtual ISpanFactory? SpanFactory { get; set; }
 
-        protected virtual MarkdownPipeline? GetMarkdownPipeline() => 
-            new MarkdownPipelineBuilder()
-                        .UseEmojiAndSmiley()
-                        .UseEmphasisExtras()
-                        .Build();
+        protected abstract IMauiRenderer GetRenderer();
+
+        protected virtual MarkdownPipeline? GetMarkdownPipeline() => new MarkdownPipelineBuilder()
+            .UseEmojiAndSmiley()
+            .UseEmphasisExtras()
+            .Build();
 
         protected virtual FormattedString Convert(string markdownString)
         {
             using var mauiRenderer = GetRenderer();
 
             Markdown.Convert(
-                        markdownString, //.Replace("  ", Environment.NewLine),
+                        markdownString,
                         mauiRenderer,
                         GetMarkdownPipeline());
 

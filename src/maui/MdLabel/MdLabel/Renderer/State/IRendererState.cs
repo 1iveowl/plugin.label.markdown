@@ -22,8 +22,7 @@ namespace MdLabel.Renderer
 
         void BeginListBlockGroup(bool IsOrdered, char? orderDelimiter);
         void EndListBlockGroup();
-        void BeginListBlockItem(int order);
-        void EndListBlockItem();
+        void AddListBlockItem(int order);
 
         void PopInlineFormatType();
         void PushInlineFormatType(MarkdownInlineFormatKind markdownLineType);

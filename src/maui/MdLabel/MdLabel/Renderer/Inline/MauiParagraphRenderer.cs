@@ -13,7 +13,7 @@ namespace MdLabel.Renderer.Inline
 
             if (obj.NewLine is not NewLine.None)
             {
-                renderer.State.AddNewLine();
+                //renderer.State.AddNewLine();
             }
 
             renderer.State.CloseBlock();

@@ -43,18 +43,9 @@
         <Setter Property="FontSize" Value="{StaticResource MarkdownHeader6Size}"></Setter>
     </Style>
 
-    <!--<Style TargetType="md:MarkdownHeader1Span" BasedOn="{StaticResource MarkdownHeader1StyleBase}"/>
-    <Style TargetType="md:MarkdownHeader2Span" BasedOn="{StaticResource MarkdownHeader2StyleBase}"/>
-    <Style TargetType="md:MarkdownHeader3Span" BasedOn="{StaticResource MarkdownHeader3StyleBase}"/>
-    <Style TargetType="md:MarkdownHeader4Span" BasedOn="{StaticResource MarkdownHeader4StyleBase}"/>
-    <Style TargetType="md:MarkdownHeader5Span" BasedOn="{StaticResource MarkdownHeader5StyleBase}"/>
-    <Style TargetType="md:MarkdownHeader6Span" BasedOn="{StaticResource MarkdownHeader6StyleBase}"/>-->
-
-    <!--<Style TargetType="md:MarkdownInlineLinkSpan" BasedOn="{StaticResource MarkdownInlineBase}" />-->
     <Style TargetType="md:MarkdownInlineSpan" BasedOn="{StaticResource MarkdownInlineBase}" />
 
-    <Style x:Key="MarkdownListBase" TargetType="md:MarkdownInlineSpanBase">
-        
-    </Style>
+    <Style x:Key="MarkdownListBase" TargetType="md:MarkdownInlineSpanBase" BasedOn="{StaticResource MarkdownInlineBase}"/>
+    <Style TargetType="md:MarkdownListSpan" BasedOn="{StaticResource MarkdownListBase}"/>
 
 </ResourceDictionary>

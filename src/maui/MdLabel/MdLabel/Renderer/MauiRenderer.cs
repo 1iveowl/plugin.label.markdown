@@ -11,23 +11,13 @@ namespace MdLabel.Renderer
         private readonly ISpanFactory _spanFactory;
         public virtual IRendererState State { get; private set; }
 
-        public MauiRenderer(ISpanFactory spanFactory) : base(new StringWriter())
+        public MauiRenderer(ISpanFactory spanFactory, IRendererState? state = default) : base(new StringWriter())
         {
             _spanFactory = spanFactory;
 
-            State = new MauiRenderState();
-
-            Initialize();
-
-            //ObjectWriteBefore += MdRenderer_ObjectWriteBefore;
-            //ObjectWriteAfter += MdRenderer_ObjectWriteAfter;
-        }
-
-        public MauiRenderer(ISpanFactory spanFactory, IRendererState state) : base(new StringWriter())
-        {
-            _spanFactory = spanFactory;
-
-            State = state;
+            State = state is not null 
+                ? state 
+                : new MauiRenderState();
 
             Initialize();
 

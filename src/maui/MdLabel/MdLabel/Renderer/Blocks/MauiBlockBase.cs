@@ -7,7 +7,7 @@ namespace MdLabel.Renderer.Blocks
     {
         private readonly List<Span>? _spans = new();
 
-        public int TrailingNewLine { get; set; }
+        //public int TrailingNewLine { get; private set; }
 
         public MarkdownBlockKind BlockKind { get; init; }
 
@@ -22,19 +22,19 @@ namespace MdLabel.Renderer.Blocks
         {
             if (span is not null)
             {
-                if (TrailingNewLine > 0)
-                {
-                    var stringBuilder = StringBuilderCache.Acquire().Append(span.Text);
+                //if (TrailingNewLine > 0)
+                //{
+                //    var stringBuilder = StringBuilderCache.Acquire().Append(span.Text);
 
-                    for (var i = 0; i < TrailingNewLine; i++)
-                    {
-                        stringBuilder.Append(Environment.NewLine);
-                    }                    
+                //    for (var i = 0; i < TrailingNewLine; i++)
+                //    {
+                //        stringBuilder.Append(Environment.NewLine);
+                //    }                    
 
-                    span.Text = StringBuilderCache.GetStringAndRelease(stringBuilder);
+                //    span.Text = StringBuilderCache.GetStringAndRelease(stringBuilder);
 
-                    TrailingNewLine = 0;
-                }
+                //    TrailingNewLine = 0;
+                //}
 
                 _spans?.Add(span);
             }

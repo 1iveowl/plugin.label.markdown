@@ -8,7 +8,8 @@ namespace MdLabel.Renderer
         {
             if (CurrentTextBlock is not null)
             {
-                CurrentTextBlock.TrailingNewLine++;
+                //CurrentTextBlock.AddSpan();
+                //CurrentTextBlock.TrailingNewLine++;
             }
             else
             {
