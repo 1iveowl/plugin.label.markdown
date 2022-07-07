@@ -27,6 +27,8 @@ namespace MdLabel.Renderer
             ObjectRenderers.Add(new MauiLinkInlineRenderer());
             ObjectRenderers.Add(new MauiListRenderer());
             ObjectRenderers.Add(new MauiQuoteBlockRenderer());
+
+            // Note: Code is not fully implemented at this time
             //ObjectRenderers.Add(new MauiCodeRenderer());
 
             //ObjectWriteBefore += MdRenderer_ObjectWriteBefore;
