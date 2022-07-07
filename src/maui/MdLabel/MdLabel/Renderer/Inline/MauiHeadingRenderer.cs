@@ -11,7 +11,8 @@ namespace MdLabel.Renderer.Inline
                 throw new ArgumentOutOfRangeException("Header level must be between 1 and 6.");
             }
 
-            renderer.State.OpenTextBlock((MarkdownBlockKind)obj.Level);
+            renderer.State.OpenTextBlock();
+            renderer.State.AddTextBlock((MarkdownBlockKind)obj.Level);
 
             if (obj.Inline is not null)
             {

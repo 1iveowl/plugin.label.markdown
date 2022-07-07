@@ -17,7 +17,9 @@ Where `{{1}}` represent a variable place-holder for the value of a bindable prop
 
 ### Limitations
 
-The `MarkdownLabel` control inherits the `Label` MAUI control and uses `FormattedString`and the `Span` controls to represent Markdown as blocks. This approach makes the the `MarkdownLabel`control light-weight and fast and able to support [Basic Syntax](https://www.markdownguide.org/basic-syntax), and also most [Extended Syntax](https://www.markdownguide.org/extended-syntax/), but not all. For instance, Tables are not support by the control, as there is no support for grids or borders etc. in `FormattedString`. Nor are images supported.  
+The `MarkdownLabel` control inherits the from `Label` MAUI control and uses `FormattedString`and the `Span`s to represent Markdown as blocks. 
+
+This approach makes the the `MarkdownLabel`control light-weight and fast and able to support most [Basic Markdown Syntax](https://www.markdownguide.org/basic-syntax), and some [Extended Syntax](https://www.markdownguide.org/extended-syntax/) too, but not all. For instance,Tables are not support by the control, since there is no support for grids or borders in `FormattedString`. Nor are images or `code` supported.  
 
 ## Platforms supported
 

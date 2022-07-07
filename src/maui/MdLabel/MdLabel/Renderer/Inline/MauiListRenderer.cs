@@ -12,7 +12,7 @@ namespace MdLabel.Renderer.Inline
                             ? listBlock.OrderedDelimiter
                             : null);
 
-            foreach (ListItemBlock item in listBlock)
+            foreach (var item in listBlock.Cast<ListItemBlock>())
             {
                 renderer.State.AddListBlockItem(item.Order);
 

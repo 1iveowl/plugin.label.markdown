@@ -45,7 +45,17 @@
 
     <Style TargetType="md:MarkdownInlineSpan" BasedOn="{StaticResource MarkdownInlineBase}" />
 
-    <Style x:Key="MarkdownListBase" TargetType="md:MarkdownInlineSpanBase" BasedOn="{StaticResource MarkdownInlineBase}"/>
+    <Style x:Key="MarkdownListBase" TargetType="md:MarkdownListSpanBase" BasedOn="{StaticResource MarkdownInlineBase}"/>
     <Style TargetType="md:MarkdownListSpan" BasedOn="{StaticResource MarkdownListBase}"/>
+
+    <Style x:Key="MarkdownQuoteBlockBase" TargetType="md:MarkdownBlockQuoteSpanBase" BasedOn="{StaticResource MarkdownInlineBase}">
+        <Setter Property="BackgroundColor"  Value="LightGray"></Setter>
+    </Style>
+    <Style TargetType="md:MarkdownBlockQuoteSpan" BasedOn="{StaticResource MarkdownQuoteBlockBase}"/>
+
+    <Style x:Key="MarkdownCodeBase" TargetType="md:MarkdownCodeSpanBase" BasedOn="{StaticResource MarkdownInlineBase}">
+        <!--<Setter Property="FontFamily"  Value="Cascadia-Code-Light"></Setter>-->
+    </Style>
+    <Style TargetType="md:MarkdownCodeSpan" BasedOn="{StaticResource MarkdownCodeBase}"/>
 
 </ResourceDictionary>

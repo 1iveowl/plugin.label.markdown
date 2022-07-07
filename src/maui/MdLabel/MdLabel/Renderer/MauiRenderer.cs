@@ -19,14 +19,6 @@ namespace MdLabel.Renderer
                 ? state 
                 : new MauiRenderState();
 
-            Initialize();
-
-            //ObjectWriteBefore += MdRenderer_ObjectWriteBefore;
-            //ObjectWriteAfter += MdRenderer_ObjectWriteAfter;
-        }
-
-        protected virtual void Initialize()
-        {
             ObjectRenderers.Add(new MauiParagraphRenderer());
             ObjectRenderers.Add(new MauiLiteralInlineRenderer());
             ObjectRenderers.Add(new MauiEmphasisInlineRenderer());
@@ -34,6 +26,11 @@ namespace MdLabel.Renderer
             ObjectRenderers.Add(new MauiLineBreakInlineRenderer());
             ObjectRenderers.Add(new MauiLinkInlineRenderer());
             ObjectRenderers.Add(new MauiListRenderer());
+            ObjectRenderers.Add(new MauiQuoteBlockRenderer());
+            //ObjectRenderers.Add(new MauiCodeRenderer());
+
+            //ObjectWriteBefore += MdRenderer_ObjectWriteBefore;
+            //ObjectWriteAfter += MdRenderer_ObjectWriteAfter;
         }
 
         public virtual FormattedString GetFormattedString()

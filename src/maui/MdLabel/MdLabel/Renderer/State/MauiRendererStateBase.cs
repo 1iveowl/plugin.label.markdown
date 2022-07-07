@@ -1,5 +1,6 @@
 ﻿using MdLabel.Renderer.Blocks;
 using MdLabel.Renderer.Inline;
+using MdLabel.Spans;
 
 namespace MdLabel.Renderer
 {
@@ -8,6 +9,8 @@ namespace MdLabel.Renderer
         private readonly Stack<MarkdownInlineFormatKind> _inlineFormatStack = new();
         private readonly Stack<IMauiBlockGroup> _blockGroupStack = new();
         private readonly List<IMauiBlock> _blocks = new();
+
+        private bool _isBlockItem;
 
         protected IMauiBlockGroup? CurrentBlockGroup => 
             _blockGroupStack.TryPeek(out var blockGroup) 
@@ -26,6 +29,12 @@ namespace MdLabel.Renderer
         public virtual IEnumerable<Span> MarkdownSpans => _blocks.SelectMany(block => block.GetSpans());
 
         public Uri? Uri { get; private set; } = default;
+
+        public bool IsParagraphPartOfBlock => (CurrentTextBlockKind 
+            is MarkdownBlockKind.List
+            or MarkdownBlockKind.Code
+            or MarkdownBlockKind.Blockquote)
+            && _isBlockItem;
 
 
         public virtual void PushInlineFormatType(MarkdownInlineFormatKind markdownLineType)
@@ -75,14 +84,26 @@ namespace MdLabel.Renderer
 
         protected virtual void AddBlock(IMauiBlock block)
         {
+            if (block is MauiListItemBlock
+                or MauiQuoteItemBlock
+                or MauiCodeItemBlock)
+            {
+                _isBlockItem = true;
+            }
+
             _blocks.Add(block);
         }
 
-        protected virtual void EndBlockGroup()
+        protected virtual void EndItem()
         {
+            _isBlockItem = false;
+        }
+
+        protected virtual void EndBlockGroup()
+        {           
+
             if (_blockGroupStack.Count == 0)
             {
-                //return;
                 throw new InvalidOperationException("Did not expect the Text Block Group to be empty or null");
             }
 
@@ -91,10 +112,24 @@ namespace MdLabel.Renderer
             _blocks.Last().SetIndentLevel(blockGroup.IndentLevel);
         }
 
+        protected virtual void AddIndenting<TBlock, TBlockGroup, TSpan>(
+            TBlock listBlock,
+            TBlockGroup blockGroup)
+                where TBlock : IMauiBlock
+                where TBlockGroup : IMauiBlockGroup
+                where TSpan : MarkdownSpanBase, new()
+        {
+            for (int i = 0; i < blockGroup.IndentLevel; i++)
+            {
+                listBlock.AddSpan(new TSpan { Text = "    " });
+            }
+        }
+
         public virtual void Dispose()
         {
             _blocks.Clear();
             _inlineFormatStack.Clear();
+            GC.SuppressFinalize(this);
         }
     }
 }

@@ -2,13 +2,13 @@
 
 namespace MdLabel.Spans
 {
-    internal class MarkdownBlockquoteSpan : MarkdownBlockquoteSpanBase
+    internal class MarkdownBlockQuoteSpan : MarkdownBlockQuoteSpanBase
     {
-        public MarkdownBlockquoteSpan()
+        public MarkdownBlockQuoteSpan()
         {
         }
 
-        public MarkdownBlockquoteSpan(IEnumerable<MarkdownInlineFormatKind>? inlineFormats) : base(inlineFormats)
+        public MarkdownBlockQuoteSpan(IEnumerable<MarkdownInlineFormatKind>? inlineFormats) : base(inlineFormats)
         {
         }
     }

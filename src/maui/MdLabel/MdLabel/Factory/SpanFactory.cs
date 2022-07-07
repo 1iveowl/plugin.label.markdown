@@ -48,7 +48,7 @@ namespace MdLabel.Factory
                     MarkdownBlockKind.Header5 => new MarkdownHeader5Span(inlineFormats),
                     MarkdownBlockKind.Header6 => new MarkdownHeader6Span(inlineFormats),
                     MarkdownBlockKind.List => new MarkdownListSpan(inlineFormats),
-                    MarkdownBlockKind.Blockquote => new MarkdownBlockquoteSpan(inlineFormats),
+                    MarkdownBlockKind.Blockquote => new MarkdownBlockQuoteSpan(inlineFormats),
                     MarkdownBlockKind.Code => new MarkdownCodeSpan(inlineFormats),
                     _ => throw new NotImplementedException(),
                 };

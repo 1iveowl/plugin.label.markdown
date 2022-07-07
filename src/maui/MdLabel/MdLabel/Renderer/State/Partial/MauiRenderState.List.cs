@@ -1,5 +1,4 @@
-﻿using Markdig.Syntax;
-using MdLabel.Renderer.Blocks;
+﻿using MdLabel.Renderer.Blocks;
 using MdLabel.Spans;
 
 namespace MdLabel.Renderer
@@ -25,12 +24,11 @@ namespace MdLabel.Renderer
         {
             if (CurrentBlockGroup is MauiListBlockGroup blockListGroup)
 {
-                var listBlock = new MauiListItemBlock() { Order = order };
-                
+                var listBlock = new MauiListItemBlock() { Order = order };                
                 
                 if (blockListGroup.IndentLevel > 0)
                 {
-                    AddIndenting(listBlock);
+                    AddIndenting<MauiListItemBlock, MauiListBlockGroup, MarkdownListSpan>(listBlock, blockListGroup);
                 }
 
                 if (blockListGroup.IsOrdered)
@@ -44,14 +42,7 @@ namespace MdLabel.Renderer
 
                 AddBlock(listBlock);
             }
-
-            void AddIndenting(MauiListItemBlock listBlock)
-            {
-                for (int i = 0; i < blockListGroup.IndentLevel; i++)
-                {
-                    listBlock.AddSpan(new MarkdownListSpan { Text = "    " });
-                }
-            }
+            
 
             void AddOrderedNumber(MauiListItemBlock listBlock)
             {
@@ -64,5 +55,6 @@ namespace MdLabel.Renderer
             }
         }
 
+        public void EndListBlockItem() => EndItem();
     }
 }

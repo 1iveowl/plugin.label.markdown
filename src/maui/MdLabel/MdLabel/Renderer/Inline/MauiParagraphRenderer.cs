@@ -7,7 +7,15 @@ namespace MdLabel.Renderer.Inline
     {
         protected override void Write(MauiRenderer renderer, ParagraphBlock obj)
         {
-            renderer.State.OpenTextBlock(MarkdownBlockKind.Paragraph);
+            if (!renderer.State.IsParagraphPartOfBlock)
+            {
+                renderer.State.OpenTextBlock();
+                renderer.State.AddTextBlock(MarkdownBlockKind.Paragraph);                
+            }
+            else
+            {
+
+            }
 
             renderer.WriteLeafInline(obj);
 
@@ -16,7 +24,14 @@ namespace MdLabel.Renderer.Inline
                 //renderer.State.AddNewLine();
             }
 
-            renderer.State.CloseBlock();
+            if (!renderer.State.IsParagraphPartOfBlock)
+            {
+                renderer.State.CloseBlock();
+            }
+            else
+            {
+                renderer.State.EndListBlockItem();
+            }
         }
     }
 }

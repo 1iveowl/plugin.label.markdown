@@ -94,11 +94,17 @@ New line normal
     2. Indent Item 1.2
 3. Item 3
 
+    > Block quote
+   
+4. Item 4
+
 * Item a
 * Item b
 
     Line in list
+                    
 * Item c
+                    
                 </md:MarkdownLabel.Text>
             </md:MarkdownLabel>
 
