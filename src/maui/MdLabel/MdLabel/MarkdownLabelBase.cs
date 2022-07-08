@@ -35,6 +35,7 @@ namespace MdLabel
         protected virtual MarkdownPipeline? GetMarkdownPipeline() => new MarkdownPipelineBuilder()
             .UseEmojiAndSmiley()
             .UseEmphasisExtras()
+            .UseReferralLinks()
             .Build();
 
         protected virtual FormattedString Convert(string markdownString)

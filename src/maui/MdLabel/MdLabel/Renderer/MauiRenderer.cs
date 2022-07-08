@@ -23,7 +23,7 @@ namespace MdLabel.Renderer
             ObjectRenderers.Add(new MauiLiteralInlineRenderer());
             ObjectRenderers.Add(new MauiEmphasisInlineRenderer());
             ObjectRenderers.Add(new MauiHeadingRenderer());
-            ObjectRenderers.Add(new MauiLineBreakInlineRenderer());
+            // ObjectRenderers.Add(new MauiLineBreakInlineRenderer());
             ObjectRenderers.Add(new MauiLinkInlineRenderer());
             ObjectRenderers.Add(new MauiListRenderer());
             ObjectRenderers.Add(new MauiQuoteBlockRenderer());

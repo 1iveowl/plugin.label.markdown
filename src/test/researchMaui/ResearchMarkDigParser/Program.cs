@@ -15,7 +15,7 @@ _First Line is italic text._
 
 ~~New line strike through~~  
 
-New line normal
+New line normal [test]
 
 *Italic Link: [Microsoft Azure B2C login](https://blogs.msdn.microsoft.com/azureadb2c/2018/10/05/b2clogin-com-is-now-generally-available/)*
 
@@ -37,17 +37,9 @@ New line normal
     Line in list
                     
 * Item c
-
-``
-class Test
-{
-    public void Test()
-    {
-         Console.WriteLine(""Hello world"");
-    }
-}
-``
-                    ";
+                    
+[test]: Inserted variable
+";
 
 //var parsers = new MarkdownPipelineBuilder().DisableHtml().InlineParsers;
 
@@ -55,7 +47,8 @@ class Test
 
 var pipelineBuilder = new MarkdownPipelineBuilder()
     .UseEmojiAndSmiley()
-    .UseEmphasisExtras();
+    .UseEmphasisExtras()
+    .UseReferralLinks();
 
 var extensions = pipelineBuilder.Extensions;
 
